@@ -21,11 +21,11 @@ Move the **King** off the grid by pushing him while managing limited resources a
 
 ### **Assassins (2 total, hidden)**  
 - Two soldiers are secretly assassins.  
-- If an **assassin** is adjacent to the King and **no other soldier is touching the assassin**, the assassin **kills the King**, resulting in a **game over**.  
+- If an **assassin** is adjacent to the King and **no other non-assasin soldier is touching the assassin**, the assassin **kills the King**, resulting in a **game over**.  
 
-### **Merchants (2 total, hidden)**  
-- Two soldiers are secretly **merchants**.  
-- If a **merchant** is adjacent to a **gold coin**, they automatically grab it and **disappear from the game**.  
+### **Mercenaries (2 total, hidden)**  
+- Two soldiers are secretly **mercenariess**.  
+- If a **mercenary** is adjacent to a **gold coin**, they automatically grab it and **disappear from the game**.  
 
 ### **Traps (10 total, hidden)**  
 - Placed randomly on the grid.  
@@ -33,7 +33,7 @@ Move the **King** off the grid by pushing him while managing limited resources a
 
 ### **Gold Coins (8 total, visible)**  
 - Placed randomly on the grid.  
-- If a **merchant** soldier is adjacent to a gold coin, they **pick it up and disappear**.  
+- If a **mercenary** soldier is adjacent to a gold coin, they **pick it up and disappear**.  
 
 ### **Food (energy resource)**  
 - The **player starts with 10 food**.  
@@ -44,7 +44,7 @@ Move the **King** off the grid by pushing him while managing limited resources a
 ### **Informant (2 total, visible)**  
 - Placed randomly on the grid.  
 - If a soldier steps onto an **informant** tile, the tile is removed and a random text information is displayed to the player. **information** can be:
-- *"Rupert is a merchant."*
+- *"Rupert is a mercenary."*
 - *"Assasins are on white."*
 - *"Thoralf is no assasin."*
 
