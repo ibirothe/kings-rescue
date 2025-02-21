@@ -6,7 +6,7 @@ enum State {INACTIVE, IDLE, MOVING}
 @onready var current_state: State = State.INACTIVE  # Start as INACTIVE
 const MOVE_DISTANCE := 16.0
 const MOVE_TIME := 0.5  # Time in seconds to complete movement
-const INTERACTION_RADIUS := 15.0
+const INTERACTION_RADIUS := 25.0
 var target_position := Vector2.ZERO
 
 func _ready() -> void:
@@ -28,6 +28,7 @@ func handle_inactive_state() -> void:
 		var click_pos = get_global_mouse_position()
 		# Check if click is on or very close to the character
 		if position.distance_to(click_pos) < INTERACTION_RADIUS:
+			AudioManager.play_sound("select_soldier")
 			transition_to_state(State.IDLE)
 
 func handle_idle_state() -> void:
@@ -35,6 +36,7 @@ func handle_idle_state() -> void:
 		var click_pos = get_global_mouse_position()
 		# If clicked far from character, return to inactive
 		if position.distance_to(click_pos) > INTERACTION_RADIUS:
+			AudioManager.play_sound("disselect_soldier")
 			transition_to_state(State.INACTIVE)
 		else:
 			handle_movement_input()
