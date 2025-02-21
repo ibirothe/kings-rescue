@@ -1,0 +1,78 @@
+[gd_scene load_steps=12 format=3 uid="uid://v3anqebutw1r"]
+
+[ext_resource type="Script" path="res://Scripts/soldier.gd" id="1_8wkfs"]
+[ext_resource type="Texture2D" uid="uid://6nwsf8e0yl3q" path="res://Assets/warrior_48px.png" id="1_pyisa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwl2j"]
+atlas = ExtResource("1_pyisa")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_psnqi"]
+atlas = ExtResource("1_pyisa")
+region = Rect2(64, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rolg4"]
+atlas = ExtResource("1_pyisa")
+region = Rect2(112, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wmd7r"]
+atlas = ExtResource("1_pyisa")
+region = Rect2(160, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_whwqp"]
+atlas = ExtResource("1_pyisa")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i3egf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iwl2j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_psnqi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rolg4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wmd7r")
+}],
+"loop": true,
+"name": &"active",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_whwqp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fprcw"]
+radius = 6.08276
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dl8vv"]
+size = Vector2(28, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fc0j8"]
+size = Vector2(6, 29)
+
+[node name="Soldier" type="CharacterBody2D"]
+script = ExtResource("1_8wkfs")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_i3egf")
+animation = &"active"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_fprcw")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_dl8vv")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_fc0j8")
