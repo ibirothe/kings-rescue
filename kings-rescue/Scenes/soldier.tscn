@@ -1,7 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://v3anqebutw1r"]
+[gd_scene load_steps=16 format=3 uid="uid://v3anqebutw1r"]
 
 [ext_resource type="Script" path="res://Scripts/soldier.gd" id="1_8wkfs"]
 [ext_resource type="Texture2D" uid="uid://6nwsf8e0yl3q" path="res://Assets/warrior_48px.png" id="1_pyisa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_whwqp"]
+atlas = ExtResource("1_pyisa")
+region = Rect2(16, 32, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iwl2j"]
 atlas = ExtResource("1_pyisa")
@@ -19,12 +23,32 @@ region = Rect2(112, 32, 16, 16)
 atlas = ExtResource("1_pyisa")
 region = Rect2(160, 32, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_whwqp"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_unpru"]
 atlas = ExtResource("1_pyisa")
-region = Rect2(16, 32, 16, 16)
+region = Rect2(16, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ju2v"]
+atlas = ExtResource("1_pyisa")
+region = Rect2(64, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ehxsb"]
+atlas = ExtResource("1_pyisa")
+region = Rect2(112, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_umhou"]
+atlas = ExtResource("1_pyisa")
+region = Rect2(160, 128, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i3egf"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_whwqp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_iwl2j")
@@ -39,15 +63,24 @@ animations = [{
 "texture": SubResource("AtlasTexture_wmd7r")
 }],
 "loop": true,
-"name": &"active",
+"name": &"idle",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_whwqp")
+"texture": SubResource("AtlasTexture_unpru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ju2v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ehxsb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umhou")
 }],
 "loop": true,
-"name": &"default",
+"name": &"walk",
 "speed": 5.0
 }]
 
@@ -65,7 +98,8 @@ script = ExtResource("1_8wkfs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_i3egf")
-animation = &"active"
+autoplay = "default"
+frame_progress = 0.10849
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_fprcw")
