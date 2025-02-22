@@ -24,17 +24,21 @@ var movement_locked = false
 var movement = Vector2.ZERO
 var role
 var bodies
+var movestart_position
+var returning = false
+var tween
+@onready var center: Marker2D = $Center
 
 func _ready() -> void:
 	# Start with default animation
 	animated_sprite_2d.play("default")
-	match subclass:
-		"brute":
-			assassin = true
 	
 	
 
 func _physics_process(_delta: float) -> void:
+	if active == true:
+		#print(possible_assassination, soldier_close)
+		pass
 	if assassin == true:
 		for bodies in neighbours_check.get_overlapping_bodies():
 			if bodies.role=="King":
@@ -46,6 +50,7 @@ func _physics_process(_delta: float) -> void:
 		#print(possible_assassination, soldier_close)
 		if possible_assassination == true and soldier_close == false:
 			GlobalText.set_text("Game Over")
+			print("Game Over")
 	
 	if active ==true:
 		#print(im_new)
@@ -120,7 +125,7 @@ func handle_movement_input() -> void:
 		active = false
 		return
 	if movement_locked == false and active == true: 
-
+		movestart_position = position
 		movement = calculate_grid_movement(click_pos)
 		get_parent().currently_moving = true
 		movement_locked = true
@@ -150,14 +155,15 @@ func calculate_grid_movement(click_pos: Vector2) -> Vector2:
 	return Vector2.ZERO
 
 func move_character(movement: Vector2) -> void:
-	
+		
+
 	#print(get_parent().soldier_in_a_way, im_new)
 	if current_state == State.MOVING:
 		return
 	transition_to_state(State.MOVING)
 	animated_sprite_2d.play("walk")
 
-	var tween = create_tween()
+	tween = create_tween()
 	tween.tween_property(self, "position", 
 		position + movement, MOVE_TIME
 	).set_trans(Tween.TRANS_LINEAR)
@@ -169,8 +175,9 @@ func move_character(movement: Vector2) -> void:
 		get_parent().movement_resolved(possible_assassination, soldier_close)
 		movement_locked = false
 		get_parent().currently_moving = false
+		get_parent().refire_king()
 		)
-	
+	# Add method to stop movement
 
 func transition_to_state(new_state: State) -> void:
 	match new_state:
@@ -220,3 +227,24 @@ func _on_neighbours_check_body_exited(body: Node2D) -> void:
 		elif body.role == "King":
 			if assassin == true:
 				possible_assassination = false
+
+func turn_back():
+	print("Returning")
+	if tween:
+		tween.kill() # Stop the current tween
+		
+	# Create new tween to return to start
+	tween = create_tween()
+	tween.tween_property(self, "position", 
+		movestart_position, MOVE_TIME
+	).set_trans(Tween.TRANS_LINEAR)
+	
+
+	# When return movement completes
+	tween.tween_callback(func():
+		animated_sprite_2d.play("idle")
+		transition_to_state(State.IDLE)
+		movement_locked = false
+		get_parent().currently_moving = false
+		get_parent().refire_king()
+		)

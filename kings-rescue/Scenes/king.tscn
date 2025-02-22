@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bny6i5an3s0g0"]
+[gd_scene load_steps=17 format=3 uid="uid://bny6i5an3s0g0"]
 
 [ext_resource type="Script" path="res://Scripts/king.gd" id="1_2d7mi"]
 [ext_resource type="Texture2D" uid="uid://cua7t3m6em0oo" path="res://Assets/tank_48px.png" id="1_n836n"]
@@ -6,6 +6,30 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_n44nq"]
 atlas = ExtResource("1_n836n")
 region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hicgm"]
+atlas = ExtResource("1_n836n")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yldqa"]
+atlas = ExtResource("1_n836n")
+region = Rect2(64, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1kcjp"]
+atlas = ExtResource("1_n836n")
+region = Rect2(16, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61rbv"]
+atlas = ExtResource("1_n836n")
+region = Rect2(64, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bsc65"]
+atlas = ExtResource("1_n836n")
+region = Rect2(112, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y5pyb"]
+atlas = ExtResource("1_n836n")
+region = Rect2(160, 128, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mqq1x"]
 animations = [{
@@ -16,20 +40,105 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hicgm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yldqa")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1kcjp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61rbv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bsc65")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y5pyb")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_luvpu"]
-radius = 6.0
+radius = 4.24264
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l4t82"]
+radius = 4.12311
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_33uko"]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c88t1"]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yobkp"]
+radius = 5.09902
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lknlo"]
+radius = 5.09902
 
 [node name="King" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_2d7mi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_mqq1x")
+animation = &"walk"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="King_shape" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_luvpu")
 
 [node name="King" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_l4t82")
+
+[node name="Up" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Up"]
+position = Vector2(0, -16)
+shape = SubResource("CircleShape2D_33uko")
+
+[node name="Down" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Down"]
+position = Vector2(0, 13)
+shape = SubResource("CircleShape2D_c88t1")
+
+[node name="Left" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left"]
+position = Vector2(-15, 0)
+shape = SubResource("CircleShape2D_yobkp")
+
+[node name="Right" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right"]
+position = Vector2(16, 0)
+shape = SubResource("CircleShape2D_lknlo")
+
+[node name="Center" type="Marker2D" parent="."]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 AudioManager="*res://Scenes/AudioManager.tscn"
-King="*res://Scenes/king.tscn"
 GlobalText="*res://Scripts/global_text.gd"
 
 [input]

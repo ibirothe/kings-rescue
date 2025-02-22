@@ -97,6 +97,7 @@ size = Vector2(28, 5)
 size = Vector2(6, 29)
 
 [node name="Soldier" type="CharacterBody2D"]
+collision_layer = 5
 script = ExtResource("1_8wkfs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -116,6 +117,7 @@ shape = SubResource("RectangleShape2D_dm2i7")
 
 [node name="Neighbours_check" type="Area2D" parent="."]
 collision_layer = 2
+collision_mask = 3
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Neighbours_check"]
 shape = SubResource("RectangleShape2D_dl8vv")
@@ -123,6 +125,8 @@ shape = SubResource("RectangleShape2D_dl8vv")
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Neighbours_check"]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_fc0j8")
+
+[node name="Center" type="Marker2D" parent="."]
 
 [connection signal="input_event" from="Activation_area" to="." method="_on_area_2d_input_event"]
 [connection signal="body_entered" from="Neighbours_check" to="." method="_on_neighbours_check_body_entered"]

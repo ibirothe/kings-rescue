@@ -1,5 +1,6 @@
 extends Node2D
 var soldier_scene = preload("res://Scenes/soldier.tscn")
+var coin_scene = preload("res://Scenes/coin.tscn")
 var rng = RandomNumberGenerator.new()
 var subclasses = ["Rupert", "Thoralf", "Ogra", "Bartholo", "Ibrahim", "Edwin", "Marquise", "Arianna"]
 var roles = ["Mercenary", "Mercenary", "Assassin", "Assassin", "Soldier", "Soldier", "Soldier", "Soldier"]
@@ -14,14 +15,17 @@ var soldier_changing = false
 var click_resolved = true
 var cycle_odd = true
 var currently_moving = false
+@export var coins_number = 8
+@onready var king: CharacterBody2D = $"../King"
 
 func _ready() -> void:
 
 	#active_soldier = false
-	x=King.position.x-8-16
-	y=King.position.y-8
+	x=king.position.x-16
+	y=king.position.y-16
 	if setup_done == false:
 		spawn_soldiers()
+		spawn_coins(coins_number)
 		setup_done = true
 	pass
 	
@@ -57,7 +61,7 @@ func spawn_soldiers():
 	for i in range(8):
 		var soldier = soldier_scene.instantiate()
 		var j = round(randf_range(0, len(subclasses)-1))
-		print(j)
+		#print(j)
 		var subclass = subclasses[j]
 		soldier.subclass = subclass
 		subclasses.erase(subclass)
@@ -93,6 +97,32 @@ func spawn_soldiers():
 		
 		soldier.position = Vector2(x, y)
 		add_child(soldier)
+		
+		
+func spawn_coins(coins_numb):
+	var i = 0
+	var coins = []
+	while i < coins_numb:
+		var coin = coin_scene.instantiate()
+		x = round(randf_range(0, 10))
+		y = round(randf_range(0, 10))
+		print(x," ", y)
+		if x > 2 and y > 2 and x < 8 and y < 8:
+			pass
+		else:
+			x = king.position.x-(5*16) + x*16
+			y = king.position.y+(5*16) - y*16
+			var pos = [x, y]
+			#print(pos)
+			if pos not in coins:
+				i += 1
+			else:
+				print("Double")
+			coin.position = Vector2(x, y)
+			coins.append([x, y])
+			if i == coins_numb+1:
+				print("Array: ",coins)
+			add_child(coin)
 
 func movement_resolved(possible_assassination, soldier_close):
 	if possible_assassination == true and soldier_close == false:
@@ -102,3 +132,6 @@ func movement_resolved(possible_assassination, soldier_close):
 	#connect signals
 	#check game over
 	#disconnect signals
+
+func refire_king():
+	king.king()
