@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://c5qlik5x313qp"]
+[gd_scene load_steps=23 format=4 uid="uid://c5qlik5x313qp"]
 
 [ext_resource type="Texture2D" uid="uid://daggdvepx4vai" path="res://Assets/VFX/light_ray_M.png" id="1_3r7fq"]
 [ext_resource type="Texture2D" uid="uid://bk373qbmw3vfy" path="res://Assets/game UI placeholder.png" id="1_817jl"]
@@ -1095,6 +1095,18 @@ line_spacing = -5.0
 font = ExtResource("7_rm11i")
 font_color = Color(0.894118, 0.862745, 0.839216, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jig83"]
+size = Vector2(183, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2dbl"]
+size = Vector2(37, 235)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d8pki"]
+size = Vector2(35, 213)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_641yk"]
+size = Vector2(218, 22)
+
 [node name="Level" type="Node2D"]
 
 [node name="LightRayM" type="GPUParticles2D" parent="."]
@@ -1161,3 +1173,35 @@ autowrap_mode = 3
 script = ExtResource("8_83tln")
 custom_typing_speed = 0.02
 metadata/_edit_use_anchors_ = true
+
+[node name="Top Win" type="StaticBody2D" parent="."]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top Win"]
+position = Vector2(-7, -96)
+shape = SubResource("RectangleShape2D_jig83")
+
+[node name="Right Win" type="StaticBody2D" parent="."]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right Win"]
+position = Vector2(101.5, 13.5)
+shape = SubResource("RectangleShape2D_w2dbl")
+
+[node name="Left Win" type="StaticBody2D" parent="."]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left Win"]
+position = Vector2(-117.5, 2.5)
+shape = SubResource("RectangleShape2D_d8pki")
+
+[node name="Bot Win" type="StaticBody2D" parent="."]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bot Win"]
+position = Vector2(-3, 111)
+shape = SubResource("RectangleShape2D_641yk")

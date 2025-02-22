@@ -14,6 +14,7 @@ var current_state
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 var tween
 const MOVE_TIME := 0.5  # Time in seconds to complete movement
+@onready var win: Area2D = $Win
 
 func _ready() -> void:
 	#print(position)
@@ -31,6 +32,8 @@ func _physics_process(_delta: float) -> void:
 		State.MOVING:
 			# Movement is handled by tween, we just watch for new input
 			pass
+	if len(win.get_overlapping_bodies()) > 0:
+		print("win")
 
 func king():
 	direction_check = false
