@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name Soldier
 enum State {INACTIVE, IDLE, MOVING}
-
+@onready var neighbours_check: Area2D = $Neighbours_check
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var current_state: State = State.INACTIVE  # Start as INACTIVE
 const MOVE_DISTANCE := 16.0
@@ -10,8 +10,9 @@ const MOVE_TIME := 0.5  # Time in seconds to complete movement
 const INTERACTION_RADIUS := 25.0
 var target_position := Vector2.ZERO
 var assassin = false
+var mercenary = false
 var possible_assassination = false
-var soldier_close = false
+var soldier_close = true
 var number = 0
 var subclass
 var click_resolved = false
@@ -21,6 +22,8 @@ var next_cycle = false
 var cycle_sync = false
 var movement_locked = false
 var movement = Vector2.ZERO
+var role
+var bodies
 
 func _ready() -> void:
 	# Start with default animation
@@ -32,6 +35,18 @@ func _ready() -> void:
 	
 
 func _physics_process(_delta: float) -> void:
+	if assassin == true:
+		for bodies in neighbours_check.get_overlapping_bodies():
+			if bodies.role=="King":
+				#print("Possible_Assassination")
+				possible_assassination = true
+			if bodies.role=="Soldier":
+				#print("Should be impossible")
+				soldier_close = true
+		#print(possible_assassination, soldier_close)
+		if possible_assassination == true and soldier_close == false:
+			print("Game Over")
+	
 	if active ==true:
 		#print(im_new)
 		pass
@@ -108,6 +123,8 @@ func handle_movement_input() -> void:
 		get_parent().currently_moving = true
 		movement_locked = true
 		print(subclass)
+		print("Assassin - ", assassin)
+		print("Mercenary - ", mercenary)
 
 	if movement != Vector2.ZERO:
 		# Update sprite flip based on movement direction
@@ -181,11 +198,22 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 			AudioManager.play_sound("select_soldier")
 			transition_to_state(State.IDLE)
 
-
+"""
 func _on_neighbours_check_body_entered(body: Node2D) -> void:
 	if body.has_node("King"):
 		if assassin == true:
+			print("Possible_Assassination")
 			possible_assassination = true
-	if body.has_node("Soldier"):
+	elif body.role == "Soldier":
 		if assassin == true:
-			soldier_close = true
+			print("Should be impossible")
+			soldier_close = true"""
+
+
+func _on_neighbours_check_body_exited(body: Node2D) -> void:
+		if body.role == "Soldier":
+			if assassin == true:
+				soldier_close = false
+		elif body.role == "King":
+			if assassin == true:
+				possible_assassination = false
