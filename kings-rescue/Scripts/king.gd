@@ -22,13 +22,16 @@ func _ready() -> void:
 	
 func _physics_process(_delta: float) -> void:
 	#print(direction_check)
-	if game_manager:
-		if game_manager.currently_moving == true:
-			king_shape.disabled = true
-		else:
-			king_shape.disabled = false
+	if game_manager.party_ended and len(win.get_overlapping_bodies()) == 0:
+		if animated_sprite_2d.animation != "death":
+			animated_sprite_2d.play("death")
+			AudioManager.play_sound("player_death")
+		return
+	if game_manager.currently_moving == true:
+		king_shape.disabled = true
 	else:
-		game_manager = get_parent().get_node("Game Manager")
+		king_shape.disabled = false
+
 	match current_state:
 		State.IDLE:
 			handle_idle_state()
@@ -38,7 +41,7 @@ func _physics_process(_delta: float) -> void:
 	if len(win.get_overlapping_bodies()) > 0:
 		game_manager.party_ended = true
 		GlobalText.set_text("The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one?")
-
+			
 func king():
 	direction_check = false
 

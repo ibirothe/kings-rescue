@@ -20,7 +20,7 @@ var party_ended = false
 @onready var king: CharacterBody2D = $"../King"
 
 func _ready() -> void:
-
+	AudioManager.play_music("ambience")
 	#active_soldier = false
 	x=king.position.x-16
 	y=king.position.y-16

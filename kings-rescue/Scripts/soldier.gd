@@ -31,7 +31,7 @@ var tween
 @onready var center: Marker2D = $Center
 const CHARACTER_DESCRIPTIONS = {
 	"Rupert": "Rupert has been in the guard for 45 years. The only thing he fears more than death is retirement.",
-	"Thoralf": "Thoralf makes inappropriate jokes sometimes. We try not to laugh, but it's hard at times.",
+	"Thoralf": "Thoralf is an older wizard making inappropriate jokes sometimes. We try not to laugh, but it's hard at times.",
 	"Ogra": "Ogra has trained for the King's Guard since she was a little girl. No way she's an imposter.",
 	"Bartholo": "Bartholo wanted to be an inventor, but his parents said no. So he became a video game character.",
 	"Ibrahim": "Ibrahim is a loyal kingsman. At least, that's what I assume.",
@@ -43,7 +43,7 @@ const CHARACTER_DESCRIPTIONS = {
 
 func _ready() -> void:
 	# Start with default animation
-	animated_sprite_2d.play("default")
+	animated_sprite_2d.play(subclass+"_default")
 	
 
 func _physics_process(_delta: float) -> void:
@@ -68,8 +68,10 @@ func _physics_process(_delta: float) -> void:
 				soldier_close = true
 		#print(possible_assassination, soldier_close)
 		if possible_assassination == true and soldier_close == false:
-			game_manager.party_ended = true
-			GlobalText.set_text("Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King!")
+			if !game_manager.party_ended:
+				AudioManager.play_sound("")
+				game_manager.party_ended = true
+				GlobalText.set_text("Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King!")
 	
 	if active ==true:
 		#print(im_new)
@@ -179,7 +181,7 @@ func move_character(movement: Vector2) -> void:
 	if current_state == State.MOVING:
 		return
 	transition_to_state(State.MOVING)
-	animated_sprite_2d.play("walk")
+	animated_sprite_2d.play(subclass+"_walk")
 
 	tween = create_tween()
 	tween.tween_property(self, "position", 
@@ -188,7 +190,7 @@ func move_character(movement: Vector2) -> void:
 	
 	# When movement completes
 	tween.tween_callback(func():
-		animated_sprite_2d.play("idle")
+		animated_sprite_2d.play(subclass+"_idle")
 		transition_to_state(State.IDLE)
 		get_parent().movement_resolved(possible_assassination, soldier_close)
 		movement_locked = false
@@ -200,11 +202,11 @@ func move_character(movement: Vector2) -> void:
 func transition_to_state(new_state: State) -> void:
 	match new_state:
 		State.INACTIVE:
-			animated_sprite_2d.play("default")
+			animated_sprite_2d.play(subclass+"_default")
 			active = false
 			im_new = true
 		State.IDLE:
-			animated_sprite_2d.play("idle")
+			animated_sprite_2d.play(subclass+"_idle")
 	
 	current_state = new_state
 
@@ -260,7 +262,7 @@ func turn_back():
 
 	# When return movement completes
 	tween.tween_callback(func():
-		animated_sprite_2d.play("idle")
+		animated_sprite_2d.play(subclass+"_idle")
 		transition_to_state(State.IDLE)
 		movement_locked = false
 		get_parent().currently_moving = false
