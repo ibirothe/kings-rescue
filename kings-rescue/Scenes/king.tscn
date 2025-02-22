@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://bny6i5an3s0g0"]
+[gd_scene load_steps=6 format=3 uid="uid://bny6i5an3s0g0"]
 
+[ext_resource type="Script" path="res://Scripts/king.gd" id="1_2d7mi"]
 [ext_resource type="Texture2D" uid="uid://cua7t3m6em0oo" path="res://Assets/tank_48px.png" id="1_n836n"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n44nq"]
@@ -21,6 +22,7 @@ animations = [{
 radius = 6.0
 
 [node name="King" type="CharacterBody2D"]
+script = ExtResource("1_2d7mi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -1)
@@ -29,3 +31,5 @@ sprite_frames = SubResource("SpriteFrames_mqq1x")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_luvpu")
+
+[node name="King" type="Node2D" parent="."]

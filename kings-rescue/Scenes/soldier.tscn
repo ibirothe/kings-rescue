@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://v3anqebutw1r"]
+[gd_scene load_steps=17 format=3 uid="uid://v3anqebutw1r"]
 
 [ext_resource type="Script" path="res://Scripts/soldier.gd" id="1_8wkfs"]
 [ext_resource type="Texture2D" uid="uid://6nwsf8e0yl3q" path="res://Assets/warrior_48px.png" id="1_pyisa"]
@@ -87,6 +87,9 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_fprcw"]
 radius = 6.08276
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dm2i7"]
+size = Vector2(14, 18)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dl8vv"]
 size = Vector2(28, 5)
 
@@ -104,9 +107,22 @@ frame_progress = 0.10849
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_fprcw")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+[node name="Activation_area" type="Area2D" parent="."]
+collision_layer = 32768
+collision_mask = 32768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Activation_area"]
+shape = SubResource("RectangleShape2D_dm2i7")
+
+[node name="Neighbours_check" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Neighbours_check"]
 shape = SubResource("RectangleShape2D_dl8vv")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Neighbours_check"]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_fc0j8")
+
+[connection signal="input_event" from="Activation_area" to="." method="_on_area_2d_input_event"]
+[connection signal="body_entered" from="Neighbours_check" to="." method="_on_neighbours_check_body_entered"]
