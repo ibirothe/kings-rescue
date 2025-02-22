@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://be742f4bwkru0"]
+
+[ext_resource type="Texture2D" uid="uid://clj00fee2v4eb" path="res://Assets/Items.png" id="2_83rci"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gr22t"]
+radius = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cuwut"]
+atlas = ExtResource("2_83rci")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_as65x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cuwut")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Informant" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gr22t")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_as65x")

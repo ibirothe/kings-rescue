@@ -50,6 +50,9 @@ func _physics_process(_delta: float) -> void:
 	#check end condition
 	if game_manager:
 		if game_manager.party_ended == true:
+			if game_manager.food == 0:
+				if animated_sprite_2d.animation != subclass+"_death":
+					animated_sprite_2d.play(subclass+"_death")
 			active = false
 	else:
 		game_manager = get_parent()

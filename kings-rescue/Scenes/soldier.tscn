@@ -1,4 +1,4 @@
-[gd_scene load_steps=162 format=3 uid="uid://v3anqebutw1r"]
+[gd_scene load_steps=166 format=3 uid="uid://v3anqebutw1r"]
 
 [ext_resource type="Script" path="res://Scripts/soldier.gd" id="1_8wkfs"]
 [ext_resource type="Texture2D" uid="uid://cxjwj0qe476fq" path="res://Assets/arianna_48px.png" id="2_rg8em"]
@@ -33,6 +33,22 @@ region = Rect2(0, 120, 48, 24)
 [sub_resource type="AtlasTexture" id="AtlasTexture_lwvys"]
 atlas = ExtResource("2_rg8em")
 region = Rect2(0, 24, 48, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hn236"]
+atlas = ExtResource("2_rg8em")
+region = Rect2(0, 168, 48, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2xjgd"]
+atlas = ExtResource("2_rg8em")
+region = Rect2(48, 168, 48, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tg6po"]
+atlas = ExtResource("2_rg8em")
+region = Rect2(96, 168, 48, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i828h"]
+atlas = ExtResource("2_rg8em")
+region = Rect2(144, 168, 48, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a4e35"]
 atlas = ExtResource("2_rg8em")
@@ -623,8 +639,20 @@ animations = [{
 "name": &"Arianna_attack",
 "speed": 5.0
 }, {
-"frames": [],
-"loop": true,
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hn236")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2xjgd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tg6po")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i828h")
+}],
+"loop": false,
 "name": &"Arianna_death",
 "speed": 5.0
 }, {
@@ -1258,6 +1286,7 @@ size = Vector2(28, 5)
 size = Vector2(6, 29)
 
 [node name="Soldier" type="CharacterBody2D"]
+z_index = 1
 position = Vector2(0, -2)
 collision_layer = 5
 script = ExtResource("1_8wkfs")
@@ -1265,7 +1294,7 @@ script = ExtResource("1_8wkfs")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_i3egf")
-animation = &"Thoralf_walk"
+animation = &"Arianna_death"
 autoplay = "Arianna_default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
