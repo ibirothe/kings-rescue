@@ -22,7 +22,7 @@ var party_ended = false
 
 func _ready() -> void:
 	AudioManager.play_sound("ambience",0.0,1.0,true)
-	AudioManager.play_music("bg_music", -9.5)
+	AudioManager.play_music("bg_music", -10.5)
 	#active_soldier = false
 	x=king.position.x-16
 	y=king.position.y-16
