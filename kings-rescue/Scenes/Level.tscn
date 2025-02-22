@@ -1,8 +1,32 @@
-[gd_scene load_steps=6 format=4 uid="uid://c5qlik5x313qp"]
+[gd_scene load_steps=16 format=4 uid="uid://c5qlik5x313qp"]
 
+[ext_resource type="Texture2D" uid="uid://daggdvepx4vai" path="res://Assets/VFX/light_ray_M.png" id="1_3r7fq"]
 [ext_resource type="Texture2D" uid="uid://bk373qbmw3vfy" path="res://Assets/game UI placeholder.png" id="1_817jl"]
 [ext_resource type="PackedScene" uid="uid://bny6i5an3s0g0" path="res://Scenes/king.tscn" id="2_tgcop"]
+[ext_resource type="Texture2D" uid="uid://csr212x2hxhtq" path="res://Assets/VFX/light_ray_S.png" id="2_up7sy"]
 [ext_resource type="Script" path="res://Scripts/game_manager.gd" id="4_2wxqe"]
+[ext_resource type="Shader" path="res://Shaders/fog.gdshader" id="6_kkd8k"]
+
+[sub_resource type="Gradient" id="Gradient_wn7d4"]
+offsets = PackedFloat32Array(0, 0.217949, 0.657051, 0.910256)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.141176, 1, 1, 1, 0.105882, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jy25q"]
+gradient = SubResource("Gradient_wn7d4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b8mc7"]
+lifetime_randomness = 0.27
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(80, 0, 0)
+direction = Vector3(0, 0, 0)
+spread = 0.0
+initial_velocity_min = -2.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_jy25q")
+turbulence_noise_speed = Vector3(50, 0, 0)
+turbulence_noise_speed_random = 1.51
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gdl6h"]
 texture = ExtResource("1_817jl")
@@ -1045,7 +1069,50 @@ texture_region_size = Vector2i(8, 8)
 tile_size = Vector2i(8, 8)
 sources/1 = SubResource("TileSetAtlasSource_gdl6h")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ou07"]
+shader = ExtResource("6_kkd8k")
+shader_parameter/base_color = Color(0, 0, 0, 0.933333)
+
+[sub_resource type="Gradient" id="Gradient_066n6"]
+offsets = PackedFloat32Array(0, 0.00675676, 0.655405, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0.106443, 0.0946779, 0.0868347, 1, 0.894118, 0.862745, 0.839216, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ufnk3"]
+frequency = 0.0063
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_eu5cl"]
+width = 1400
+height = 800
+seamless = true
+normalize = false
+color_ramp = SubResource("Gradient_066n6")
+noise = SubResource("FastNoiseLite_ufnk3")
+
 [node name="Level" type="Node2D"]
+
+[node name="LightRayM" type="GPUParticles2D" parent="."]
+z_index = 1
+texture_filter = 1
+position = Vector2(12, -104)
+amount = 5
+process_material = SubResource("ParticleProcessMaterial_b8mc7")
+texture = ExtResource("1_3r7fq")
+lifetime = 7.0
+preprocess = 7.0
+randomness = 0.5
+visibility_rect = Rect2(0, 0, 600, 600)
+
+[node name="LightRayS" type="GPUParticles2D" parent="."]
+z_index = 1
+texture_filter = 1
+position = Vector2(10, -44)
+amount = 5
+process_material = SubResource("ParticleProcessMaterial_b8mc7")
+texture = ExtResource("2_up7sy")
+lifetime = 7.0
+preprocess = 7.0
+randomness = 0.5
+visibility_rect = Rect2(0, 0, 600, 600)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(-8, 8)
@@ -1061,3 +1128,15 @@ position = Vector2(-8, 9)
 
 [node name="Game Manager" type="Node2D" parent="."]
 script = ExtResource("4_2wxqe")
+
+[node name="Fog2" type="TextureRect" parent="."]
+texture_filter = 1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_5ou07")
+offset_left = -102.0
+offset_top = -86.0
+offset_right = 76.0
+offset_bottom = 92.0
+texture = SubResource("NoiseTexture2D_eu5cl")
+expand_mode = 1
+stretch_mode = 2

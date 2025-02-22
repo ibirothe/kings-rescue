@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://ftgwlvthfm2n"]
+
+[ext_resource type="Shader" path="res://Shaders/fog.gdshader" id="1_s7oto"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_12olw"]
+shader = ExtResource("1_s7oto")
+shader_parameter/base_color = Color(0.745098, 0.878431, 1, 0.796078)
+
+[sub_resource type="Gradient" id="Gradient_tg6mx"]
+offsets = PackedFloat32Array(0, 0.00675676, 0.655405, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0.106443, 0.0946779, 0.0868347, 1, 0.894118, 0.862745, 0.839216, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_r4gbj"]
+frequency = 0.0063
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fkop3"]
+width = 1400
+height = 800
+seamless = true
+normalize = false
+color_ramp = SubResource("Gradient_tg6mx")
+noise = SubResource("FastNoiseLite_r4gbj")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Fog" type="TextureRect" parent="."]
+texture_filter = 1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_12olw")
+offset_right = 1400.0
+offset_bottom = 800.0
+texture = SubResource("NoiseTexture2D_fkop3")
