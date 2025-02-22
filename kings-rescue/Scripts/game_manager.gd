@@ -6,6 +6,7 @@ var subclasses = ["Rupert", "Thoralf", "Ogra", "Bartholo", "Ibrahim", "Edwin", "
 var roles = ["Mercenary", "Mercenary", "Assassin", "Assassin", "Soldier", "Soldier", "Soldier", "Soldier"]
 var x = 0  # Initialize x
 var y = 0  # Initialize y
+var food = 10
 var setup_done = false
 #@export var soldier: PackedScene
 var soldier_in_a_way = false
@@ -20,7 +21,8 @@ var party_ended = false
 @onready var king: CharacterBody2D = $"../King"
 
 func _ready() -> void:
-	AudioManager.play_music("ambience")
+	AudioManager.play_sound("ambience",0.0,1.0,true)
+	AudioManager.play_music("bg_music", -9.5)
 	#active_soldier = false
 	x=king.position.x-16
 	y=king.position.y-16

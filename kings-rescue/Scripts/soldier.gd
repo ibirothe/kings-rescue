@@ -55,7 +55,7 @@ func _physics_process(_delta: float) -> void:
 		game_manager = get_parent()
 		
 	if active == true:
-		GlobalText.set_text(CHARACTER_DESCRIPTIONS[subclass])
+		GlobalText.set_text(CHARACTER_DESCRIPTIONS[subclass], subclass)
 		#print(possible_assassination, soldier_close)
 		pass
 	if assassin == true:
@@ -72,7 +72,7 @@ func _physics_process(_delta: float) -> void:
 				AudioManager.play_sound("")
 				game_manager.party_ended = true
 				GlobalText.set_text("Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King!")
-	
+
 	if active ==true:
 		#print(im_new)
 		pass
@@ -150,7 +150,7 @@ func handle_movement_input() -> void:
 		movement = calculate_grid_movement(click_pos)
 		get_parent().currently_moving = true
 		movement_locked = true
-
+		game_manager.food = max(0, game_manager.food-1)
 		print("Assassin - ", assassin)
 		print("Mercenary - ", mercenary)
 

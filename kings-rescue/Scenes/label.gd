@@ -25,7 +25,7 @@ func _ready():
 	type_timer.one_shot = false
 	type_timer.wait_time = typing_speed
 
-func _on_text_changed(new_text: String) -> void:
+func _on_text_changed(new_text: String, new_char: String) -> void:
 	# Skip if the new text is the same as current target text
 	if new_text == target_text:
 		return

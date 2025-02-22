@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://c5qlik5x313qp"]
+[gd_scene load_steps=25 format=4 uid="uid://c5qlik5x313qp"]
 
 [ext_resource type="Texture2D" uid="uid://daggdvepx4vai" path="res://Assets/VFX/light_ray_M.png" id="1_3r7fq"]
 [ext_resource type="Texture2D" uid="uid://bk373qbmw3vfy" path="res://Assets/game UI placeholder.png" id="1_817jl"]
@@ -8,6 +8,8 @@
 [ext_resource type="Shader" path="res://Shaders/fog.gdshader" id="6_kkd8k"]
 [ext_resource type="FontFile" uid="uid://c6fxatwakvveq" path="res://Fonts/Vest 9.ttf" id="7_rm11i"]
 [ext_resource type="Script" path="res://Scenes/label.gd" id="8_83tln"]
+[ext_resource type="Script" path="res://Scenes/namelabel.gd" id="8_f131e"]
+[ext_resource type="Script" path="res://Scenes/food_label.gd" id="9_ffase"]
 
 [sub_resource type="Gradient" id="Gradient_wn7d4"]
 offsets = PackedFloat32Array(0, 0.217949, 0.657051, 0.910256)
@@ -1124,7 +1126,7 @@ visibility_rect = Rect2(0, 0, 600, 600)
 [node name="LightRayS" type="GPUParticles2D" parent="."]
 z_index = 1
 texture_filter = 1
-position = Vector2(10, -44)
+position = Vector2(10, -40)
 amount = 5
 process_material = SubResource("ParticleProcessMaterial_b8mc7")
 texture = ExtResource("2_up7sy")
@@ -1143,7 +1145,7 @@ position = Vector2(-52, 8)
 zoom = Vector2(3, 3)
 
 [node name="King" parent="." instance=ExtResource("2_tgcop")]
-position = Vector2(-8, 9)
+position = Vector2(-8, 8)
 
 [node name="Game Manager" type="Node2D" parent="."]
 script = ExtResource("4_2wxqe")
@@ -1159,6 +1161,32 @@ offset_bottom = 92.0
 texture = SubResource("NoiseTexture2D_eu5cl")
 expand_mode = 1
 stretch_mode = 2
+
+[node name="NameLabel" type="Label" parent="."]
+texture_filter = 1
+offset_left = -195.0
+offset_top = -79.0
+offset_right = -67.0
+offset_bottom = 119.0
+scale = Vector2(0.6, 0.6)
+text = "Kings Guard"
+label_settings = SubResource("LabelSettings_ryrto")
+autowrap_mode = 3
+script = ExtResource("8_f131e")
+metadata/_edit_use_anchors_ = true
+
+[node name="FoodLabel" type="Label" parent="."]
+texture_filter = 1
+offset_left = -195.0
+offset_top = -50.0
+offset_right = -67.0
+offset_bottom = 148.0
+scale = Vector2(0.6, 0.6)
+text = "0"
+label_settings = SubResource("LabelSettings_ryrto")
+autowrap_mode = 3
+script = ExtResource("9_ffase")
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="."]
 texture_filter = 1
