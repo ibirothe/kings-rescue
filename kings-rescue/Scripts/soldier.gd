@@ -45,7 +45,7 @@ func _physics_process(_delta: float) -> void:
 				soldier_close = true
 		#print(possible_assassination, soldier_close)
 		if possible_assassination == true and soldier_close == false:
-			print("Game Over")
+			GlobalText.set_text("Game Over")
 	
 	if active ==true:
 		#print(im_new)
@@ -120,10 +120,12 @@ func handle_movement_input() -> void:
 		active = false
 		return
 	if movement_locked == false and active == true: 
+
 		movement = calculate_grid_movement(click_pos)
 		get_parent().currently_moving = true
 		movement_locked = true
-		print(subclass)
+		var text = subclass + " started Moving."
+		GlobalText.set_text(text)
 		print("Assassin - ", assassin)
 		print("Mercenary - ", mercenary)
 
@@ -154,7 +156,7 @@ func move_character(movement: Vector2) -> void:
 		return
 	transition_to_state(State.MOVING)
 	animated_sprite_2d.play("walk")
-	GlobalText.set_text("You started Moving.")
+
 	var tween = create_tween()
 	tween.tween_property(self, "position", 
 		position + movement, MOVE_TIME
