@@ -18,8 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 AudioManager="*res://Scenes/AudioManager.tscn"
-GameManager="*res://Scripts/game_manager.gd"
-Level="*res://Scenes/Level.tscn"
 King="*res://Scenes/king.tscn"
 
 [input]
