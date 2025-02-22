@@ -68,6 +68,7 @@ func handle_idle_state() -> void:
 		# If clicked far from character, return to inactive
 		if position.distance_to(click_pos) > INTERACTION_RADIUS:
 			AudioManager.play_sound("disselect_soldier")
+			GlobalText.set_text("You changed to Not Active.")
 			#print("Becoming inactive")
 			transition_to_state(State.INACTIVE)
 			if get_parent().soldier_changing == false:
@@ -84,7 +85,7 @@ func handle_movement_input() -> void:
 	if not Input.is_action_just_pressed("left_click"):
 		return
 	var click_pos = get_global_mouse_position()
-		
+
 	# Check if click is outside interaction range
 	if position.distance_to(click_pos) > INTERACTION_RADIUS:
 		#print("Becoming inactive")
@@ -107,7 +108,6 @@ func handle_movement_input() -> void:
 		movement = calculate_grid_movement(click_pos)
 		get_parent().currently_moving = true
 		movement_locked = true
-		print(subclass)
 
 	if movement != Vector2.ZERO:
 		# Update sprite flip based on movement direction
@@ -136,7 +136,7 @@ func move_character(movement: Vector2) -> void:
 		return
 	transition_to_state(State.MOVING)
 	animated_sprite_2d.play("walk")
-	
+	GlobalText.set_text("You started Moving.")
 	var tween = create_tween()
 	tween.tween_property(self, "position", 
 		position + movement, MOVE_TIME

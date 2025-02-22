@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://c5qlik5x313qp"]
+[gd_scene load_steps=19 format=4 uid="uid://c5qlik5x313qp"]
 
 [ext_resource type="Texture2D" uid="uid://daggdvepx4vai" path="res://Assets/VFX/light_ray_M.png" id="1_3r7fq"]
 [ext_resource type="Texture2D" uid="uid://bk373qbmw3vfy" path="res://Assets/game UI placeholder.png" id="1_817jl"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://csr212x2hxhtq" path="res://Assets/VFX/light_ray_S.png" id="2_up7sy"]
 [ext_resource type="Script" path="res://Scripts/game_manager.gd" id="4_2wxqe"]
 [ext_resource type="Shader" path="res://Shaders/fog.gdshader" id="6_kkd8k"]
+[ext_resource type="FontFile" uid="uid://c6fxatwakvveq" path="res://Fonts/Vest 9.ttf" id="7_rm11i"]
+[ext_resource type="Script" path="res://Scenes/label.gd" id="8_83tln"]
 
 [sub_resource type="Gradient" id="Gradient_wn7d4"]
 offsets = PackedFloat32Array(0, 0.217949, 0.657051, 0.910256)
@@ -1088,7 +1090,10 @@ normalize = false
 color_ramp = SubResource("Gradient_066n6")
 noise = SubResource("FastNoiseLite_ufnk3")
 
-[sub_resource type="LabelSettings" id="LabelSettings_71lxt"]
+[sub_resource type="LabelSettings" id="LabelSettings_ryrto"]
+line_spacing = -5.0
+font = ExtResource("7_rm11i")
+font_color = Color(0.894118, 0.862745, 0.839216, 1)
 
 [node name="Level" type="Node2D"]
 
@@ -1144,11 +1149,15 @@ expand_mode = 1
 stretch_mode = 2
 
 [node name="Label" type="Label" parent="."]
+texture_filter = 1
 offset_left = -195.0
 offset_top = -22.0
-offset_right = -119.0
-offset_bottom = 97.0
-text = "efwewerw"
-label_settings = SubResource("LabelSettings_71lxt")
-autowrap_mode = 2
-clip_text = true
+offset_right = -67.0
+offset_bottom = 176.0
+scale = Vector2(0.6, 0.6)
+text = "Text"
+label_settings = SubResource("LabelSettings_ryrto")
+autowrap_mode = 3
+script = ExtResource("8_83tln")
+custom_typing_speed = 0.02
+metadata/_edit_use_anchors_ = true
