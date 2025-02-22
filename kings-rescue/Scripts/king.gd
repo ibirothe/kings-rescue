@@ -22,10 +22,13 @@ func _ready() -> void:
 	
 func _physics_process(_delta: float) -> void:
 	#print(direction_check)
-	if game_manager.currently_moving == true:
-		king_shape.disabled = true
+	if game_manager:
+		if game_manager.currently_moving == true:
+			king_shape.disabled = true
+		else:
+			king_shape.disabled = false
 	else:
-		king_shape.disabled = false
+		game_manager = get_parent().get_node("Game Manager")
 	match current_state:
 		State.IDLE:
 			handle_idle_state()
@@ -33,7 +36,8 @@ func _physics_process(_delta: float) -> void:
 			# Movement is handled by tween, we just watch for new input
 			pass
 	if len(win.get_overlapping_bodies()) > 0:
-		print("win")
+		game_manager.party_ended = true
+		GlobalText.set_text("The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one?")
 
 func king():
 	direction_check = false

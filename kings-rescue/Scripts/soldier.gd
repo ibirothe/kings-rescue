@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 class_name Soldier
 enum State {INACTIVE, IDLE, MOVING}
+@onready var game_manager: Node2D = get_parent()
 @onready var neighbours_check: Area2D = $Neighbours_check
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var current_state: State = State.INACTIVE  # Start as INACTIVE
@@ -28,15 +29,33 @@ var movestart_position
 var returning = false
 var tween
 @onready var center: Marker2D = $Center
+const CHARACTER_DESCRIPTIONS = {
+	"Rupert": "Rupert has been in the guard for 45 years. The only thing he fears more than death is retirement.",
+	"Thoralf": "Thoralf makes inappropriate jokes sometimes. We try not to laugh, but it's hard at times.",
+	"Ogra": "Ogra has trained for the King's Guard since she was a little girl. No way she's an imposter.",
+	"Bartholo": "Bartholo wanted to be an inventor, but his parents said no. So he became a video game character.",
+	"Ibrahim": "Ibrahim is a loyal kingsman. At least, that's what I assume.",
+	"Edwin": "Edwin's singing voice sounds like birds in spring. Unfortunately, we didn't hire voice actors to prove it.",
+	"Marquise": "Marquise's archery is masterful. Sadly, the developers didn't put arrows in the game.",
+	"Arianna": "Arianna joined the King's Guard recently. She had exceptional results in the job interview."
+}
+
 
 func _ready() -> void:
 	# Start with default animation
 	animated_sprite_2d.play("default")
 	
-	
 
 func _physics_process(_delta: float) -> void:
+	#check end condition
+	if game_manager:
+		if game_manager.party_ended == true:
+			active = false
+	else:
+		game_manager = get_parent()
+		
 	if active == true:
+		GlobalText.set_text(CHARACTER_DESCRIPTIONS[subclass])
 		#print(possible_assassination, soldier_close)
 		pass
 	if assassin == true:
@@ -49,8 +68,8 @@ func _physics_process(_delta: float) -> void:
 				soldier_close = true
 		#print(possible_assassination, soldier_close)
 		if possible_assassination == true and soldier_close == false:
-			GlobalText.set_text("Game Over")
-			print("Game Over")
+			game_manager.party_ended = true
+			GlobalText.set_text("Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King!")
 	
 	if active ==true:
 		#print(im_new)
@@ -88,7 +107,7 @@ func handle_idle_state() -> void:
 		# If clicked far from character, return to inactive
 		if position.distance_to(click_pos) > INTERACTION_RADIUS:
 			AudioManager.play_sound("disselect_soldier")
-			GlobalText.set_text("You changed to Not Active.")
+			
 			#print("Becoming inactive")
 			transition_to_state(State.INACTIVE)
 			if get_parent().soldier_changing == false:
@@ -129,8 +148,7 @@ func handle_movement_input() -> void:
 		movement = calculate_grid_movement(click_pos)
 		get_parent().currently_moving = true
 		movement_locked = true
-		var text = subclass + " started Moving."
-		GlobalText.set_text(text)
+
 		print("Assassin - ", assassin)
 		print("Mercenary - ", mercenary)
 

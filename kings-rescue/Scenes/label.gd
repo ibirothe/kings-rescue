@@ -1,6 +1,6 @@
 extends Label
 
-@onready var type_timer = $TypeTimer
+@onready var type_timer
 
 var target_text: String = ""
 var current_display_length: int = 0

@@ -15,6 +15,7 @@ var soldier_changing = false
 var click_resolved = true
 var cycle_odd = true
 var currently_moving = false
+var party_ended = false
 @export var coins_number = 8
 @onready var king: CharacterBody2D = $"../King"
 
@@ -27,11 +28,10 @@ func _ready() -> void:
 		spawn_soldiers()
 		spawn_coins(coins_number)
 		setup_done = true
-	pass
 	
 
 func _physics_process(delta: float) -> void:
-	#print(currently_moving)
+		
 	
 	if cycle_odd == true:
 		cycle_odd = false
