@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://c5qlik5x313qp"]
+[gd_scene load_steps=17 format=4 uid="uid://c5qlik5x313qp"]
 
 [ext_resource type="Texture2D" uid="uid://daggdvepx4vai" path="res://Assets/VFX/light_ray_M.png" id="1_3r7fq"]
 [ext_resource type="Texture2D" uid="uid://bk373qbmw3vfy" path="res://Assets/game UI placeholder.png" id="1_817jl"]
@@ -1088,6 +1088,8 @@ normalize = false
 color_ramp = SubResource("Gradient_066n6")
 noise = SubResource("FastNoiseLite_ufnk3")
 
+[sub_resource type="LabelSettings" id="LabelSettings_71lxt"]
+
 [node name="Level" type="Node2D"]
 
 [node name="LightRayM" type="GPUParticles2D" parent="."]
@@ -1140,3 +1142,13 @@ offset_bottom = 92.0
 texture = SubResource("NoiseTexture2D_eu5cl")
 expand_mode = 1
 stretch_mode = 2
+
+[node name="Label" type="Label" parent="."]
+offset_left = -195.0
+offset_top = -22.0
+offset_right = -119.0
+offset_bottom = 97.0
+text = "efwewerw"
+label_settings = SubResource("LabelSettings_71lxt")
+autowrap_mode = 2
+clip_text = true
