@@ -23,7 +23,7 @@ var cycle_sync = false
 func _ready() -> void:
 	# Start with default animation
 	animated_sprite_2d.play("default")
-	subclass = GameManager.get_subclass(1)
+	subclass = get_parent().get_subclass(1)
 	match subclass:
 		"brute":
 			assassin = true
@@ -31,6 +31,8 @@ func _ready() -> void:
 	
 
 func _physics_process(_delta: float) -> void:
+	if active ==true:
+		print(im_new)
 	match current_state:
 		State.INACTIVE:
 			handle_inactive_state()
@@ -54,43 +56,53 @@ func handle_inactive_state() -> void:
 
 func handle_idle_state() -> void:
 	 #, #GameManager.soldier_changing
-	if GameManager.soldier_changing == true and im_new == false:
+	if get_parent().soldier_changing == true and im_new == false:
 		transition_to_state(State.INACTIVE)
-	if Input.is_action_just_pressed("left_click") and GameManager.click_resolved == false:
+	if get_parent().soldier_changing == false and im_new == true:
+		im_new = false
+		active = true
+	if Input.is_action_just_pressed("left_click") and get_parent().click_resolved == false:
 		var click_pos = get_global_mouse_position()
 		# If clicked far from character, return to inactive
 		if position.distance_to(click_pos) > INTERACTION_RADIUS:
 			AudioManager.play_sound("disselect_soldier")
+			print("Becoming inactive")
 			transition_to_state(State.INACTIVE)
-			if active==true:
-				#GameManager.active_soldier = false
-				active = false
+			if get_parent().soldier_changing == false:
+				get_parent().active_soldier = false
+			active = false
 		else:
 			handle_movement_input()
 
 
 func handle_movement_input() -> void:
+	match current_state:
+		State.INACTIVE:
+			return
 	if not Input.is_action_just_pressed("left_click"):
 		return
-	"""if cycle_sync == false:
-			cycle_sync = true
-	else:"""
 	var click_pos = get_global_mouse_position()
 		
 	# Check if click is outside interaction range
 	if position.distance_to(click_pos) > INTERACTION_RADIUS:
+		print("Becoming inactive")
 		transition_to_state(State.INACTIVE)
+		if get_parent().soldier_changing == false:
+			get_parent().active_soldier = false
+			im_new = true
+			active = false
 		return
-		
+	if get_parent().soldier_changing == true and im_new == false:
+		transition_to_state(State.INACTIVE)
+		im_new = true
+		active = false
 	var movement = calculate_grid_movement(click_pos)
 		
 	if movement != Vector2.ZERO:
 		# Update sprite flip based on movement direction
 		if movement.x != 0:
 			animated_sprite_2d.flip_h = movement.x < 0
-	if GameManager.soldier_in_a_way == true and im_new == false:
-		transition_to_state(State.INACTIVE)
-		return
+
 	move_character(movement)
 
 
@@ -106,6 +118,11 @@ func calculate_grid_movement(click_pos: Vector2) -> Vector2:
 	return Vector2.ZERO
 
 func move_character(movement: Vector2) -> void:
+	print(get_parent().soldier_in_a_way, im_new)
+	if get_parent().soldier_in_a_way == true and im_new == false:
+		print("Guy in a way")
+		transition_to_state(State.INACTIVE)
+		return
 	if current_state == State.MOVING:
 		return
 	transition_to_state(State.MOVING)
@@ -121,7 +138,7 @@ func move_character(movement: Vector2) -> void:
 		animated_sprite_2d.play("idle")
 		transition_to_state(State.IDLE)
 	)
-	GameManager.movement_resolved(possible_assassination, soldier_close)
+	get_parent().movement_resolved(possible_assassination, soldier_close)
 
 func transition_to_state(new_state: State) -> void:
 	match new_state:
@@ -138,18 +155,17 @@ func transition_to_state(new_state: State) -> void:
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if Input.is_action_just_pressed("left_click"):
-		if GameManager.active_soldier == false and GameManager.click_resolved == false:
-			GameManager.active_soldier = true
-			GameManager.click_resolved = true
+		if get_parent().active_soldier == false and get_parent().click_resolved == false:
+			get_parent().active_soldier = true
+			get_parent().click_resolved = true
 			im_new = false
 			active = true
 			#print("soldier activated", click_resolved)
-		if GameManager.active_soldier == true and GameManager.click_resolved == false:
-			GameManager.soldier_in_a_way = true
-			GameManager.soldier_changing = true
-			GameManager.click_resolved = true
+		if get_parent().active_soldier == true and get_parent().click_resolved == false:
+			get_parent().soldier_in_a_way = true
+			get_parent().soldier_changing = true
+			get_parent().click_resolved = true
 			print("changing soldier")
-			im_new = false
 		AudioManager.play_sound("select_soldier")
 		transition_to_state(State.IDLE)
 

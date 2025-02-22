@@ -25,25 +25,22 @@ func _ready() -> void:
 	
 
 func _physics_process(delta: float) -> void:
-	active_soldier = true
-	#print("in a way ", soldier_in_a_way, "; active ", active_soldier, "; changing ", soldier_changing)
-	if active_soldier== true:
-		print("; active ", active_soldier)
 
-	if active_soldier == false:
-		print("WTF")
+	
 	if cycle_odd == true:
 		cycle_odd = false
 	else:
 		cycle_odd == true
 
 	if soldier_in_a_way == true:
+		print("in a way ", soldier_in_a_way, "; active ", active_soldier, "; changing ", soldier_changing)
 		if skip_cycle == true:
 			pass
 			skip_cycle = false
 		else:
 			soldier_in_a_way = false
 			skip_cycle = true
+			soldier_changing = false
 	if click_resolved == true:
 		if skip_cycle == true:
 			pass
@@ -51,6 +48,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			click_resolved = false
 			skip_cycle = true
+
 		
 
 func spawn_soldiers():
