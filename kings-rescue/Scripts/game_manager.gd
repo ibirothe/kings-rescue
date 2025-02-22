@@ -12,6 +12,7 @@ var active_soldier: bool
 var soldier_changing = false
 var click_resolved = true
 var cycle_odd = true
+var currently_moving = false
 
 func _ready() -> void:
 
@@ -25,7 +26,7 @@ func _ready() -> void:
 	
 
 func _physics_process(delta: float) -> void:
-
+	print(currently_moving)
 	
 	if cycle_odd == true:
 		cycle_odd = false
@@ -83,6 +84,7 @@ func movement_resolved(possible_assassination, soldier_close):
 	if possible_assassination == true and soldier_close == false:
 		print("Game Over")
 	pass
+	#currently_moving = false
 	#connect signals
 	#check game over
 	#disconnect signals
