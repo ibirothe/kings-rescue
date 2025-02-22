@@ -26,7 +26,7 @@ func _ready() -> void:
 	
 
 func _physics_process(delta: float) -> void:
-	print(currently_moving)
+	#print(currently_moving)
 	
 	if cycle_odd == true:
 		cycle_odd = false
@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 		cycle_odd == true
 
 	if soldier_in_a_way == true:
-		print("in a way ", soldier_in_a_way, "; active ", active_soldier, "; changing ", soldier_changing)
+		#print("in a way ", soldier_in_a_way, "; active ", active_soldier, "; changing ", soldier_changing)
 		if skip_cycle == true:
 			pass
 			skip_cycle = false
@@ -57,7 +57,10 @@ func spawn_soldiers():
 		var soldier = soldier_scene.instantiate()
 		var j = round(randf_range(0, len(subclasses)-1))
 		print(j)
-		soldier.subclass = subclasses[j]
+		var subclass = subclasses[j]
+		soldier.subclass = subclass
+		subclasses.erase(subclass)
+		
 		
 		match i:
 			0:
@@ -88,6 +91,3 @@ func movement_resolved(possible_assassination, soldier_close):
 	#connect signals
 	#check game over
 	#disconnect signals
-
-func get_subclass(number):
-	return "brute"

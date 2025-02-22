@@ -25,7 +25,6 @@ var movement = Vector2.ZERO
 func _ready() -> void:
 	# Start with default animation
 	animated_sprite_2d.play("default")
-	subclass = get_parent().get_subclass(1)
 	match subclass:
 		"brute":
 			assassin = true
@@ -96,7 +95,7 @@ func handle_movement_input() -> void:
 			active = false
 		return
 	if get_parent().soldier_in_a_way == true and im_new == false:
-		print("Guy in a way")
+		#print("Guy in a way")
 		transition_to_state(State.INACTIVE)
 		return
 	if get_parent().soldier_changing == true and im_new == false:
@@ -108,6 +107,7 @@ func handle_movement_input() -> void:
 		movement = calculate_grid_movement(click_pos)
 		get_parent().currently_moving = true
 		movement_locked = true
+		print(subclass)
 
 	if movement != Vector2.ZERO:
 		# Update sprite flip based on movement direction
