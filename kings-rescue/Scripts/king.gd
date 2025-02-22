@@ -40,7 +40,7 @@ func king():
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	if direction_check == false:
+	#if direction_check == false:
 		var direction = center.global_position.direction_to(body.center.global_position)
 		print(direction/3.14*180)
 		if direction.x < 0 and direction.y == 0:
@@ -72,7 +72,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 				print("illegal")
 			else:
 				move_character(body.movement)
-		direction_check = true
+		#direction_check = true
 	
 func handle_idle_state() -> void:
 	pass
