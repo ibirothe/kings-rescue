@@ -104,10 +104,10 @@ func handle_movement_input() -> void:
 		im_new = true
 		active = false
 		return
-	if movement_locked == false and get_parent().soldier_changing == false and active == true: 
+	if movement_locked == false and active == true: 
 		movement = calculate_grid_movement(click_pos)
 		get_parent().currently_moving = true
-	movement_locked = true
+		movement_locked = true
 
 	if movement != Vector2.ZERO:
 		# Update sprite flip based on movement direction
