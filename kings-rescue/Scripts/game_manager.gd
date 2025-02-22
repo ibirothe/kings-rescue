@@ -42,6 +42,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if food == 0:
 		party_ended = true
+		AudioManager.stop_music()
 		GlobalText.set_text("Your food stores are depleted. The soldiers begin to fall one by one—and soon, the king does as well. If you only listened to my instructions...", "Game Over")
 	
 	if cycle_odd == true:

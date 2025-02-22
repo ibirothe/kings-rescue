@@ -34,7 +34,7 @@ const CHARACTER_DESCRIPTIONS = {
 	"Thoralf": "Thoralf is an older wizard making inappropriate jokes sometimes. We try not to laugh, but it's hard at times.",
 	"Ogra": "Ogra has trained for the King's Guard since she was a little girl. No way she's an imposter.",
 	"Bartholo": "Bartholo wanted to be an inventor, but his parents said no. So he became a video game character.",
-	"Ibrahim": "Ibrahim is a loyal kingsman. At least, that's what I assume.",
+	"Ibrahim": "Ibrahim is a loyal kingsman. At least, that's what I assume. Placing him next to a Gold Coin will bring some clarity.",
 	"Edwin": "Edwin's singing voice sounds like birds in spring. Unfortunately, we didn't hire voice actors to prove it.",
 	"Marquise": "Marquise's archery is masterful. Sadly, the developers didn't put arrows in the game.",
 	"Arianna": "Arianna joined the King's Guard recently. She had exceptional results in the job interview."
