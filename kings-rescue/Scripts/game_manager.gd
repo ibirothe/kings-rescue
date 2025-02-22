@@ -2,6 +2,7 @@ extends Node2D
 var soldier_scene = preload("res://Scenes/soldier.tscn")
 var rng = RandomNumberGenerator.new()
 var subclasses = ["Rupert", "Thoralf", "Ogra", "Bartholo", "Ibrahim", "Edwin", "Marquise", "Arianna"]
+var roles = ["Mercenary", "Mercenary", "Assassin", "Assassin", "Soldier", "Soldier", "Soldier", "Soldier"]
 var x = 0  # Initialize x
 var y = 0  # Initialize y
 var setup_done = false
@@ -60,6 +61,16 @@ func spawn_soldiers():
 		var subclass = subclasses[j]
 		soldier.subclass = subclass
 		subclasses.erase(subclass)
+		var k = round(randf_range(0, len(roles)-1))
+		var role = roles[k]
+		if role == "Assassin":
+			soldier.assassin = true
+		elif role == "Mercenary":
+			soldier.mercenary = true
+			soldier.role = "Soldier"
+		else:
+			soldier.role = "Soldier"
+		roles.erase(role)
 		
 		
 		match i:
