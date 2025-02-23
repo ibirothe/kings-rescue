@@ -26,6 +26,7 @@ var party_ended = false
 @export var trap_number = 20
 @export var informant_number = 2
 @onready var king: CharacterBody2D = $"../King"
+var informantion = []
 
 func _ready() -> void:
 	AudioManager.play_sound("ambience",0.0,1.0,true)
@@ -87,6 +88,7 @@ func spawn_soldiers():
 		var role = roles[k]
 		if role == "Assassin":
 			soldier.assassin = true
+			informantion.append(subclass+ " is an assassin.")
 		elif role == "Mercenary":
 			soldier.mercenary = true
 			soldier.role = "Soldier"
@@ -163,7 +165,7 @@ func spawn_informant(informant_numb):
 		var informant = informant_scene.instantiate()
 		x = round(randf_range(0, 10))
 		y = round(randf_range(0, 10))
-		
+		informant.info = informantion[i]
 		if x > 2 and y > 2 and x < 8 and y < 8:
 			pass
 		else:

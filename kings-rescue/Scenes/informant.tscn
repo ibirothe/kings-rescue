@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://be742f4bwkru0"]
+[gd_scene load_steps=6 format=3 uid="uid://be742f4bwkru0"]
 
+[ext_resource type="Script" path="res://Scripts/informant.gd" id="1_5clly"]
 [ext_resource type="Texture2D" uid="uid://clj00fee2v4eb" path="res://Assets/Items.png" id="2_83rci"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gr22t"]
@@ -21,6 +22,7 @@ animations = [{
 }]
 
 [node name="Informant" type="Area2D"]
+script = ExtResource("1_5clly")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_gr22t")
