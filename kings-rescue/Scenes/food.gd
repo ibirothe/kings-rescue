@@ -1,4 +1,5 @@
 extends Area2D
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 @onready var game_manager: Node2D = get_parent()
 @export var food_efficiency = 10
@@ -15,4 +16,7 @@ func _on_body_entered(body):
 		game_manager.food += food_efficiency
 		AudioManager.play_sound("food_collect")
 		# Delete the item
-		queue_free()
+		var tween = create_tween()
+		tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
+		await tween.finished
+		queue_free()  # Remove the node after fading out
