@@ -28,7 +28,8 @@ func _on_body_entered(body):
 		if body.assassin == true:
 			var i = round(randf_range(0, 10))
 			GlobalText.set_text(assassin_manuals[i])
-		GlobalText.set_text(str(info))
+		else:
+			GlobalText.set_text(str(info))
 		# Delete the item
 		var tween = create_tween()
 		tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
