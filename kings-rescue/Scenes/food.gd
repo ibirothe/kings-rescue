@@ -9,7 +9,7 @@ func _ready():
 
 func _on_body_entered(body):
 	if body is Soldier:
-		body.active = false
+		#body.active = false
 		body.animated_sprite_2d.play(body.subclass+"_default")
 		GlobalText.set_text("You gathered some Food. Running out of supplies leads to starvation, so this was a wise choice. If only it weren’t an apple...", "Apple")
 		game_manager.food += food_efficiency

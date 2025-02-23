@@ -1,14 +1,14 @@
 extends CharacterBody2D
 
 class_name Soldier
-enum State {INACTIVE, IDLE, MOVING}
+enum State {INACTIVE, IDLE, MOVING, DEAD}
 @onready var game_manager: Node2D = get_parent()
 @onready var neighbours_check: Area2D = $Neighbours_check
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var current_state: State = State.INACTIVE  # Start as INACTIVE
 const MOVE_DISTANCE := 16.0
 const MOVE_TIME := 0.5  # Time in seconds to complete movement
-const INTERACTION_RADIUS := 25.0
+const INTERACTION_RADIUS := 24.0
 var target_position := Vector2.ZERO
 var assassin = false
 var mercenary = false
@@ -28,6 +28,10 @@ var bodies
 var movestart_position
 var returning = false
 var tween
+var dead = false
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+
+
 @onready var center: Marker2D = $Center
 const CHARACTER_DESCRIPTIONS = {
 	"Rupert": "Rupert has been in the guard for 45 years. The only thing he fears more than death is retirement.",
@@ -58,7 +62,6 @@ func _physics_process(_delta: float) -> void:
 		game_manager = get_parent()
 		
 	if active == true:
-		GlobalText.set_text(CHARACTER_DESCRIPTIONS[subclass], subclass)
 		#print(possible_assassination, soldier_close)
 		pass
 	if assassin == true:
@@ -87,6 +90,9 @@ func _physics_process(_delta: float) -> void:
 		State.MOVING:
 			# Movement is handled by tween, we just watch for new input
 			handle_movement_input()
+		State.DEAD:
+			animated_sprite_2d.play(subclass+"_death")
+			animated_sprite_2d.frame = 3
 	if click_resolved == true:
 		click_resolved == false
 
@@ -110,7 +116,11 @@ func handle_idle_state() -> void:
 	if Input.is_action_just_pressed("left_click") and get_parent().click_resolved == false:
 		var click_pos = get_global_mouse_position()
 		# If clicked far from character, return to inactive
-		if position.distance_to(click_pos) > INTERACTION_RADIUS:
+		var click_distance = click_pos-center.global_position
+		
+		print(click_distance)
+		if abs(click_distance.x) > INTERACTION_RADIUS or abs(click_distance.y) > INTERACTION_RADIUS or abs(click_distance.x) > 8 and abs(click_distance.y) > 8:
+			print("too Far")
 			AudioManager.play_sound("disselect_soldier")
 			
 			#print("Becoming inactive")
@@ -153,7 +163,6 @@ func handle_movement_input() -> void:
 		movement = calculate_grid_movement(click_pos)
 		get_parent().currently_moving = true
 		movement_locked = true
-		game_manager.food = max(0, game_manager.food-1)
 		print("Assassin - ", assassin)
 		print("Mercenary - ", mercenary)
 
@@ -196,6 +205,7 @@ func move_character(movement: Vector2) -> void:
 		animated_sprite_2d.play(subclass+"_idle")
 		transition_to_state(State.IDLE)
 		get_parent().movement_resolved(possible_assassination, soldier_close)
+		get_parent().food = max(0, get_parent().food-1)
 		movement_locked = false
 		get_parent().currently_moving = false
 		get_parent().refire_king()
@@ -216,20 +226,24 @@ func transition_to_state(new_state: State) -> void:
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if Input.is_action_just_pressed("left_click"):
-		if get_parent().active_soldier == false and get_parent().click_resolved == false and get_parent().currently_moving == false:
-			get_parent().active_soldier = true
-			get_parent().click_resolved = true
-			im_new = false
-			active = true
-			#print("soldier activated", click_resolved)
-		if get_parent().active_soldier == true and get_parent().click_resolved == false and get_parent().currently_moving == false:
-			get_parent().soldier_in_a_way = true
-			get_parent().soldier_changing = true
-			get_parent().click_resolved = true
-			#print("changing soldier")
-		if get_parent().currently_moving == false:
-			AudioManager.play_sound("select_soldier")
-			transition_to_state(State.IDLE)
+		if dead == true:
+			GlobalText.set_text("He's dead, Jim.")
+		else:
+			if get_parent().active_soldier == false and get_parent().click_resolved == false and get_parent().currently_moving == false:
+				get_parent().active_soldier = true
+				get_parent().click_resolved = true
+				im_new = false
+				active = true
+				#print("soldier activated", click_resolved)
+			if get_parent().active_soldier == true and get_parent().click_resolved == false and get_parent().currently_moving == false:
+				get_parent().soldier_in_a_way = true
+				get_parent().soldier_changing = true
+				get_parent().click_resolved = true
+				#print("changing soldier")
+			if get_parent().currently_moving == false:
+				AudioManager.play_sound("select_soldier")
+				transition_to_state(State.IDLE)
+			GlobalText.set_text(CHARACTER_DESCRIPTIONS[subclass], subclass)
 
 """
 func _on_neighbours_check_body_entered(body: Node2D) -> void:
@@ -271,3 +285,35 @@ func turn_back():
 		get_parent().currently_moving = false
 		get_parent().refire_king()
 		)
+func stop():
+	if tween:
+		tween.kill() # Stop the current tween
+func death():
+	stop()
+	click_resolved == true
+
+	#
+	if animated_sprite_2d.animation != subclass+"_death":
+		animated_sprite_2d.play(subclass+"_death")
+		
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if animated_sprite_2d.animation == subclass+"_death":
+		print("Handling death")
+		collision_shape_2d.disabled = true
+		get_parent().food = max(0, get_parent().food-1)
+		dead = true
+		print("Im dead")
+		transition_to_state(State.DEAD)
+		active = false
+		movement_locked = false
+		if get_parent().soldier_changing == false:
+			get_parent().active_soldier = false
+			im_new = true
+			active = false
+		get_parent().active_soldier = false
+		get_parent().click_resolved = false
+		get_parent().currently_moving = false
+		return
+		

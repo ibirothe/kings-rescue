@@ -15,6 +15,7 @@ var current_state
 var tween
 const MOVE_TIME := 0.5  # Time in seconds to complete movement
 @onready var win: Area2D = $Win
+var trap = false
 
 func _ready() -> void:
 	#print(position)
@@ -22,7 +23,7 @@ func _ready() -> void:
 	
 func _physics_process(_delta: float) -> void:
 	#print(direction_check)
-	if game_manager.party_ended and len(win.get_overlapping_bodies()) == 0:
+	if game_manager.party_ended and len(win.get_overlapping_bodies()) == 0 or trap == true:
 		if animated_sprite_2d.animation != "death":
 			animated_sprite_2d.play("death")
 			AudioManager.play_sound("player_death")

@@ -3,6 +3,7 @@ var soldier_scene = preload("res://Scenes/soldier.tscn")
 var coin_scene = preload("res://Scenes/coin.tscn")
 var food_scene = preload("res://Scenes/food.tscn")
 var informant_scene = preload("res://Scenes/informant.tscn")
+var trap_scene = preload("res://Scenes/trap.tscn")
 var rng = RandomNumberGenerator.new()
 var subclasses = ["Rupert", "Thoralf", "Ogra", "Bartholo", "Ibrahim", "Edwin", "Marquise", "Arianna"]
 var roles = ["Mercenary", "Mercenary", "Assassin", "Assassin", "Soldier", "Soldier", "Soldier", "Soldier"]
@@ -22,6 +23,7 @@ var currently_moving = false
 var party_ended = false
 @export var coins_number = 8
 @export var food_number = 5
+@export var trap_number = 20
 @export var informant_number = 2
 @onready var king: CharacterBody2D = $"../King"
 
@@ -36,15 +38,19 @@ func _ready() -> void:
 		spawn_coins(coins_number)
 		spawn_food(food_number)
 		spawn_informant(informant_number)
+		spawn_traps(trap_number)
 		setup_done = true
 	
 
 func _physics_process(delta: float) -> void:
+	#print(active_soldier, " ", click_resolved, " ", currently_moving)
 	if food == 0:
 		party_ended = true
 		AudioManager.stop_music()
-		GlobalText.set_text("Your food stores are depleted. The soldiers begin to fall one by one—and soon, the king does as well. If you only listened to my instructions...", "Game Over")
-	
+		GlobalText.set_text("Your food stores are depleted. The soldiers begin to fall one by one—and soon, the king does as well. If you only listened to my instructions...", "Game Over",)
+	if Input.is_action_just_pressed("Restart"):
+		get_tree().reload_current_scene()
+		Engine.time_scale = 1
 	if cycle_odd == true:
 		cycle_odd = false
 	else:
@@ -170,6 +176,26 @@ func spawn_informant(informant_numb):
 				informant.position = pos
 				occupied_positions.append(pos)
 				add_child(informant)
+
+func spawn_traps(traps_numb):
+	var i = 0
+	while i < traps_numb:
+		var trap = trap_scene.instantiate()
+		x = round(randf_range(0, 10))
+		y = round(randf_range(0, 10))
+		
+		if x > 2 and y > 2 and x < 8 and y < 8:
+			pass
+		else:
+			x = king.position.x-(5*16) + x*16
+			y = king.position.y+(5*16) - y*16
+			var pos = Vector2(x, y)
+			
+			if pos not in occupied_positions:
+				i += 1
+				trap.position = pos
+				occupied_positions.append(pos)
+				add_child(trap)
 
 func movement_resolved(possible_assassination, soldier_close):
 	if possible_assassination == true and soldier_close == false:

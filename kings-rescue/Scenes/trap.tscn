@@ -1,0 +1,86 @@
+[gd_scene load_steps=12 format=3 uid="uid://bx31414pko86i"]
+
+[ext_resource type="Script" path="res://Scripts/trap.gd" id="1_rrvs4"]
+[ext_resource type="Texture2D" uid="uid://i5ucpyi0gpjj" path="res://Assets/trap_48.png" id="2_obas5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6sno"]
+atlas = ExtResource("2_obas5")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vn7iu"]
+atlas = ExtResource("2_obas5")
+region = Rect2(176, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3lfug"]
+atlas = ExtResource("2_obas5")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jip0s"]
+atlas = ExtResource("2_obas5")
+region = Rect2(80, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_00v30"]
+atlas = ExtResource("2_obas5")
+region = Rect2(112, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xrh1r"]
+atlas = ExtResource("2_obas5")
+region = Rect2(144, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8h74d"]
+atlas = ExtResource("2_obas5")
+region = Rect2(176, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8xn3w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6sno")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vn7iu")
+}],
+"loop": true,
+"name": &"linger",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3lfug")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jip0s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_00v30")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xrh1r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8h74d")
+}],
+"loop": false,
+"name": &"trigger",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yonlb"]
+radius = 1.0
+
+[node name="Trap" type="Area2D"]
+collision_layer = 512
+collision_mask = 512
+script = ExtResource("1_rrvs4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -1)
+sprite_frames = SubResource("SpriteFrames_8xn3w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_yonlb")

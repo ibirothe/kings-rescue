@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://c7vnwowkk438y"]
+[gd_scene load_steps=2 format=3 uid="uid://cnrfgl6lihvyo"]
 
 [ext_resource type="Script" path="res://Scripts/audio_manager.gd" id="1_20nhb"]
 
