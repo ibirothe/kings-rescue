@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 AudioManager="*res://Scenes/AudioManager.tscn"
 GlobalText="*res://Scripts/global_text.gd"
+GlobalDifficulty="*res://Scenes/global_difficulty.tscn"
 
 [input]
 

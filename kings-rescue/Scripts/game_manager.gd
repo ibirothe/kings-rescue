@@ -28,10 +28,14 @@ var party_ended = false
 @onready var king: CharacterBody2D = $"../King"
 var informantion = []
 var magic = false
+@onready var win_lose_label: Label = $"../CanvasLayer/Win-lose-label"
+@onready var color_rect: ColorRect = $"../CanvasLayer/ColorRect"
+
 
 func _ready() -> void:
 	AudioManager.play_sound("ambience",0.0,1.0,true)
 	AudioManager.play_music("bg_music", -10.5)
+	color_rect.color = Color(0, 0, 0, 0)  # Initialize with transparent black
 	#active_soldier = false
 	x=king.position.x-16
 	y=king.position.y-16
@@ -42,6 +46,7 @@ func _ready() -> void:
 		spawn_informant(informant_number)
 		spawn_traps(trap_number)
 		setup_done = true
+		win_lose_label.modulate.a = 0
 	
 
 func _physics_process(delta: float) -> void:
@@ -60,6 +65,7 @@ func _physics_process(delta: float) -> void:
 		AudioManager.stop_music()
 		GlobalText.set_text("Your food stores are depleted. The soldiers begin to fall one by one—and soon, the king does as well. If you only listened to my instructions...", "Game Over",)
 	if Input.is_action_just_pressed("Restart"):
+		GlobalDifficulty.difficulty += 1
 		get_tree().reload_current_scene()
 		Engine.time_scale = 1
 	if Input.is_action_just_pressed("Help"):
@@ -227,3 +233,20 @@ func movement_resolved(possible_assassination, soldier_close):
 
 func refire_king():
 	king.king()
+
+func win_fade_out():
+	print("Fade out")
+	# Screen fade
+	var tween = create_tween().set_trans(Tween.TRANS_LINEAR)
+	# Fade from transparent to black
+	tween.tween_property(color_rect, "color", Color(0, 0, 0, 1), 1.0)
+	await tween.finished
+	# Short pause
+	await get_tree().create_timer(0.5).timeout
+	
+	if win_lose_label:
+		var text_tween = create_tween()
+		text_tween.tween_property(win_lose_label, "modulate:a", 1.0, 1.0)
+		print("Text fade started")
+	else:
+		print("Cannot fade label - not found!")

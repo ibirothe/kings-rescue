@@ -16,6 +16,7 @@ var tween
 const MOVE_TIME := 0.5  # Time in seconds to complete movement
 @onready var win: Area2D = $Win
 var trap = false
+var win_check = false
 
 func _ready() -> void:
 	#print(position)
@@ -42,7 +43,11 @@ func _physics_process(_delta: float) -> void:
 	if len(win.get_overlapping_bodies()) > 0:
 		game_manager.party_ended = true
 		win_anim()
-		GlobalText.set_text("The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one?")
+		if win_check == false:
+			GlobalDifficulty.difficulty =+1
+			GlobalText.set_text("The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one?")
+			game_manager.win_fade_out()
+			win_check = true
 			
 func king():
 	direction_check = false
