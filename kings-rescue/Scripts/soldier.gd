@@ -74,6 +74,8 @@ func _physics_process(_delta: float) -> void:
 				soldier_close = true
 		#print(possible_assassination, soldier_close)
 		if possible_assassination == true and soldier_close == false:
+			if animated_sprite_2d.animation != subclass+"_attack":
+				animated_sprite_2d.play(subclass+"_attack")
 			if !game_manager.party_ended:
 				AudioManager.play_sound("")
 				game_manager.party_ended = true

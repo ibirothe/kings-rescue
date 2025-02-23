@@ -1294,7 +1294,7 @@ script = ExtResource("1_8wkfs")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_i3egf")
-animation = &"Thoralf_death"
+animation = &"Rupert_attack"
 autoplay = "Arianna_default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
