@@ -340,3 +340,10 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		get_parent().currently_moving = false
 		return
 		
+func take_coin():
+	tween = create_tween()
+	
+	# Fade out over 1 second
+	tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
+	await tween.finished
+	queue_free()  # Remove the node after fading out
