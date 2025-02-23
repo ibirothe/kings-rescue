@@ -62,6 +62,13 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Restart"):
 		get_tree().reload_current_scene()
 		Engine.time_scale = 1
+	if Input.is_action_just_pressed("Help"):
+		GlobalText.set_text("An assassination plot has been uncovered! Click to select a Soldier and move them. Soldiers can push the King to escort him safely out of the royal court - but beware, for traitors lurk among them.")
+		Engine.time_scale = 1
+	if cycle_odd == true:
+		cycle_odd = false
+	else:
+		cycle_odd == true
 	if cycle_odd == true:
 		cycle_odd = false
 	else:
