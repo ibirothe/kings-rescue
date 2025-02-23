@@ -27,6 +27,7 @@ var party_ended = false
 @export var informant_number = 2
 @onready var king: CharacterBody2D = $"../King"
 var informantion = []
+var magic = false
 
 func _ready() -> void:
 	AudioManager.play_sound("ambience",0.0,1.0,true)
@@ -45,6 +46,15 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	#print(active_soldier, " ", click_resolved, " ", currently_moving)
+	if Input.is_action_just_pressed("Magic"):
+		if magic == false:
+			var trap = trap_scene.instantiate()
+			x = king.position.x
+			y = king.position.y
+			var pos = Vector2(x, y)
+			trap.position = pos
+			add_child(trap)
+			magic = true
 	if food == 0:
 		party_ended = true
 		AudioManager.stop_music()
