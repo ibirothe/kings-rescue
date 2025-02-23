@@ -94,6 +94,8 @@ func _physics_process(_delta: float) -> void:
 			if animated_sprite_2d.animation != subclass+"_attack":
 				if king_direction.x < 0:
 					animated_sprite_2d.flip_h = true
+				else:
+					animated_sprite_2d.flip_h = false
 				animated_sprite_2d.play(subclass+"_attack")
 			if !game_manager.party_ended:
 				AudioManager.play_sound("")
