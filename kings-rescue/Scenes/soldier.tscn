@@ -1,4 +1,4 @@
-[gd_scene load_steps=166 format=3 uid="uid://v3anqebutw1r"]
+[gd_scene load_steps=167 format=3 uid="uid://v3anqebutw1r"]
 
 [ext_resource type="Script" path="res://Scripts/soldier.gd" id="1_8wkfs"]
 [ext_resource type="Texture2D" uid="uid://cxjwj0qe476fq" path="res://Assets/arianna_48px.png" id="2_rg8em"]
@@ -1285,6 +1285,8 @@ size = Vector2(28, 5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fc0j8"]
 size = Vector2(6, 29)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ymxx7"]
+
 [node name="Soldier" type="CharacterBody2D"]
 z_index = 1
 position = Vector2(0, -2)
@@ -1319,6 +1321,14 @@ position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_fc0j8")
 
 [node name="Center" type="Marker2D" parent="."]
+
+[node name="Border_check" type="Area2D" parent="."]
+position = Vector2(0, -4)
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border_check"]
+shape = SubResource("CircleShape2D_ymxx7")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="input_event" from="Activation_area" to="." method="_on_area_2d_input_event"]

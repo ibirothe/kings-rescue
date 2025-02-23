@@ -29,7 +29,9 @@ var movestart_position
 var returning = false
 var tween
 var dead = false
+var king_direction
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var border_check: Area2D = $Border_check
 
 
 @onready var center: Marker2D = $Center
@@ -52,6 +54,17 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	#check end condition
+	if len(border_check.get_overlapping_bodies()) > 0:
+		stop()
+		active = false
+		get_parent().active_soldier = false
+		get_parent().click_resolved = false
+		get_parent().currently_moving = false
+		queue_free()
+		#AudioManager.play_sound("mercenary_flee")
+		var text=subclass + " left. Hope they bring some help. Godspeed."
+		GlobalText.set_text(text)
+		queue_free()
 	if game_manager:
 		if game_manager.party_ended == true:
 			if game_manager.food == 0:
@@ -64,17 +77,23 @@ func _physics_process(_delta: float) -> void:
 	if active == true:
 		#print(possible_assassination, soldier_close)
 		pass
-	if assassin == true:
+	if assassin == true and dead == false:
 		for bodies in neighbours_check.get_overlapping_bodies():
 			if bodies.role=="King":
+				king_direction = bodies.global_position - global_position
 				#print("Possible_Assassination")
 				possible_assassination = true
 			if bodies.role=="Soldier":
+				if bodies.dead == true:
+					pass
+				else:
 				#print("Should be impossible")
-				soldier_close = true
+					soldier_close = true
 		#print(possible_assassination, soldier_close)
 		if possible_assassination == true and soldier_close == false:
 			if animated_sprite_2d.animation != subclass+"_attack":
+				if king_direction.x < 0:
+					animated_sprite_2d.flip_h = true
 				animated_sprite_2d.play(subclass+"_attack")
 			if !game_manager.party_ended:
 				AudioManager.play_sound("")
