@@ -41,6 +41,7 @@ func _physics_process(_delta: float) -> void:
 			pass
 	if len(win.get_overlapping_bodies()) > 0:
 		game_manager.party_ended = true
+		win_anim()
 		GlobalText.set_text("The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one?")
 			
 func king():
@@ -111,3 +112,12 @@ func transition_to_state(new_state: State) -> void:
 			animated_sprite_2d.play("idle")
 	
 	current_state = new_state
+
+func win_anim():
+	animated_sprite_2d.play("walk")
+	var tween = create_tween()
+	
+	# Fade out over 1 second
+	tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
+	await tween.finished
+	queue_free()  # Remove the node after fading out
