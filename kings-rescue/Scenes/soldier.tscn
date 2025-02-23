@@ -1,4 +1,4 @@
-[gd_scene load_steps=167 format=3 uid="uid://v3anqebutw1r"]
+[gd_scene load_steps=166 format=3 uid="uid://v3anqebutw1r"]
 
 [ext_resource type="Script" path="res://Scripts/soldier.gd" id="1_8wkfs"]
 [ext_resource type="Texture2D" uid="uid://cxjwj0qe476fq" path="res://Assets/arianna_48px.png" id="2_rg8em"]
@@ -333,10 +333,6 @@ region = Rect2(144, 72, 48, 24)
 [sub_resource type="AtlasTexture" id="AtlasTexture_1t35c"]
 atlas = ExtResource("6_kmg5p")
 region = Rect2(0, 24, 48, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_avo2y"]
-atlas = ExtResource("6_kmg5p")
-region = Rect2(48, 0, 48, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qx4tn"]
 atlas = ExtResource("6_kmg5p")
@@ -968,9 +964,6 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_avo2y")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qx4tn")
 }, {
