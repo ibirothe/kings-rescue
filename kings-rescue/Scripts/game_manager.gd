@@ -21,9 +21,9 @@ var click_resolved = true
 var cycle_odd = true
 var currently_moving = false
 var party_ended = false
-@export var coins_number = 8
+@export var coins_number = 7
 @export var food_number = 5
-@export var trap_number = 20
+@export var trap_number = 18
 @export var informant_number = 2
 @onready var king: CharacterBody2D = $"../King"
 var informantion = []
@@ -61,15 +61,20 @@ func _physics_process(delta: float) -> void:
 			add_child(trap)
 			magic = true
 	if food == 0:
-		party_ended = true
+		
 		AudioManager.stop_music()
-		GlobalText.set_text("Your food stores are depleted. The soldiers begin to fall one by one—and soon, the king does as well. If you only listened to my instructions...", "Game Over",)
+		if party_ended == false:
+			GlobalDifficulty.losses +=1
+			var win_text = "Your food stores are depleted. The soldiers begin to fall one by one-and soon, the king does as well. If you only listened to my instructions... \n \nWINS:" + str(GlobalDifficulty.wins) + "\n \nLOSSES:" + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY:" + str(GlobalDifficulty.difficulty) + "\n \nHistory keeps repeating itself! Press 'R' to retry and keep an eye on your Food Rations"
+			GlobalText.set_text(win_text)
+			win_fade_out()
+			party_ended = true
+
 	if Input.is_action_just_pressed("Restart"):
-		GlobalDifficulty.difficulty += 1
 		get_tree().reload_current_scene()
 		Engine.time_scale = 1
 	if Input.is_action_just_pressed("Help"):
-		GlobalText.set_text("An assassination plot has been uncovered! Click to select a Soldier and move them. Soldiers can push the King to escort him safely out of the royal court - but beware, for traitors lurk among them.")
+		GlobalText.set_text("An assassination plot has been uncovered! Click to select a Soldier and move them. Soldiers can push the King to escort him safely from the board-but beware, if an Assassin gets close, only a Soldier standing next to them can stop the deadly strike.", "Starter Guide")
 		Engine.time_scale = 1
 	if cycle_odd == true:
 		cycle_odd = false
@@ -144,7 +149,7 @@ func spawn_soldiers():
 		
 func spawn_coins(coins_numb):
 	var i = 0
-	while i < coins_numb:
+	while i < coins_numb + GlobalDifficulty.difficulty:
 		var coin = coin_scene.instantiate()
 		x = round(randf_range(0, 10))
 		y = round(randf_range(0, 10))
@@ -164,7 +169,7 @@ func spawn_coins(coins_numb):
 
 func spawn_food(food_numb):
 	var i = 0
-	while i < food_numb:
+	while i < max(0, food_numb - GlobalDifficulty.difficulty):
 		var food = food_scene.instantiate()
 		x = round(randf_range(0, 10))
 		y = round(randf_range(0, 10))
@@ -204,7 +209,7 @@ func spawn_informant(informant_numb):
 
 func spawn_traps(traps_numb):
 	var i = 0
-	while i < traps_numb:
+	while i < traps_numb + 2 * GlobalDifficulty.difficulty:
 		var trap = trap_scene.instantiate()
 		x = round(randf_range(0, 10))
 		y = round(randf_range(0, 10))

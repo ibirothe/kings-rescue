@@ -2,7 +2,7 @@ extends Area2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 @onready var game_manager: Node2D = get_parent()
-@export var food_efficiency = 10
+@export var food_efficiency = 8
 
 func _ready():
 	# Connect the body_entered signal
@@ -13,7 +13,7 @@ func _on_body_entered(body):
 		#body.active = false
 		body.animated_sprite_2d.play(body.subclass+"_default")
 		GlobalText.set_text("You gathered some Food. Running out of supplies leads to starvation, so this was a wise choice. If only it weren’t an apple...", "Apple")
-		game_manager.food += food_efficiency
+		game_manager.food += food_efficiency-GlobalDifficulty.difficulty
 		AudioManager.play_sound("food_collect")
 		# Delete the item
 		var tween = create_tween()

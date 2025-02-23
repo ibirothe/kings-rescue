@@ -41,13 +41,14 @@ func _physics_process(_delta: float) -> void:
 			# Movement is handled by tween, we just watch for new input
 			pass
 	if len(win.get_overlapping_bodies()) > 0:
-		game_manager.party_ended = true
 		win_anim()
-		if win_check == false:
+		if game_manager.party_ended == false:
+			GlobalDifficulty.wins +=1
+			var win_text = "The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one? \n \nWINS:" + str(GlobalDifficulty.wins) + "\n \nLOSSES:" + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY:" + str(GlobalDifficulty.difficulty) + "\n \nHistory keeps repeating itself, and saving just one King per century won’t break the cycle. Press 'R' to restart with increased difficulty!"
+			GlobalText.set_text(win_text)
 			GlobalDifficulty.difficulty =+1
-			GlobalText.set_text("The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one?")
 			game_manager.win_fade_out()
-			win_check = true
+			game_manager.party_ended = true
 			
 func king():
 	direction_check = false

@@ -14,7 +14,7 @@ func _on_body_entered(body):
 		#body.active = false
 		animated_sprite_2d.play("trigger")
 		body.animated_sprite_2d.play(body.subclass+"_death")
-		GlobalText.set_text("A hidden trap killed a Soldier of the King’s Guard. Or actually, it was you.")
+		GlobalText.set_text("A hidden trap killed a Soldier of the King’s Guard. Well, technically, it was you.")
 		body.death()
 		AudioManager.play_sound("player_hurt")
 		# Delete the item
@@ -23,4 +23,9 @@ func _on_body_entered(body):
 		animated_sprite_2d.play("trigger")
 		body.trap = true
 		AudioManager.play_sound("")
-		GlobalText.set_text("You managed to stop the Assassins from killing the King. You just did it yourself.")
+		if game_manager.party_ended == false:
+			GlobalDifficulty.losses +=1
+			var lose_text = "You managed to stop the Assassins from killing the King... by doing it yourself. \n \nWINS:" + str(GlobalDifficulty.wins) + "\n \nLOSSES:" + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY:" + str(GlobalDifficulty.difficulty) + "\n \nHistory keeps repeating itself-maybe next time, you won’t be the one to slay the King. Press 'R' to retry... and perhaps find a safer path!"
+			GlobalText.set_text(lose_text)
+			game_manager.win_fade_out()
+			game_manager.party_ended = true

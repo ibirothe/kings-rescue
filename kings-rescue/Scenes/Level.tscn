@@ -1238,7 +1238,7 @@ offset_top = -22.0
 offset_right = -67.0
 offset_bottom = 176.0
 scale = Vector2(0.6, 0.6)
-text = "An assassination plot has been uncovered! Click to select a Soldier and move them. Soldiers can push the King to escort him safely out of the royal court - but beware, for traitors lurk among them."
+text = "An assassination plot has been uncovered! Click to select a Soldier and move them. Soldiers can push the King to escort him safely from the board-but beware, if an Assassin gets close, only a Soldier standing next to them can stop the deadly strike."
 label_settings = SubResource("LabelSettings_ryrto")
 autowrap_mode = 3
 script = ExtResource("8_83tln")
@@ -1294,11 +1294,11 @@ mouse_filter = 2
 [node name="Win-lose-label" type="Label" parent="CanvasLayer"]
 z_index = 3
 texture_filter = 1
-offset_left = 564.0
-offset_top = 253.0
-offset_right = 692.0
-offset_bottom = 451.0
-scale = Vector2(0.6, 0.6)
+offset_left = 456.0
+offset_top = 44.0
+offset_right = 584.0
+offset_bottom = 242.0
+scale = Vector2(2, 2)
 text = "The crown is safe. Would you like to try again? It may not be that easy this time.
 Press R to try"
 label_settings = SubResource("LabelSettings_ryrto")
