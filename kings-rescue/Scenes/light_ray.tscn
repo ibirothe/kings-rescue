@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://cls7tfgdhbch7"]
+
+[sub_resource type="Gradient" id="Gradient_73y8g"]
+offsets = PackedFloat32Array(0, 0.217949, 0.657051, 0.910256)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.231373, 1, 1, 1, 0.105882, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ysuls"]
+gradient = SubResource("Gradient_73y8g")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5qfa1"]
+lifetime_randomness = 0.27
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(240, 0, 0)
+direction = Vector3(0, 0, 0)
+spread = 0.0
+initial_velocity_min = -2.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_ysuls")
+turbulence_noise_speed = Vector3(50, 0, 0)
+turbulence_noise_speed_random = 1.51
+
+[node name="Node2D" type="Node2D"]
+
+[node name="LightRayM" type="GPUParticles2D" parent="."]
+z_index = 1
+texture_filter = 1
+position = Vector2(142, 291)
+amount = 5
+process_material = SubResource("ParticleProcessMaterial_5qfa1")
+lifetime = 7.0
+preprocess = 7.0
+randomness = 0.5
+visibility_rect = Rect2(0, 0, 600, 600)

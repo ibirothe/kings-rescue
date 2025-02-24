@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://cwy6ax8x3hg4c"]
+
+[ext_resource type="Script" path="res://Scenes/food.gd" id="1_elbs4"]
+[ext_resource type="Texture2D" uid="uid://clj00fee2v4eb" path="res://Assets/Items.png" id="1_yfksy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gr22t"]
+radius = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7aoy"]
+atlas = ExtResource("1_yfksy")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_as65x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7aoy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Food" type="Area2D"]
+script = ExtResource("1_elbs4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gr22t")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_as65x")
