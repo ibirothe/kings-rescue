@@ -100,7 +100,7 @@ func _physics_process(_delta: float) -> void:
 
 			if game_manager.party_ended == false:
 				GlobalDifficulty.losses +=1
-				var lose_text = "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \nWINS:" + str(GlobalDifficulty.wins) + "\n \nLOSSES:" + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY:" + str(GlobalDifficulty.difficulty) + "\n \nHistory keeps repeating itself, and strangely, there are always two Assassins within the King's Guard. Press 'R' to restart… and trust no one!"
+				var lose_text = "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \nWINS: " + str(GlobalDifficulty.wins) + "\n \nLOSSES: " + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY: " + str(GlobalDifficulty.difficulty_name()) + "\n \nHistory keeps repeating itself, and strangely, there are always two Assassins within the King's Guard. Press 'R' to restart… and trust no one!"
 				GlobalText.set_text("")
 				game_manager.win_fade_out(lose_text)
 				game_manager.party_ended = true

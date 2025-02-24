@@ -66,7 +66,7 @@ func _physics_process(delta: float) -> void:
 		if party_ended == false:
 			GlobalDifficulty.losses +=1
 			GlobalText.set_text("")
-			var lose_text = "Your food stores are depleted. The soldiers begin to fall one by one-and soon, the king does as well. If you only listened to my instructions... \n \nWINS:" + str(GlobalDifficulty.wins) + "\n \nLOSSES:" + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY:" + str(GlobalDifficulty.difficulty) + "\n \nHistory keeps repeating itself! Press 'R' to retry and keep an eye on your Food Rations"
+			var lose_text = "Your food stores are depleted. The soldiers begin to fall one by one-and soon, the king does as well. If you only listened to my instructions... \n \nWINS: " + str(GlobalDifficulty.wins) + "\n \nLOSSES: " + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY: " + str(GlobalDifficulty.difficulty_name()) + "\n \nHistory keeps repeating itself! Press 'R' to retry and keep an eye on your Food Rations"
 			win_fade_out(lose_text)
 			party_ended = true
 
