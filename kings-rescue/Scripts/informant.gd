@@ -34,9 +34,9 @@ func _on_body_entered(body):
 		if body.assassin == true:
 			var i = round(randf_range(0, 9))
 			GlobalText.set_text(assassin_manuals[i])
-		elif body.mercenary == true:
-			var i = round(randf_range(0, 4))
-			GlobalText.set_text(mercenary_manuals[i])
+		#elif body.mercenary == true:
+		#	var i = round(randf_range(0, 4))
+		#	GlobalText.set_text(mercenary_manuals[i])
 		else:
 			GlobalText.set_text(str(info))
 		# Delete the item
