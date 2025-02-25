@@ -29,24 +29,19 @@ func _ready():
 	_setup_music_player()
 
 func _load_sound_effects():
-	var dir = DirAccess.open(SFX_DIRECTORY)
-	if not dir:
-		push_error("Failed to open SFX directory")
-		return
-	
-	dir.list_dir_begin()
-	var file_name = dir.get_next()
-	
-	while file_name != "":
-		if file_name.ends_with(".wav") or file_name.ends_with(".ogg"):
-			var sound_name = file_name.get_basename()
-			var path = SFX_DIRECTORY + file_name
-			var stream = load(path)
-			_sound_effects[sound_name] = stream
-		
-		file_name = dir.get_next()
-	
-	dir.list_dir_end()
+	# Preload specific sounds (recommended for exports)
+	# Replace these examples with your actual sound files
+	_sound_effects = {
+		"ambience": preload("res://Assets/SFX/ambience.wav"),
+		"disselect_soldier": preload("res://Assets/SFX/disselect_soldier.wav"),
+		"food_collect": preload("res://Assets/SFX/food_collect.wav"),
+		"mercenary_flee": preload("res://Assets/SFX/mercenary_flee.wav"),
+		"player_death": preload("res://Assets/SFX/player_death.wav"),
+		"player_hurt": preload("res://Assets/SFX/player_hurt.wav"),
+		"player_run": preload("res://Assets/SFX/player_run.wav"),
+		"select_soldier": preload("res://Assets/SFX/select_soldier.wav")
+	}
+
 
 func _create_audio_players():
 	for sound_name in _sound_effects.keys():
@@ -157,14 +152,25 @@ func stop_looping_sound(sound_name: String, instance_id: Variant = null) -> void
 			_sound_instances.erase(unique_sound_key)
 
 func play_music(track_name: String, volume_db: float = 0.0, loop: bool = true) -> void:
-	var path = MUSIC_DIRECTORY + track_name + ".wav"
+	# Use ResourceLoader instead of file existence check
+	var music_stream
 	
-	if not FileAccess.file_exists(path):
-		push_warning("Music track '%s' not found!" % track_name)
-		return
+	# You can either preload specific music tracks:
+	var music_tracks = {
+		"title": preload("res://Assets/Music/bg_music.wav")
+		# Add more music tracks here
+	}
 	
-	# Load the music stream
-	var music_stream = load(path)
+	if music_tracks.has(track_name):
+		music_stream = music_tracks[track_name]
+	else:
+		# Fallback to dynamic loading (may not work in exports)
+		var path = MUSIC_DIRECTORY + track_name + ".wav"
+		music_stream = ResourceLoader.load(path)
+		
+		if not music_stream:
+			push_warning("Music track '%s' not found!" % track_name)
+			return
 	
 	# Store current music details
 	_current_music = {

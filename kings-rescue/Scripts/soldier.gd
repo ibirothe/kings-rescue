@@ -100,9 +100,9 @@ func _physics_process(_delta: float) -> void:
 
 			if game_manager.party_ended == false:
 				GlobalDifficulty.losses +=1
-				var lose_text = "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \nWINS:" + str(GlobalDifficulty.wins) + "\n \nLOSSES:" + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY:" + str(GlobalDifficulty.difficulty) + "\n \nHistory keeps repeating itself, and strangely, there are always two Assassins within the King's Guard. Press 'R' to restart… and trust no one!"
-				GlobalText.set_text(lose_text)
-				game_manager.win_fade_out()
+				var lose_text = "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \nWINS: " + str(GlobalDifficulty.wins) + "\n \nLOSSES: " + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY: " + str(GlobalDifficulty.difficulty_name()) + "\n \nHistory keeps repeating itself, and strangely, there are always two Assassins within the King's Guard. Press 'R' to restart… and trust no one!"
+				GlobalText.set_text("")
+				game_manager.win_fade_out(lose_text)
 				game_manager.party_ended = true
 				AudioManager.play_sound("player_hurt")
 
@@ -140,7 +140,7 @@ func handle_idle_state() -> void:
 	if get_parent().soldier_changing == false and im_new == true:
 		im_new = false
 		active = true
-	if Input.is_action_just_pressed("left_click") and get_parent().click_resolved == false:
+	if Input.is_action_just_pressed("left_click") and get_parent().click_resolved == false and game_manager.party_ended == false:
 		var click_pos = get_global_mouse_position()
 		# If clicked far from character, return to inactive
 		var click_distance = click_pos-center.global_position
@@ -163,7 +163,7 @@ func handle_movement_input() -> void:
 	match current_state:
 		State.INACTIVE:
 			return
-	if not Input.is_action_just_pressed("left_click"):
+	if not Input.is_action_just_pressed("left_click") or game_manager.party_ended:
 		return
 	var click_pos = get_global_mouse_position()
 
@@ -252,7 +252,7 @@ func transition_to_state(new_state: State) -> void:
 
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if Input.is_action_just_pressed("left_click"):
+	if Input.is_action_just_pressed("left_click") and game_manager.party_ended == false:
 		if dead == true:
 			GlobalText.set_text("He's dead, Jim.")
 		else:

@@ -21,9 +21,9 @@ var click_resolved = true
 var cycle_odd = true
 var currently_moving = false
 var party_ended = false
-@export var coins_number = 7
-@export var food_number = 5
-@export var trap_number = 18
+@export var coins_number = 6
+@export var food_number = 7
+@export var trap_number = 14
 @export var informant_number = 2
 @onready var king: CharacterBody2D = $"../King"
 var informantion = []
@@ -65,9 +65,9 @@ func _physics_process(delta: float) -> void:
 		AudioManager.stop_music()
 		if party_ended == false:
 			GlobalDifficulty.losses +=1
-			var win_text = "Your food stores are depleted. The soldiers begin to fall one by one-and soon, the king does as well. If you only listened to my instructions... \n \nWINS:" + str(GlobalDifficulty.wins) + "\n \nLOSSES:" + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY:" + str(GlobalDifficulty.difficulty) + "\n \nHistory keeps repeating itself! Press 'R' to retry and keep an eye on your Food Rations"
-			GlobalText.set_text(win_text)
-			win_fade_out()
+			GlobalText.set_text("")
+			var lose_text = "Your food stores are depleted. The soldiers begin to fall one by one-and soon, the king does as well. If you only listened to my instructions... \n \nWINS: " + str(GlobalDifficulty.wins) + "\n \nLOSSES: " + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY: " + str(GlobalDifficulty.difficulty_name()) + "\n \nHistory keeps repeating itself! Press 'R' to retry and keep an eye on your Food Rations"
+			win_fade_out(lose_text)
 			party_ended = true
 
 	if Input.is_action_just_pressed("Restart"):
@@ -239,7 +239,10 @@ func movement_resolved(possible_assassination, soldier_close):
 func refire_king():
 	king.king()
 
-func win_fade_out():
+func win_fade_out(display_text, wait_time = 1.8):
+	# Wait for the timer to complete before proceeding
+	await get_tree().create_timer(wait_time).timeout
+	
 	print("Fade out")
 	# Screen fade
 	var tween = create_tween().set_trans(Tween.TRANS_LINEAR)
@@ -252,6 +255,6 @@ func win_fade_out():
 	if win_lose_label:
 		var text_tween = create_tween()
 		text_tween.tween_property(win_lose_label, "modulate:a", 1.0, 1.0)
-		print("Text fade started")
+		GlobalText.set_text(display_text)
 	else:
 		print("Cannot fade label - not found!")
