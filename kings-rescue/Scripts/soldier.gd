@@ -357,6 +357,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		dead = true
 		print("Im dead")
 		transition_to_state(State.DEAD)
+		visual_deactivation()
 		active = false
 		movement_locked = false
 		if get_parent().soldier_changing == false:
