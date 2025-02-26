@@ -1,18 +1,16 @@
 extends Node2D
-var soldier_scene = preload("res://Scenes/soldier.tscn")
+var troop_scene = preload("res://Scenes/troop.tscn")
 var coin_scene = preload("res://Scenes/coin.tscn")
 var food_scene = preload("res://Scenes/food.tscn")
 var informant_scene = preload("res://Scenes/informant.tscn")
 var trap_scene = preload("res://Scenes/trap.tscn")
 var rng = RandomNumberGenerator.new()
-var subclasses = ["Rupert", "Thoralf", "Ogra", "Bartholo", "Ibrahim", "Edwin", "Marquise", "Arianna"]
-var roles = ["Mercenary", "Mercenary", "Assassin", "Assassin", "Soldier", "Soldier", "Soldier", "Soldier"]
 var x = 0  # Initialize x
 var y = 0  # Initialize y
 var occupied_positions = []
 var food = 10
 var setup_done = false
-#@export var soldier: PackedScene
+var troop
 var soldier_in_a_way = false
 var skip_cycle = true
 var active_soldier: bool
@@ -41,7 +39,9 @@ func _ready() -> void:
 	x=king.position.x-16
 	y=king.position.y-16
 	if setup_done == false:
-		spawn_soldiers()
+		troop = troop_scene.instantiate()
+		self.add_child(troop)
+		troop.spawn_soldiers()
 		spawn_coins(coins_number)
 		spawn_food(food_number)
 		spawn_informant(informant_number)
@@ -103,50 +103,6 @@ func _physics_process(delta: float) -> void:
 			click_resolved = false
 			skip_cycle = true
 
-		
-
-func spawn_soldiers():
-	for i in range(8):
-		var soldier = soldier_scene.instantiate()
-		var j = round(randf_range(0, len(subclasses)-1))
-		#print(j)
-		var subclass = subclasses[j]
-		soldier.subclass = subclass
-		subclasses.erase(subclass)
-		var k = round(randf_range(0, len(roles)-1))
-		var role = roles[k]
-		if role == "Assassin":
-			soldier.assassin = true
-			informantion.append(subclass+ " is an assassin.")
-		elif role == "Mercenary":
-			soldier.mercenary = true
-			soldier.role = "Soldier"
-		else:
-			soldier.role = "Soldier"
-		roles.erase(role)
-		
-		
-		match i:
-			0:
-				pass
-			1: 
-				x += 16
-			2: 
-				x += 16
-			3: 
-				y += 16
-			4: 
-				y += 16
-			5: 
-				x -= 16
-			6: 
-				x -= 16
-			7: 
-				y -= 16
-		
-		soldier.position = Vector2(x, y)
-		add_child(soldier)
-		
 		
 func spawn_coins(coins_numb):
 	var i = 0
@@ -227,15 +183,6 @@ func spawn_traps(traps_numb):
 				trap.position = pos
 				occupied_positions.append(pos)
 				add_child(trap)
-
-func movement_resolved(possible_assassination, soldier_close):
-	if possible_assassination == true and soldier_close == false:
-		print("Game Over")
-	pass
-	#currently_moving = false
-	#connect signals
-	#check game over
-	#disconnect signals
 
 func refire_king():
 	king.king()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://c5qlik5x313qp"]
+[gd_scene load_steps=17 format=4 uid="uid://c5qlik5x313qp"]
 
 [ext_resource type="Texture2D" uid="uid://bk373qbmw3vfy" path="res://Assets/game UI placeholder.png" id="1_817jl"]
 [ext_resource type="PackedScene" uid="uid://bny6i5an3s0g0" path="res://Scenes/king.tscn" id="2_tgcop"]
