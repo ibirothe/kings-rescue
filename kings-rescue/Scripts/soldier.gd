@@ -32,7 +32,23 @@ var dead = false
 var king_direction
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var border_check: Area2D = $Border_check
-
+@onready var square_border: AnimatedSprite2D = $Square_border
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var movement_arrows: AnimatedSprite2D = $Movement_arrows
+var blue_shader_material = ShaderMaterial.new()
+var blue_shader_code = """
+	shader_type canvas_item;
+	uniform vec4 tint_color : source_color = vec4(0.0, 0.2, 0.7, 0.7);
+	uniform float tint_effect : hint_range(0.0, 1.0) = 0.0;
+	
+	void fragment() {
+		vec4 texture_color = texture(TEXTURE, UV);
+		// Mix the colors but preserve original alpha
+		vec4 final_color = mix(texture_color, vec4(tint_color.rgb, texture_color.a), tint_effect);
+		// Only apply tint where the sprite is visible (non-transparent)
+		COLOR = vec4(final_color.rgb, texture_color.a);
+	}
+	"""
 
 @onready var center: Marker2D = $Center
 const CHARACTER_DESCRIPTIONS = {
@@ -50,6 +66,9 @@ const CHARACTER_DESCRIPTIONS = {
 func _ready() -> void:
 	# Start with default animation
 	animated_sprite_2d.play(subclass+"_default")
+	square_border.self_modulate = Color(1,1,1,0)
+	movement_arrows.self_modulate = Color(1,1,1,0)
+
 	
 
 func _physics_process(_delta: float) -> void:
@@ -155,6 +174,7 @@ func handle_idle_state() -> void:
 			if get_parent().soldier_changing == false:
 				get_parent().active_soldier = false
 			active = false
+			visual_deactivation()
 		else:
 			handle_movement_input()
 
@@ -175,6 +195,7 @@ func handle_movement_input() -> void:
 			get_parent().active_soldier = false
 			im_new = true
 			active = false
+			visual_deactivation()
 		return
 	if get_parent().soldier_in_a_way == true and im_new == false:
 		#print("Guy in a way")
@@ -184,6 +205,7 @@ func handle_movement_input() -> void:
 		transition_to_state(State.INACTIVE)
 		im_new = true
 		active = false
+		visual_deactivation()
 		return
 	if movement_locked == false and active == true: 
 		movestart_position = position
@@ -270,6 +292,7 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 			if get_parent().currently_moving == false:
 				AudioManager.play_sound("select_soldier")
 				transition_to_state(State.IDLE)
+				visual_activation()
 			GlobalText.set_text(CHARACTER_DESCRIPTIONS[subclass], subclass)
 
 """
@@ -352,3 +375,52 @@ func take_coin():
 	tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
 	await tween.finished
 	queue_free()  # Remove the node after fading out
+
+func visual_activation():
+	print("Visual activation")
+	
+	# Create a shader material with an improved shader
+	var shader_material = ShaderMaterial.new()
+	var shader_code = """
+	shader_type canvas_item;
+	uniform vec4 tint_color : source_color = vec4(0.0, 0.2, 0.7, 0.7);
+	uniform float tint_effect : hint_range(0.0, 1.0) = 0.0;
+	
+	void fragment() {
+		vec4 texture_color = texture(TEXTURE, UV);
+		// Mix the colors but preserve original alpha
+		vec4 final_color = mix(texture_color, vec4(tint_color.rgb, texture_color.a), tint_effect);
+		// Only apply tint where the sprite is visible (non-transparent)
+		COLOR = vec4(final_color.rgb, texture_color.a);
+	}
+	"""
+	
+	# Create shader and apply it
+	blue_shader_material.shader = Shader.new()
+	blue_shader_material.shader.code = blue_shader_code
+	animated_sprite_2d.material = blue_shader_material
+	
+	# Tween the shader parameter
+	tween = create_tween()
+	tween.tween_method(func(value): 
+		animated_sprite_2d.material.set_shader_parameter("tint_effect", value), 
+		0.2, 0.4, 0.4)
+	var tween1 = create_tween()
+	tween1.tween_property(square_border, "self_modulate:a", 0.9, 1.5)
+	animation_player.play("Border_blink")
+	var tween2 = create_tween()
+	tween2.tween_property(movement_arrows, "self_modulate:a", 0.9, 1.5)
+	await tween2.finished
+
+func visual_deactivation():
+	print("Visual activation")
+	# Tween the shader parameter
+	tween = create_tween()
+	tween.tween_method(func(value): 
+		animated_sprite_2d.material.set_shader_parameter("tint_effect", value), 
+		0.0, 0.0, 0.0)
+	animation_player.stop()
+	var tween1 = create_tween()
+	tween1.tween_property(square_border, "self_modulate:a", 0.0, 0.5)
+	var tween2 = create_tween()
+	tween2.tween_property(movement_arrows, "self_modulate:a", 0.0, 0.5)
