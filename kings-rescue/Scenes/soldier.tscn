@@ -1453,6 +1453,7 @@ libraries = {
 }
 
 [node name="Movement_arrows" type="AnimatedSprite2D" parent="."]
+z_index = 3
 sprite_frames = SubResource("SpriteFrames_q2s4w")
 autoplay = "default"
 
