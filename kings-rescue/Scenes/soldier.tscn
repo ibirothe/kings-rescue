@@ -1,4 +1,4 @@
-[gd_scene load_steps=166 format=3 uid="uid://v3anqebutw1r"]
+[gd_scene load_steps=181 format=3 uid="uid://v3anqebutw1r"]
 
 [ext_resource type="Script" path="res://Scripts/soldier.gd" id="1_8wkfs"]
 [ext_resource type="Texture2D" uid="uid://cxjwj0qe476fq" path="res://Assets/arianna_48px.png" id="2_rg8em"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bmjx50pb2ldx3" path="res://Assets/ogra_48px.png" id="7_o25pi"]
 [ext_resource type="Texture2D" uid="uid://bn18sxtrv8p6j" path="res://Assets/rupert_48px.png" id="8_2it55"]
 [ext_resource type="Texture2D" uid="uid://bpp6puobs6l21" path="res://Assets/thoralf_48px.png" id="9_ikw5c"]
+[ext_resource type="Texture2D" uid="uid://c5b7v3rymuonl" path="res://Assets/Movement-border.png" id="10_wq6ns"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x3mst"]
 atlas = ExtResource("2_rg8em")
@@ -1280,6 +1281,123 @@ size = Vector2(6, 29)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ymxx7"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_h04ti"]
+atlas = ExtResource("10_wq6ns")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ivu6b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h04ti")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_6m8ka"]
+resource_name = "Border_blink"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1.86607, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.508), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cl3qk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ybh1i"]
+_data = {
+"Border_blink": SubResource("Animation_6m8ka"),
+"RESET": SubResource("Animation_cl3qk")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cb3ld"]
+atlas = ExtResource("10_wq6ns")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wa5wl"]
+atlas = ExtResource("10_wq6ns")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uv4ns"]
+atlas = ExtResource("10_wq6ns")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nksqd"]
+atlas = ExtResource("10_wq6ns")
+region = Rect2(96, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgmpj"]
+atlas = ExtResource("10_wq6ns")
+region = Rect2(120, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hw2p1"]
+atlas = ExtResource("10_wq6ns")
+region = Rect2(120, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qh0n3"]
+atlas = ExtResource("10_wq6ns")
+region = Rect2(144, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0h4b8"]
+atlas = ExtResource("10_wq6ns")
+region = Rect2(168, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q2s4w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cb3ld")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wa5wl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uv4ns")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nksqd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hgmpj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hw2p1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qh0n3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0h4b8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="Soldier" type="CharacterBody2D"]
 z_index = 1
 position = Vector2(0, -2)
@@ -1287,6 +1405,7 @@ collision_layer = 517
 script = ExtResource("1_8wkfs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 2
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_i3egf")
 animation = &"Marquise_death"
@@ -1322,6 +1441,20 @@ collision_mask = 128
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Border_check"]
 shape = SubResource("CircleShape2D_ymxx7")
+
+[node name="Square_border" type="AnimatedSprite2D" parent="."]
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_ivu6b")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Square_border")
+libraries = {
+"": SubResource("AnimationLibrary_ybh1i")
+}
+
+[node name="Movement_arrows" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_q2s4w")
+autoplay = "default"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="input_event" from="Activation_area" to="." method="_on_area_2d_input_event"]
