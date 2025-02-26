@@ -30,6 +30,7 @@ var informantion = []
 var magic = false
 @onready var win_lose_label: Label = $"../CanvasLayer/Win-lose-label"
 @onready var color_rect: ColorRect = $"../CanvasLayer/ColorRect"
+var inside_board = true
 
 
 func _ready() -> void:
@@ -258,3 +259,12 @@ func win_fade_out(display_text, wait_time = 1.8):
 		GlobalText.set_text(display_text)
 	else:
 		print("Cannot fade label - not found!")
+
+
+func _on_boardclickarea_mouse_entered() -> void:
+	inside_board = true
+	pass # Replace with function body.
+
+
+func _on_boardclickarea_mouse_exited() -> void:
+	inside_board = false
