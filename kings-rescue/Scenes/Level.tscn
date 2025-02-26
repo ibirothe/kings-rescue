@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://c5qlik5x313qp"]
+[gd_scene load_steps=16 format=4 uid="uid://c5qlik5x313qp"]
 
 [ext_resource type="Texture2D" uid="uid://bk373qbmw3vfy" path="res://Assets/game UI placeholder.png" id="1_817jl"]
 [ext_resource type="PackedScene" uid="uid://bny6i5an3s0g0" path="res://Scenes/king.tscn" id="2_tgcop"]
@@ -1066,6 +1066,9 @@ size = Vector2(35, 213)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_641yk"]
 size = Vector2(218, 22)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_so7fr"]
+size = Vector2(204, 213)
+
 [node name="Level" type="Node2D"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -1188,3 +1191,13 @@ autowrap_mode = 3
 script = ExtResource("8_83tln")
 custom_typing_speed = 0.02
 metadata/_edit_use_anchors_ = true
+
+[node name="Board-click-area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Board-click-area"]
+position = Vector2(-8, 5.5)
+shape = SubResource("RectangleShape2D_so7fr")
+
+[connection signal="input_event" from="Board-click-area" to="Game Manager" method="_on_boardclickarea_input_event"]
+[connection signal="mouse_entered" from="Board-click-area" to="Game Manager" method="_on_boardclickarea_mouse_entered"]
+[connection signal="mouse_exited" from="Board-click-area" to="Game Manager" method="_on_boardclickarea_mouse_exited"]

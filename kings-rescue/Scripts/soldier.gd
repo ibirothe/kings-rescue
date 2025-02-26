@@ -30,6 +30,8 @@ var returning = false
 var tween
 var dead = false
 var king_direction
+var move_dir
+var click_inside
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var border_check: Area2D = $Border_check
 @onready var square_border: AnimatedSprite2D = $Square_border
@@ -135,7 +137,7 @@ func _physics_process(_delta: float) -> void:
 			handle_idle_state()
 		State.MOVING:
 			# Movement is handled by tween, we just watch for new input
-			handle_movement_input()
+			handle_movement_input(move_dir)
 		State.DEAD:
 			animated_sprite_2d.play(subclass+"_death")
 			animated_sprite_2d.frame = 3
@@ -159,7 +161,7 @@ func handle_idle_state() -> void:
 	if get_parent().soldier_changing == false and im_new == true:
 		im_new = false
 		active = true
-	if Input.is_action_just_pressed("left_click") and get_parent().click_resolved == false and game_manager.party_ended == false:
+	"""if Input.is_action_just_pressed("left_click") and get_parent().click_resolved == false and game_manager.party_ended == false:
 		var click_pos = get_global_mouse_position()
 		# If clicked far from character, return to inactive
 		var click_distance = click_pos-center.global_position
@@ -176,19 +178,19 @@ func handle_idle_state() -> void:
 			active = false
 			visual_deactivation()
 		else:
-			handle_movement_input()
+			handle_movement_input(move_dir)"""
 
 
-func handle_movement_input() -> void:
+func handle_movement_input(move_dir) -> void:
 	match current_state:
 		State.INACTIVE:
 			return
 	if not Input.is_action_just_pressed("left_click") or game_manager.party_ended:
 		return
-	var click_pos = get_global_mouse_position()
+	"""var click_pos = get_global_mouse_position()"""
 
 	# Check if click is outside interaction range
-	if position.distance_to(click_pos) > INTERACTION_RADIUS:
+	"""if position.distance_to(click_pos) > INTERACTION_RADIUS:
 		#print("Becoming inactive")
 		transition_to_state(State.INACTIVE)
 		if get_parent().soldier_changing == false:
@@ -196,7 +198,7 @@ func handle_movement_input() -> void:
 			im_new = true
 			active = false
 			visual_deactivation()
-		return
+		return"""
 	if get_parent().soldier_in_a_way == true and im_new == false:
 		#print("Guy in a way")
 		transition_to_state(State.INACTIVE)
@@ -209,7 +211,12 @@ func handle_movement_input() -> void:
 		return
 	if movement_locked == false and active == true: 
 		movestart_position = position
-		movement = calculate_grid_movement(click_pos)
+		match move_dir:
+			"up": movement = Vector2(0, -16)
+			"down": movement = Vector2(0, 16)
+			"left": movement = Vector2(-16, 0)
+			"right": movement = Vector2(16,0)
+			
 		get_parent().currently_moving = true
 		movement_locked = true
 		print("Assassin - ", assassin)
@@ -340,6 +347,7 @@ func stop():
 		tween.kill() # Stop the current tween
 func death():
 	stop()
+	visual_deactivation()
 	click_resolved == true
 
 	#GlobalText.set_text("win_text")
@@ -357,7 +365,6 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		dead = true
 		print("Im dead")
 		transition_to_state(State.DEAD)
-		visual_deactivation()
 		active = false
 		movement_locked = false
 		if get_parent().soldier_changing == false:
@@ -425,3 +432,33 @@ func visual_deactivation():
 	tween1.tween_property(square_border, "self_modulate:a", 0.0, 0.5)
 	var tween2 = create_tween()
 	tween2.tween_property(movement_arrows, "self_modulate:a", 0.0, 0.5)
+
+		
+
+func _on_right_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if Input.is_action_just_pressed("left_click"):
+		if get_parent().inside_board:
+			move_dir = "right"
+			handle_movement_input(move_dir)
+
+
+func _on_left_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if Input.is_action_just_pressed("left_click"):
+		if get_parent().inside_board:
+			move_dir = "left"
+			handle_movement_input(move_dir)
+
+
+func _on_down_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if Input.is_action_just_pressed("left_click"):
+		if get_parent().inside_board:
+			move_dir = "down"
+			handle_movement_input(move_dir)
+
+
+
+func _on_up_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if Input.is_action_just_pressed("left_click"):
+		if get_parent().inside_board:
+			move_dir = "up"
+			handle_movement_input(move_dir)
