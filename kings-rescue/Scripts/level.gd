@@ -37,4 +37,4 @@ func spawn_soldiers():
 				y -= 16
 		
 		inst.position = Vector2(x, y)
-		Level.add_child(inst)
+		self.add_child(inst)
