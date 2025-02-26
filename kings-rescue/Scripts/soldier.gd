@@ -31,7 +31,6 @@ var tween
 var dead = false
 var king_direction
 var move_dir
-var click_inside
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var border_check: Area2D = $Border_check
 @onready var square_border: AnimatedSprite2D = $Square_border
@@ -202,6 +201,7 @@ func handle_movement_input(move_dir) -> void:
 	if get_parent().soldier_in_a_way == true and im_new == false:
 		#print("Guy in a way")
 		transition_to_state(State.INACTIVE)
+		visual_deactivation()
 		return
 	if get_parent().soldier_changing == true and im_new == false:
 		transition_to_state(State.INACTIVE)
