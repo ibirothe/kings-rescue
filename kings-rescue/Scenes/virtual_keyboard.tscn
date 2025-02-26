@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0jdb1hdv5101"]
+
+[ext_resource type="Texture2D" uid="uid://c6l88f685xmal" path="res://Assets/Button_L.png" id="1_gfint"]
+[ext_resource type="Script" path="res://Scripts/button.gd" id="2_inp75"]
+[ext_resource type="Texture2D" uid="uid://drtsrce7mmbk0" path="res://Assets/Button_R.png" id="3_q2g5f"]
+
+[node name="VirtualKeyboard" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ButtonL" type="Button" parent="."]
+layout_mode = 0
+offset_top = 15.0
+offset_right = 28.0
+offset_bottom = 43.0
+scale = Vector2(0.5, 0.5)
+action_mode = 0
+icon = ExtResource("1_gfint")
+script = ExtResource("2_inp75")
+action_name = "Magic"
+
+[node name="ButtonR" type="Button" parent="."]
+layout_mode = 0
+offset_right = 28.0
+offset_bottom = 28.0
+scale = Vector2(0.5, 0.5)
+action_mode = 0
+icon = ExtResource("3_q2g5f")
+script = ExtResource("2_inp75")
+action_name = "Restart"

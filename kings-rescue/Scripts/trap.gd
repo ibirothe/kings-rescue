@@ -28,5 +28,5 @@ func _on_body_entered(body):
 			GlobalDifficulty.losses +=1
 			var lose_text = "You managed to stop the Assassins from killing the King... by doing it yourself. \n \nWINS: " + str(GlobalDifficulty.wins) + "\n \nLOSSES: " + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY: " + str(GlobalDifficulty.difficulty_name()) + "\n \nHistory keeps repeating itself-maybe next time, you won’t be the one to slay the King. Press 'R' to retry... and perhaps find a safer path!"
 			GlobalText.set_text(lose_text)
-			game_manager.win_fade_out()
+			game_manager.win_fade_out(lose_text)
 			game_manager.party_ended = true
