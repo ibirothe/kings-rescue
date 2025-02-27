@@ -39,7 +39,8 @@ func spawn_soldiers():
 		
 		match i:
 			0:
-				pass
+				x -= 16
+				y -= 16
 			1: 
 				x += 16
 			2: 

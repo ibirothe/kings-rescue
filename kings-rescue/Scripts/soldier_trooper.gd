@@ -98,7 +98,7 @@ func _physics_process(_delta: float) -> void:
 func assasination_check() -> bool:
 	var possible_assassination = false
 	var soldier_close = true
-	if assassin == true and dead == false:
+	if assassin and !dead:
 		for bodies in neighbours_check.get_overlapping_bodies():
 			if bodies.role=="King":
 				king_direction = bodies.global_position - global_position
@@ -159,48 +159,6 @@ func handle_idle_state() -> void:
 		im_new = false
 		active = true"""
 
-
-"""func handle_movement_input(move_dir) -> void:
-	Refractor through click_manager
-	match current_state:
-		State.INACTIVE:
-			return
-	if not Input.is_action_just_pressed("left_click") or game_manager.party_ended:
-		return
-
-	if game_manager.soldier_in_a_way == true and im_new == false:
-		#print("Guy in a way")
-		transition_to_state(State.INACTIVE)
-		visual_deactivation()
-		return
-	if game_manager.soldier_changing == true and im_new == false:
-		transition_to_state(State.INACTIVE)
-		im_new = true
-		active = false
-		visual_deactivation()
-		return
-	if movement_locked == false and active == true: 
-		movestart_position = position
-		match move_dir:
-			"up": movement = Vector2(0, -16)
-			"down": movement = Vector2(0, 16)
-			"left": movement = Vector2(-16, 0)
-			"right": movement = Vector2(16,0)
-			
-		game_manager.currently_moving = true
-		movement_locked = true
-		print("Assassin - ", assassin)
-		print("Mercenary - ", mercenary)
-
-	if movement != Vector2.ZERO:
-		# Update sprite flip based on movement direction
-		if movement.x != 0:
-			animated_sprite_2d.flip_h = movement.x < 0
-	if active == true:
-		move_character(movement)"""
-
-
-"""We don't need that"""
 func calculate_grid_movement(click_pos: Vector2) -> Vector2:
 	var diff = click_pos - position
 	
@@ -366,26 +324,26 @@ func visual_deactivation():
 	var tween2 = create_tween()
 	tween2.tween_property(movement_arrows, "self_modulate:a", 0.0, 0.5)
 
-"""let troop handle everything"""
+"""Movement click signals"""
 func _on_right_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if Input.is_action_just_pressed("left_click"):
-		send_mov_click("right")
+		send_move_click("right")
 
 
 func _on_left_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if Input.is_action_just_pressed("left_click"):
-		send_mov_click("left")
+		send_move_click("left")
 
 
 func _on_down_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if Input.is_action_just_pressed("left_click"):
-		send_mov_click("down")
+		send_move_click("down")
 
 func _on_up_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if Input.is_action_just_pressed("left_click"):
-		send_mov_click("up")
+		send_move_click("up")
 		
-func send_mov_click(direction):
+func send_move_click(direction):
 	if 	game_manager.troop.current_soldier == self:
 		game_manager.troop.movement_query(direction, self)
 	

@@ -1,5 +1,4 @@
 extends Node2D
-var troop_scene = preload("res://Scenes/troop.tscn")
 var coin_scene = preload("res://Scenes/coin.tscn")
 var food_scene = preload("res://Scenes/food.tscn")
 var informant_scene = preload("res://Scenes/informant.tscn")
@@ -10,7 +9,6 @@ var y = 0  # Initialize y
 var occupied_positions = []
 var food = 10
 var setup_done = false
-var troop
 var soldier_in_a_way = false
 var skip_cycle = true
 var active_soldier: bool
@@ -28,6 +26,7 @@ var informantion = []
 var magic = false
 @onready var win_lose_label: Label = $"../CanvasLayer/Win-lose-label"
 @onready var color_rect: ColorRect = $"../CanvasLayer/ColorRect"
+@onready var troop = $"../Game Manager/Troop"
 var inside_board = true
 
 
@@ -39,8 +38,6 @@ func _ready() -> void:
 	x=king.position.x-16
 	y=king.position.y-16
 	if setup_done == false:
-		troop = troop_scene.instantiate()
-		self.add_child(troop)
 		troop.spawn_soldiers()
 		spawn_coins(coins_number)
 		spawn_food(food_number)
@@ -73,36 +70,10 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("Restart"):
 		get_tree().reload_current_scene()
-		Engine.time_scale = 1
+
 	if Input.is_action_just_pressed("Help"):
 		GlobalText.set_text("An assassination plot has been uncovered! Click to select a Soldier and move them. Soldiers can push the King to escort him safely from the board-but beware, if an Assassin gets close, only a Soldier standing next to them can stop the deadly strike.", "Starter Guide")
-		Engine.time_scale = 1
-	if cycle_odd == true:
-		cycle_odd = false
-	else:
-		cycle_odd == true
-	if cycle_odd == true:
-		cycle_odd = false
-	else:
-		cycle_odd == true
-
-	if soldier_in_a_way == true:
-		#print("in a way ", soldier_in_a_way, "; active ", active_soldier, "; changing ", soldier_changing)
-		if skip_cycle == true:
-			pass
-			skip_cycle = false
-		else:
-			soldier_in_a_way = false
-			skip_cycle = true
-			soldier_changing = false
-	if click_resolved == true:
-		if skip_cycle == true:
-			pass
-			skip_cycle = false
-		else:
-			click_resolved = false
-			skip_cycle = true
-
+	
 		
 func spawn_coins(coins_numb):
 	var i = 0
@@ -204,9 +175,7 @@ func win_fade_out(display_text, wait_time = 1.8):
 		var text_tween = create_tween()
 		text_tween.tween_property(win_lose_label, "modulate:a", 1.0, 1.0)
 		GlobalText.set_text(display_text)
-	else:
-		print("Cannot fade label - not found!")
-
+		
 
 func _on_boardclickarea_mouse_entered() -> void:
 	inside_board = true

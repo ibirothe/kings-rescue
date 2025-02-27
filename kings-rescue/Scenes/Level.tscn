@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=4 uid="uid://c5qlik5x313qp"]
+[gd_scene load_steps=18 format=4 uid="uid://c5qlik5x313qp"]
 
 [ext_resource type="Texture2D" uid="uid://bk373qbmw3vfy" path="res://Assets/game UI placeholder.png" id="1_817jl"]
+[ext_resource type="PackedScene" uid="uid://p8xuqhivfi58" path="res://Scenes/troop.tscn" id="2_hjf0c"]
 [ext_resource type="PackedScene" uid="uid://bny6i5an3s0g0" path="res://Scenes/king.tscn" id="2_tgcop"]
 [ext_resource type="Script" path="res://Scripts/game_manager.gd" id="4_2wxqe"]
 [ext_resource type="PackedScene" uid="uid://b0jdb1hdv5101" path="res://Scenes/virtual_keyboard.tscn" id="4_l3gnr"]
@@ -1086,6 +1087,9 @@ position = Vector2(-8, 8)
 
 [node name="Game Manager" type="Node2D" parent="."]
 script = ExtResource("4_2wxqe")
+
+[node name="Troop" parent="Game Manager" instance=ExtResource("2_hjf0c")]
+position = Vector2(-8, 8)
 
 [node name="VirtualKeyboard" parent="." instance=ExtResource("4_l3gnr")]
 offset_left = 91.0
