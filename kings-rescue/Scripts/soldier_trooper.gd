@@ -86,12 +86,13 @@ func _physics_process(_delta: float) -> void:
 			handle_idle_state()
 		State.MOVING:
 			# Movement is handled by tween, we just watch for new input
-			handle_movement_input(move_dir)
+			#handle_movement_input(move_dir)
+			pass
 		State.DEAD:
 			animated_sprite_2d.play(subclass+"_death")
 			animated_sprite_2d.frame = 3
 			
-	if click_resolved == true:
+	if click_resolved == true: #CHANGE TO CLICK MANAGER
 		click_resolved == false
 
 func assasination_check() -> bool:
@@ -150,14 +151,17 @@ func handle_inactive_state() -> void:
 
 func handle_idle_state() -> void:
 	 #, #GameManager.soldier_changing
+	pass
+	"""#Up for refractor
 	if game_manager.soldier_changing == true and im_new == false:
 		transition_to_state(State.INACTIVE)
 	if game_manager.soldier_changing == false and im_new == true:
 		im_new = false
-		active = true
+		active = true"""
 
 
-func handle_movement_input(move_dir) -> void:
+"""func handle_movement_input(move_dir) -> void:
+	Refractor through click_manager
 	match current_state:
 		State.INACTIVE:
 			return
@@ -193,10 +197,10 @@ func handle_movement_input(move_dir) -> void:
 		if movement.x != 0:
 			animated_sprite_2d.flip_h = movement.x < 0
 	if active == true:
-		move_character(movement)
+		move_character(movement)"""
 
 
-
+"""We don't need that"""
 func calculate_grid_movement(click_pos: Vector2) -> Vector2:
 	var diff = click_pos - position
 	
@@ -226,9 +230,9 @@ func move_character(movement: Vector2) -> void:
 		game_manager.food = max(0, game_manager.food-1)
 		movement_locked = false
 		game_manager.currently_moving = false
-		game_manager.refire_king()
-		)
-
+		game_manager.refire_king() 
+		) 
+"""remove refire king"""
 
 func transition_to_state(new_state: State) -> void:
 	match new_state:
@@ -242,10 +246,11 @@ func transition_to_state(new_state: State) -> void:
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if Input.is_action_just_pressed("left_click") and !game_manager.party_ended:
 		if !dead and !active:
-			game_manager.troop.activate_soldier(self)
+			game_manager.troop.activation_query(self)
 
 
 func turn_back():
+	print("turning back")
 	if tween:
 		tween.kill() # Stop the current tween
 	# Create new tween to return to start
@@ -264,6 +269,7 @@ func turn_back():
 		game_manager.refire_king()
 		)
 
+
 func stop_movement():
 	if tween:
 		tween.kill() # Stop the current tween
@@ -278,7 +284,7 @@ func death():
 		animated_sprite_2d.play(subclass+"_death")
 		
 
-
+"""is that death?"""
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if animated_sprite_2d.animation == subclass+"_death":
 		print("Handling death")
@@ -356,51 +362,34 @@ func visual_deactivation():
 	var tween2 = create_tween()
 	tween2.tween_property(movement_arrows, "self_modulate:a", 0.0, 0.5)
 
-		
-
+"""let troop handle everything"""
 func _on_right_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if Input.is_action_just_pressed("left_click"):
-		if game_manager.inside_board:
-			# Check if click position is not within another soldier's ActivationArea
-			var mouse_pos = get_viewport().get_mouse_position()
-			var overlapping_areas = false
-			# Get all soldiers in the scene
-			for soldier in game_manager.troop.soldiers:
-				# Skip checking against self
-				if soldier == self:
-					continue
-					
-				# Get the ActivationArea node of the soldier
-				var activation_area = soldier.get_node("Activation_area")
-				
-				# Check if the mouse position is within the area
-				if activation_area.get_global_rect().has_point(mouse_pos):
-					overlapping_areas = true
-					break
-			
-			# Only handle movement if not overlapping with other ActivationAreas
-			if not overlapping_areas:
-				move_dir = "right"
-				handle_movement_input(move_dir)
+		send_mov_click("right")
 
 
 func _on_left_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if Input.is_action_just_pressed("left_click"):
-		if game_manager.inside_board:
-			move_dir = "left"
-			handle_movement_input(move_dir)
+		send_mov_click("left")
 
 
 func _on_down_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if Input.is_action_just_pressed("left_click"):
-		if game_manager.inside_board:
-			move_dir = "down"
-			handle_movement_input(move_dir)
-
+		send_mov_click("down")
 
 func _on_up_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if Input.is_action_just_pressed("left_click"):
-		if game_manager.inside_board:
-			move_dir = "up"
-			handle_movement_input(move_dir)
-			
+		send_mov_click("up")
+		
+func send_mov_click(direction):
+	game_manager.troop.movement_query(direction, self)
+	
+func _on_bumping_area_body_entered(body: Node2D) -> void:
+
+	if body.subclass != self.subclass and game_manager.troop.current_soldier != self:
+		print("Hello there", body.subclass, " says ", self.subclass)
+		body.turn_back()
+		
+func soldier():
+	pass
+	#just for bumping purposes

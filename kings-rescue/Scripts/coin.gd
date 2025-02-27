@@ -9,10 +9,11 @@ func _ready():
 	body_entered.connect(_on_body_entered)
 
 func _on_body_entered(body):
-	if body.mercenary == true:
+	pass
+	"""if body.mercenary == true:
 		#body.active = false
 		body.animated_sprite_2d.play(body.subclass+"_default")
-		body.stop()
+		body.stop_movement()
 		body.active = false
 		body.animated_sprite_2d.play(body.subclass+"_walk")
 		body.get_parent().active_soldier = false
@@ -26,4 +27,4 @@ func _on_body_entered(body):
 	# Fade out over 1 second
 		tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
 		await tween.finished
-		queue_free()  # Remove the node after fading out
+		queue_free()  # Remove the node after fading out"""
