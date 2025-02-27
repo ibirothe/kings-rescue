@@ -80,17 +80,13 @@ func spawn_soldiers():
 
 func _physics_process(_delta: float) -> void:
 	if movement_click == true and activation_click == false and click_resolved == false and current_soldier != null:
-		for i in moving_soldier:
-			if current_soldier == i:
-				match movement_direction[j]:
-					"up": move_dir= Vector2(0, -16)
-					"down": move_dir = Vector2(0, 16)
-					"left": move_dir = Vector2(-16, 0)
-					"right": move_dir = Vector2(16,0)
-				current_soldier.movestart_position = current_soldier.position
-				print(current_soldier.movestart_position)
-				current_soldier.move_character(move_dir)
-			j += 1
+		match movement_direction:
+			"up": move_dir= Vector2(0, -16)
+			"down": move_dir = Vector2(0, 16)
+			"left": move_dir = Vector2(-16, 0)
+			"right": move_dir = Vector2(16,0)
+		current_soldier.movestart_position = current_soldier.position
+		current_soldier.move_character(move_dir)
 		reset_clicks()
 	elif movement_click == true and activation_click == true and click_resolved == false and current_soldier != null:
 		deactivate_soldier(current_soldier)
@@ -113,8 +109,8 @@ func _physics_process(_delta: float) -> void:
 
 func movement_query(where, guy):
 	movement_click = true
-	movement_direction.append(where)
-	moving_soldier.append(guy)
+	movement_direction = where
+	moving_soldier = guy
 	click_resolved = false
 
 func activation_query(guy):

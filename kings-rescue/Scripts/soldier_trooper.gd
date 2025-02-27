@@ -382,7 +382,8 @@ func _on_up_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> vo
 		send_mov_click("up")
 		
 func send_mov_click(direction):
-	game_manager.troop.movement_query(direction, self)
+	if 	game_manager.troop.current_soldier == self:
+		game_manager.troop.movement_query(direction, self)
 	
 func _on_bumping_area_body_entered(body: Node2D) -> void:
 
