@@ -73,7 +73,7 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	# Soldier leaving the board
-	self.board_leave_check()
+	self.leave_board()
 	# Check if food ran out
 	self.starvation_death()
 	# Assasinate if possible
@@ -125,7 +125,7 @@ func assasination() -> void:
 			game_manager.party_ended = true
 			AudioManager.play_sound("player_hurt")
 
-func board_leave_check() -> void:
+func leave_board() -> void:
 	if len(border_check.get_overlapping_bodies()) > 0:
 		stop_movement()
 		active = false
@@ -217,7 +217,11 @@ func move_character(movement: Vector2) -> void:
 		return
 	transition_to_state(State.MOVING)
 	animated_sprite_2d.play(subclass+"_walk")
-
+	
+	# Flip character if needed
+	if movement.x != 0:
+		animated_sprite_2d.flip_h = movement.x < 0
+	
 	tween = create_tween()
 	tween.tween_property(self, "position", 
 		position + movement, MOVE_TIME
@@ -386,7 +390,6 @@ func send_mov_click(direction):
 		game_manager.troop.movement_query(direction, self)
 	
 func _on_bumping_area_body_entered(body: Node2D) -> void:
-
 	if body.subclass != self.subclass and game_manager.troop.current_soldier != self:
 		print("Hello there", body.subclass, " says ", self.subclass)
 		body.turn_back()

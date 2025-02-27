@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bk373qbmw3vfy" path="res://Assets/game UI placeholder.png" id="1_817jl"]
 [ext_resource type="PackedScene" uid="uid://bny6i5an3s0g0" path="res://Scenes/king.tscn" id="2_tgcop"]
 [ext_resource type="Script" path="res://Scripts/game_manager.gd" id="4_2wxqe"]
-[ext_resource type="PackedScene" path="res://Scenes/virtual_keyboard.tscn" id="4_l3gnr"]
+[ext_resource type="PackedScene" uid="uid://b0jdb1hdv5101" path="res://Scenes/virtual_keyboard.tscn" id="4_l3gnr"]
 [ext_resource type="FontFile" uid="uid://c6fxatwakvveq" path="res://Fonts/Vest 9.ttf" id="7_rm11i"]
 [ext_resource type="Script" path="res://Scenes/label.gd" id="8_83tln"]
 [ext_resource type="Script" path="res://Scenes/namelabel.gd" id="8_f131e"]

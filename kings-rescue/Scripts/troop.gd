@@ -5,7 +5,6 @@ var movement_click = false
 var movement_direction = []
 var moving_soldier = []
 var activating_soldier
-var soldier
 var activation_click = false
 var click_resolved = true
 var current_soldier
@@ -16,7 +15,6 @@ var setup_done = false
 @onready var game_manager = get_parent()
 var soldiers = []
 @export var soldier_scene: PackedScene
-var move_dir
 
 func spawn_soldiers():
 	for i in range(8):
@@ -61,46 +59,24 @@ func spawn_soldiers():
 		self.add_child(soldier)
 		soldiers.append(soldier)
 
-# Activate target soldier and deactivate everyone else
-"""func activate_soldier(target_soldier) -> void:
-	for soldier in soldiers:
-		if !soldier.dead:
-			if soldier == target_soldier:
-				soldier.active = true
-				AudioManager.play_sound("select_soldier")
-				soldier.animated_sprite_2d.play(soldier.subclass+"_idle")
-				soldier.transition_to_state(soldier.State.IDLE)
-				soldier.visual_activation()
-				GlobalText.set_text(soldier.CHARACTER_DESCRIPTIONS[soldier.subclass], soldier.subclass)
-			else:
-				soldier.animated_sprite_2d.play(soldier.subclass+"_default")
-				soldier.transition_to_state(soldier.State.INACTIVE)
-				soldier.visual_deactivation()
-				soldier.active = false"""
-
 func _physics_process(_delta: float) -> void:
-	if movement_click == true and activation_click == false and click_resolved == false and current_soldier != null:
+	if soldier_can_move():
+		var move_dir: Vector2
 		match movement_direction:
-			"up": move_dir= Vector2(0, -16)
+			"up": move_dir = Vector2(0, -16)
 			"down": move_dir = Vector2(0, 16)
 			"left": move_dir = Vector2(-16, 0)
 			"right": move_dir = Vector2(16,0)
 		current_soldier.movestart_position = current_soldier.position
 		current_soldier.move_character(move_dir)
 		reset_clicks()
-	elif movement_click == true and activation_click == true and click_resolved == false and current_soldier != null:
-		deactivate_soldier(current_soldier)
-		activate_soldier(activating_soldier)
-		current_soldier = activating_soldier
-		reset_clicks()
-		print("Reactivation")
-	elif activation_click == true and current_soldier != null:
+	elif soldier_can_change():
 		activate_soldier(activating_soldier)
 		deactivate_soldier(current_soldier)
 		current_soldier = activating_soldier
 		print("Changing soldier")
 		reset_clicks()
-	elif activation_click == true and click_resolved == false:
+	elif soldier_can_activate():
 		print("First activation")
 		activate_soldier(activating_soldier)
 		current_soldier = activating_soldier
@@ -118,8 +94,7 @@ func activation_query(guy):
 	activating_soldier = guy
 	click_resolved = false
 	
-func activate_soldier(target_soldier) -> void:
-	soldier = target_soldier
+func activate_soldier(soldier) -> void:
 	soldier.active = true
 	AudioManager.play_sound("select_soldier")
 	soldier.animated_sprite_2d.play(soldier.subclass+"_idle")
@@ -127,8 +102,7 @@ func activate_soldier(target_soldier) -> void:
 	soldier.visual_activation()
 	GlobalText.set_text(soldier.CHARACTER_DESCRIPTIONS[soldier.subclass], soldier.subclass)
 	
-func deactivate_soldier(target_soldier) -> void:
-	soldier = target_soldier
+func deactivate_soldier(soldier) -> void:
 	soldier.animated_sprite_2d.play(soldier.subclass+"_default")
 	soldier.transition_to_state(soldier.State.INACTIVE)
 	soldier.visual_deactivation()
@@ -141,3 +115,13 @@ func reset_clicks():
 	moving_soldier = []
 	movement_direction = []
 	j = 0
+
+# Condition checks
+func soldier_can_move() -> bool:
+	return movement_click and !activation_click and !click_resolved and current_soldier != null
+	
+func soldier_can_change() -> bool:
+	return activation_click and current_soldier != null and !click_resolved
+	
+func soldier_can_activate() -> bool:
+	return activation_click and !click_resolved
