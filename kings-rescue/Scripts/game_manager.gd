@@ -157,7 +157,7 @@ func end_party(text_key, win) -> void:
 		GlobalDifficulty.difficulty =+1
 	else:
 		GlobalDifficulty.losses +=1
-	win_fade_out(txt.party_end[text_key])
+	win_fade_out(txt.get_party_end(text_key))
 	party_ended = true
 
 func win_fade_out(display_text, wait_time = 1.8):

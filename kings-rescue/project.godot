@@ -25,6 +25,11 @@ AudioManager="*res://Scenes/AudioManager.tscn"
 GlobalText="*res://Scripts/global_text.gd"
 GlobalDifficulty="*res://Scenes/global_difficulty.tscn"
 
+[display]
+
+window/size/viewport_width=1056
+window/size/viewport_height=594
+
 [input]
 
 left_click={

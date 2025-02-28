@@ -10,8 +10,6 @@ func _ready():
 
 func _on_body_entered(body):
 	if body is Soldier:
-		#body.active = false
-		body.animated_sprite_2d.play(body.subclass+"_default")
 		GlobalText.set_text(game_manager.txt.ingame["food"])
 		game_manager.food += food_efficiency-GlobalDifficulty.difficulty
 		AudioManager.play_sound("food_collect")
