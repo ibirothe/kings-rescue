@@ -1,0 +1,8 @@
+extends Node
+
+var party_end = {
+	"flee": "The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one? \n \nWINS: " + str(GlobalDifficulty.wins) + "\n \nLOSSES: " + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY: " + str(GlobalDifficulty.difficulty_name()) + "\n \nHistory keeps repeating itself, and saving just one King per century won’t break the cycle. Press 'R' to restart with increased difficulty!",
+	"starvation": "Your food stores are depleted. The soldiers begin to fall one by one-and soon, the king does as well. If you only listened to my instructions... \n \nWINS: " + str(GlobalDifficulty.wins) + "\n \nLOSSES: " + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY: " + str(GlobalDifficulty.difficulty_name()) + "\n \nHistory keeps repeating itself! Press 'R' to retry and keep an eye on your Food Rations.",
+	"assasination": "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \nWINS: " + str(GlobalDifficulty.wins) + "\n \nLOSSES: " + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY: " + str(GlobalDifficulty.difficulty_name()) + "\n \nHistory keeps repeating itself, and strangely, there are always two Assassins within the King's Guard. Press 'R' to restart… and trust no one!",
+	"trap": "You managed to stop the Assassins from killing the King... by doing it yourself. \n \nWINS: " + str(GlobalDifficulty.wins) + "\n \nLOSSES: " + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY: " + str(GlobalDifficulty.difficulty_name()) + "\n \nHistory keeps repeating itself-maybe next time, you won’t be the one to slay the King. Press 'R' to retry... and perhaps find a safer path!"
+}

@@ -43,12 +43,8 @@ func _physics_process(_delta: float) -> void:
 	if len(win.get_overlapping_bodies()) > 0:
 		win_anim()
 		if game_manager.party_ended == false:
-			GlobalDifficulty.wins +=1
-			GlobalText.set_text("")
-			var win_text = "The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one? \n \nWINS: " + str(GlobalDifficulty.wins) + "\n \nLOSSES: " + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY: " + str(GlobalDifficulty.difficulty_name()) + "\n \nHistory keeps repeating itself, and saving just one King per century won’t break the cycle. Press 'R' to restart with increased difficulty!"
-			GlobalDifficulty.difficulty =+1
-			game_manager.win_fade_out(win_text)
-			game_manager.party_ended = true
+			game_manager.end_party("flee", true)
+			
 			
 func king():
 	direction_check = false

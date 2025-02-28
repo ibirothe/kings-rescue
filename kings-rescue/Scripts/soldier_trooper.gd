@@ -114,15 +114,9 @@ func assasination() -> void:
 		if !game_manager.party_ended:
 			animated_sprite_2d.flip_h = king_direction.x < 0
 			animated_sprite_2d.play(subclass+"_attack")
-			
-			print(subclass)
-
-			GlobalDifficulty.losses +=1
-			var lose_text = "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \nWINS: " + str(GlobalDifficulty.wins) + "\n \nLOSSES: " + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY: " + str(GlobalDifficulty.difficulty_name()) + "\n \nHistory keeps repeating itself, and strangely, there are always two Assassins within the King's Guard. Press 'R' to restart… and trust no one!"
-			GlobalText.set_text("")
-			game_manager.win_fade_out(lose_text)
-			game_manager.party_ended = true
 			AudioManager.play_sound("player_hurt")
+			
+			game_manager.end_party("assasination", false)
 
 func leave_board() -> void:
 	if len(border_check.get_overlapping_bodies()) > 0:
@@ -249,18 +243,13 @@ func death():
 """is that death?"""
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if animated_sprite_2d.animation == subclass+"_death":
-		print("Handling death")
 		collision_shape_2d.disabled = true
 		game_manager.food = max(0, game_manager.food-1)
 		dead = true
-		print("Im dead")
 		transition_to_state(State.DEAD)
 		active = false
 		movement_locked = false
-		if game_manager.soldier_changing == false:
-			game_manager.active_soldier = false
-			im_new = true
-			active = false
+
 		game_manager.active_soldier = false
 		game_manager.currently_moving = false
 		return

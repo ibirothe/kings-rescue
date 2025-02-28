@@ -3,6 +3,7 @@ var coin_scene = preload("res://Scenes/coin.tscn")
 var food_scene = preload("res://Scenes/food.tscn")
 var informant_scene = preload("res://Scenes/informant.tscn")
 var trap_scene = preload("res://Scenes/trap.tscn")
+var txt_scene = preload("res://Scenes/Texts.tscn")
 var x = 0  # Initialize x
 var y = 0  # Initialize y
 var occupied_positions = []
@@ -11,17 +12,20 @@ var setup_done = false
 var active_soldier: bool
 var currently_moving = false
 var party_ended = false
+var inside_board = false
+var informantion = []
+var magic = false
+
 @export var coins_number = 6
 @export var food_number = 7
 @export var trap_number = 14
 @export var informant_number = 2
+
 @onready var king: CharacterBody2D = $"../King"
-var informantion = []
-var magic = false
 @onready var win_lose_label: Label = $"../CanvasLayer/Win-lose-label"
 @onready var color_rect: ColorRect = $"../CanvasLayer/ColorRect"
 @onready var troop = $"../Game Manager/Troop"
-var inside_board = false
+@onready var txt = txt_scene.instantiate()
 
 
 func _ready() -> void:
@@ -52,14 +56,8 @@ func _physics_process(delta: float) -> void:
 			add_child(trap)
 			magic = true
 	if food == 0:
-		
-		AudioManager.stop_music()
 		if party_ended == false:
-			GlobalDifficulty.losses +=1
-			GlobalText.set_text("")
-			var lose_text = "Your food stores are depleted. The soldiers begin to fall one by one-and soon, the king does as well. If you only listened to my instructions... \n \nWINS: " + str(GlobalDifficulty.wins) + "\n \nLOSSES: " + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY: " + str(GlobalDifficulty.difficulty_name()) + "\n \nHistory keeps repeating itself! Press 'R' to retry and keep an eye on your Food Rations"
-			win_fade_out(lose_text)
-			party_ended = true
+			end_party("starvation", false)
 
 	if Input.is_action_just_pressed("Restart"):
 		get_tree().reload_current_scene()
@@ -151,6 +149,17 @@ func spawn_traps(traps_numb):
 func refire_king():
 	king.king()
 
+func end_party(text_key, win) -> void:
+	GlobalText.set_text("")
+	AudioManager.stop_music()
+	if win:
+		GlobalDifficulty.wins +=1
+		GlobalDifficulty.difficulty =+1
+	else:
+		GlobalDifficulty.losses +=1
+	win_fade_out(txt.party_end[text_key])
+	party_ended = true
+
 func win_fade_out(display_text, wait_time = 1.8):
 	# Wait for the timer to complete before proceeding
 	await get_tree().create_timer(wait_time).timeout
@@ -172,7 +181,6 @@ func win_fade_out(display_text, wait_time = 1.8):
 
 func _on_boardclickarea_mouse_entered() -> void:
 	inside_board = true
-	pass # Replace with function body.
 
 
 func _on_boardclickarea_mouse_exited() -> void:
