@@ -63,7 +63,7 @@ func _physics_process(delta: float) -> void:
 		get_tree().reload_current_scene()
 
 	if Input.is_action_just_pressed("Help"):
-		GlobalText.set_text("An assassination plot has been uncovered! Click to select a Soldier and move them. Soldiers can push the King to escort him safely from the board-but beware, if an Assassin gets close, only a Soldier standing next to them can stop the deadly strike.", "Starter Guide")
+		GlobalText.set_text(txt.ingame["start"])
 	
 		
 func spawn_coins(coins_numb):
@@ -163,9 +163,7 @@ func end_party(text_key, win) -> void:
 func win_fade_out(display_text, wait_time = 1.8):
 	# Wait for the timer to complete before proceeding
 	await get_tree().create_timer(wait_time).timeout
-	
-	print("Fade out")
-	# Screen fade
+
 	var tween = create_tween().set_trans(Tween.TRANS_LINEAR)
 	# Fade from transparent to black
 	tween.tween_property(color_rect, "color", Color(0, 0, 0, 1), 1.0)

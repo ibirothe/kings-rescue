@@ -57,17 +57,6 @@ var blue_shader_code = """
 	}
 	"""
 
-const CHARACTER_DESCRIPTIONS = {
-	"Rupert": "Rupert has been in the guard for 45 years. The only thing he fears more than death is retirement.",
-	"Thoralf": "Thoralf is an older wizard making inappropriate jokes sometimes. We try not to laugh, but it's hard at times.",
-	"Ogra": "Ogra has trained for the King's Guard since she was a little girl. No way she's an imposter.",
-	"Bartholo": "Bartholo wanted to be an inventor, but his parents said no. So he became a video game character.",
-	"Ibrahim": "Ibrahim is a loyal kingsman. At least, that's what I assume. Placing him next to a Gold Coin will bring some clarity.",
-	"Edwin": "Edwin's singing voice sounds like birds in spring. Unfortunately, we didn't hire voice actors to prove it.",
-	"Marquise": "Marquise's archery is masterful. Sadly, the developers didn't put arrows in the game.",
-	"Arianna": "Arianna joined the King's Guard recently. She had exceptional results in the job interview."
-}
-
 func _ready() -> void:
 	# Start with default animation
 	animated_sprite_2d.play(subclass+"_default")
@@ -124,7 +113,7 @@ func leave_board() -> void:
 		active = false
 		game_manager.active_soldier = false
 		game_manager.currently_moving = false
-		var text=subclass + " left. Hope they bring some help. Godspeed."
+		var text= subclass + game_manager.txt.ingame["soldier_leaving"]
 		GlobalText.set_text(text)
 		queue_free()
 
@@ -203,7 +192,7 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 		if !dead and !active:
 			game_manager.troop.activation_query(self)
 		elif dead and game_manager.troop.current_soldier == null:
-			GlobalText.set_text("He's dead, Jim.")
+			GlobalText.set_text(game_manager.txt.ingame["dead_body"])
 
 
 func turn_back():

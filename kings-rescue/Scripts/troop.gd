@@ -102,7 +102,7 @@ func activate_soldier(soldier) -> void:
 	soldier.animated_sprite_2d.play(soldier.subclass+"_idle")
 	soldier.transition_to_state(soldier.State.IDLE)
 	soldier.visual_activation()
-	GlobalText.set_text(soldier.CHARACTER_DESCRIPTIONS[soldier.subclass], soldier.subclass)
+	GlobalText.set_text(game_manager.txt.CHARACTER_DESCRIPTIONS[soldier.subclass])
 	
 func deactivate_soldier(soldier) -> void:
 	soldier.animated_sprite_2d.play(soldier.subclass+"_default")

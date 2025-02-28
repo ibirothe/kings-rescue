@@ -5,23 +5,7 @@ extends Area2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 var number
 var info
-var assassin_manuals = ["This one is a cooking recipe. No information about assassins.", 
-"A note about knife sharpening techniques.",
-"A page from human anatomy book.",
-"King is an assassin.",
-"There are no traps on this level.",
-"If you run out of food, only traitors die.",
-"**shreds the paper**",
-"Bring this letter to the king, make sure he's alone.",
-"It's a magical spell. Press L to use it.",
-"On this level you win if the king dies."
-]
-var mercenary_manuals = ["This is not the dollar bill, you were looking for.", 
-"A note about the 13th-century stock market.",
-"You thought it was a job posting, right?",
-"There is a teleporting stone close to that Coin over there.",
-"You could try and sell this note!?"
-]
+
 
 func _ready():
 	# Connect the body_entered signal
@@ -33,10 +17,10 @@ func _on_body_entered(body):
 		#body.active = false
 		if body.assassin == true:
 			var i = round(randf_range(0, 9))
-			GlobalText.set_text(assassin_manuals[i])
+			GlobalText.set_text(game_manager.txt.assassin_manuals[i])
 		#elif body.mercenary == true:
 		#	var i = round(randf_range(0, 4))
-		#	GlobalText.set_text(mercenary_manuals[i])
+		#	GlobalText.set_text(game_manager.txt.mercenary_manuals[i])
 		else:
 			GlobalText.set_text(str(info))
 		# Delete the item

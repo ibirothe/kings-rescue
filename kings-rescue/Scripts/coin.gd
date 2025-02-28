@@ -21,7 +21,7 @@ func _on_body_entered(body):
 		body.get_parent().currently_moving = false
 		body.take_coin()
 		AudioManager.play_sound("mercenary_flee")
-		GlobalText.set_text("A mercenary fled. They value gold higher than loyalty, but even the best King’s Guard has two of them.")
+		GlobalText.set_text(game_manager.txt.ingame["mercenary_flee"])
 		var tween = create_tween()
 	
 	# Fade out over 1 second
