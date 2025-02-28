@@ -15,6 +15,7 @@ var setup_done = false
 @onready var game_manager = get_parent()
 var soldiers = []
 @export var soldier_scene: PackedScene
+var move_dir: Vector2
 
 func spawn_soldiers():
 	for i in range(8):
@@ -62,7 +63,7 @@ func spawn_soldiers():
 
 func _physics_process(_delta: float) -> void:
 	if soldier_can_move():
-		var move_dir: Vector2
+
 		match movement_direction:
 			"up": move_dir = Vector2(0, -16)
 			"down": move_dir = Vector2(0, 16)

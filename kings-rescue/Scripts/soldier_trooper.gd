@@ -277,7 +277,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		return
 	if animated_sprite_2d.animation == subclass+"_attack":
 		print("Finish attack")
-		animated_sprite_2d.stop()
+		transition_to_state(State.IDLE)
 		
 		
 		

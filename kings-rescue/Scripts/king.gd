@@ -18,6 +18,7 @@ const MOVE_TIME := 0.5  # Time in seconds to complete movement
 var trap = false
 var win_check = false
 
+
 func _ready() -> void:
 	#print(position)
 	pass
@@ -65,28 +66,28 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 				print(right.get_overlapping_bodies())
 				print("illegal")
 			else:
-				move_character(body.movement)
+				move_character(game_manager.troop.move_dir)
 		if direction.x > 0 and direction.y == 0:
 			print("left")
 			if len(left.get_overlapping_bodies()) > 0:
 				body.turn_back()
 				print("illegal")
 			else:
-				move_character(body.movement)
+				move_character(game_manager.troop.move_dir)
 		if direction.x == 0 and direction.y > 0:
 			print("up")
 			if len(up.get_overlapping_bodies()) > 0:
 				body.turn_back()
 				print("illegal")
 			else:
-				move_character(body.movement)
+				move_character(game_manager.troop.move_dir)
 		if direction.x == 0 and direction.y < 0:
 			print("down")
 			if len(down.get_overlapping_bodies()) > 0:
 				body.turn_back()
 				print("illegal")
 			else:
-				move_character(body.movement)
+				move_character(game_manager.troop.move_dir)
 		#direction_check = true
 	
 func handle_idle_state() -> void:
