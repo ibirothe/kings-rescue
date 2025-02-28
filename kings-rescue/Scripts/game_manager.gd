@@ -8,6 +8,7 @@ var x = 0  # Initialize x
 var y = 0  # Initialize y
 var occupied_positions = []
 var food = 10
+var coins = 0
 var setup_done = false
 var active_soldier: bool
 var currently_moving = false
@@ -23,7 +24,7 @@ var magic = false
 
 @onready var king: CharacterBody2D = $"../King"
 @onready var win_lose_label: Label = $"../CanvasLayer/Win-lose-label"
-@onready var color_rect: ColorRect = $"../CanvasLayer/ColorRect"
+@onready var background: Sprite2D = $"../CanvasLayer/background"
 @onready var troop = $"../Game Manager/Troop"
 @onready var txt = txt_scene.instantiate()
 
@@ -31,7 +32,6 @@ var magic = false
 func _ready() -> void:
 	AudioManager.play_sound("ambience",0.0,1.0,true)
 	AudioManager.play_music("bg_music", -10.5)
-	color_rect.color = Color(0, 0, 0, 0)  # Initialize with transparent black
 	#active_soldier = false
 	x=king.position.x-16
 	y=king.position.y-16
@@ -155,8 +155,10 @@ func end_party(text_key, win) -> void:
 	if win:
 		GlobalDifficulty.wins +=1
 		GlobalDifficulty.difficulty =+1
+		AudioManager.play_music("win_jingle", -8, false)
 	else:
 		GlobalDifficulty.losses +=1
+		AudioManager.play_music("lose_jingle", -8, false)
 	win_fade_out(txt.get_party_end(text_key))
 	party_ended = true
 
@@ -166,7 +168,7 @@ func win_fade_out(display_text, wait_time = 1.8):
 
 	var tween = create_tween().set_trans(Tween.TRANS_LINEAR)
 	# Fade from transparent to black
-	tween.tween_property(color_rect, "color", Color(0, 0, 0, 1), 1.0)
+	tween.tween_property(background, "modulate", Color(0, 0, 0, 1), 1.0)
 	await tween.finished
 	# Short pause
 	await get_tree().create_timer(0.5).timeout

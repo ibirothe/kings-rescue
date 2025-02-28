@@ -155,10 +155,10 @@ func play_music(track_name: String, volume_db: float = 0.0, loop: bool = true) -
 	# Use ResourceLoader instead of file existence check
 	var music_stream
 	
-	# You can either preload specific music tracks:
 	var music_tracks = {
-		"title": preload("res://Assets/Music/bg_music.wav")
-		# Add more music tracks here
+		"title": preload("res://Assets/Music/bg_music.wav"),
+		"win_jingle": preload("res://Assets/Music/win_jingle.wav"),
+		"lose_jingle": preload("res://Assets/Music/lose_jingle.wav")
 	}
 	
 	if music_tracks.has(track_name):
