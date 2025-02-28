@@ -26,10 +26,15 @@ var role
 var bodies
 var movestart_position
 var returning = false
-var tween
+
 var dead = false
 var king_direction
 var move_dir
+var tint_tween
+var border_tween
+var arrows_tween
+var movement_tween
+var coin_tween
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var border_check: Area2D = $Border_check
 @onready var square_border: AnimatedSprite2D = $Square_border
@@ -104,6 +109,7 @@ func assasination_check() -> bool:
 				king_direction = bodies.global_position - global_position
 				possible_assassination = true
 			if bodies.role=="Soldier":
+				print(bodies.subclass)
 				if bodies.dead != true:
 					soldier_close = true
 	return possible_assassination and !soldier_close
@@ -116,7 +122,6 @@ func assasination() -> void:
 			else:
 				animated_sprite_2d.flip_h = false
 			animated_sprite_2d.play(subclass+"_attack")
-
 		if game_manager.party_ended == false:
 			GlobalDifficulty.losses +=1
 			var lose_text = "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \nWINS: " + str(GlobalDifficulty.wins) + "\n \nLOSSES: " + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY: " + str(GlobalDifficulty.difficulty_name()) + "\n \nHistory keeps repeating itself, and strangely, there are always two Assassins within the King's Guard. Press 'R' to restart… and trust no one!"
@@ -180,13 +185,13 @@ func move_character(movement: Vector2) -> void:
 	if movement.x != 0:
 		animated_sprite_2d.flip_h = movement.x < 0
 	
-	tween = create_tween()
-	tween.tween_property(self, "position", 
+	movement_tween = create_tween()
+	movement_tween.tween_property(self, "position", 
 		position + movement, MOVE_TIME
 	).set_trans(Tween.TRANS_LINEAR)
 	
 	# When movement completes
-	tween.tween_callback(func():
+	movement_tween.tween_callback(func():
 		animated_sprite_2d.play(subclass+"_idle")
 		transition_to_state(State.IDLE)
 		game_manager.food = max(0, game_manager.food-1)
@@ -209,21 +214,23 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 	if Input.is_action_just_pressed("left_click") and !game_manager.party_ended:
 		if !dead and !active:
 			game_manager.troop.activation_query(self)
+		elif dead and game_manager.troop.current_soldier == null:
+			GlobalText.set_text("He's dead, Jim.")
 
 
 func turn_back():
 	print("turning back")
-	if tween:
-		tween.kill() # Stop the current tween
+	if movement_tween:
+		movement_tween.kill() # Stop the current tween
 	# Create new tween to return to start
-	tween = create_tween()
-	tween.tween_property(self, "position", 
+	movement_tween = create_tween()
+	movement_tween.tween_property(self, "position", 
 		movestart_position, MOVE_TIME
 	).set_trans(Tween.TRANS_LINEAR)
 	
 
 	# When return movement completes
-	tween.tween_callback(func():
+	movement_tween.tween_callback(func():
 		animated_sprite_2d.play(subclass+"_idle")
 		transition_to_state(State.IDLE)
 		movement_locked = false
@@ -233,15 +240,15 @@ func turn_back():
 
 
 func stop_movement():
-	if tween:
-		tween.kill() # Stop the current tween
+	if movement_tween:
+		movement_tween.kill() # Stop the current tween
 		
 
 func death():
 	stop_movement()
 	visual_deactivation()
 	click_resolved == true
-
+	game_manager.troop.current_soldier = null
 	if animated_sprite_2d.animation != subclass+"_death":
 		animated_sprite_2d.play(subclass+"_death")
 		
@@ -267,10 +274,10 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		return
 		
 func take_coin():
-	tween = create_tween()
+	coin_tween = create_tween()
 	# Fade out over 1 second
-	tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
-	await tween.finished
+	coin_tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
+	await coin_tween.finished
 	queue_free()  # Remove the node after fading out
 
 func visual_activation():
@@ -298,31 +305,36 @@ func visual_activation():
 	animated_sprite_2d.material = blue_shader_material
 	
 	# Tween the shader parameter
-	tween = create_tween()
-	tween.tween_method(func(value): 
+	tint_tween = create_tween()
+	tint_tween.tween_method(func(value): 
 		animated_sprite_2d.material.set_shader_parameter("tint_effect", value), 
 		0.2, 0.4, 0.4)
-	var tween1 = create_tween()
-	tween1.tween_property(square_border, "self_modulate:a", 0.9, 1.5)
+	border_tween = create_tween()
+	border_tween.tween_property(square_border, "self_modulate:a", 0.9, 1.5)
 	animation_player.play("Border_blink")
-	var tween2 = create_tween()
-	tween2.tween_property(movement_arrows, "self_modulate:a", 0.9, 1.5)
-	await tween2.finished
+	arrows_tween = create_tween()
+	arrows_tween.tween_property(movement_arrows, "self_modulate:a", 0.9, 1.5)
+	#await tween2.finished
 
 func visual_deactivation():
-	if !animated_sprite_2d.material or !active:
-		return
+	tint_tween.kill()
+	border_tween.kill()
+	arrows_tween.kill()
+	"""if !animated_sprite_2d.material:
+		return"""
 	print("Visual deactivation")
 	# Tween the shader parameter
-	tween = create_tween()
-	tween.tween_method(func(value): 
+	#await tween1.finished
+	#await tween2.finished
+	tint_tween = create_tween()
+	tint_tween.tween_method(func(value): 
 		animated_sprite_2d.material.set_shader_parameter("tint_effect", value), 
 		0.0, 0.0, 0.0)
 	animation_player.stop()
-	var tween1 = create_tween()
-	tween1.tween_property(square_border, "self_modulate:a", 0.0, 0.5)
-	var tween2 = create_tween()
-	tween2.tween_property(movement_arrows, "self_modulate:a", 0.0, 0.5)
+	border_tween = create_tween()
+	border_tween.tween_property(square_border, "self_modulate:a", 0.0, 0.5)
+	var arrows_tween = create_tween()
+	arrows_tween.tween_property(movement_arrows, "self_modulate:a", 0.0, 0.5)
 
 """Movement click signals"""
 func _on_right_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
@@ -355,3 +367,7 @@ func _on_bumping_area_body_entered(body: Node2D) -> void:
 func soldier():
 	pass
 	#just for bumping purposes
+
+
+func _on_neighbours_check_body_shape_exited(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+	pass # Replace with function body.
