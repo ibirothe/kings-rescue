@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 class_name Soldier
-enum State {INACTIVE, IDLE, MOVING, DEAD, ASSASSINATION}
+enum State {INACTIVE, IDLE, MOVING, DEAD}
 @onready var game_manager: Node2D = get_parent().get_parent()
 @onready var neighbours_check: Area2D = $Neighbours_check
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -93,10 +93,7 @@ func _physics_process(_delta: float) -> void:
 		State.MOVING:
 			# Movement is handled by tween, we just watch for new input
 			#handle_movement_input(move_dir)
-			pass
-		State.ASSASSINATION:
-			animated_sprite_2d.play(subclass+"_attack")
-			
+			pass	
 		State.DEAD:
 			animated_sprite_2d.play(subclass+"_death")
 			animated_sprite_2d.frame = 3
@@ -111,21 +108,18 @@ func assasination_check() -> bool:
 				king_direction = bodies.global_position - global_position
 				possible_assassination = true
 			if bodies.role=="Soldier":
-				print(bodies.subclass)
 				if bodies.dead != true:
 					soldier_close = true
 	return possible_assassination and !soldier_close
 
 func assasination() -> void:
 	if self.assasination_check():
-		if animated_sprite_2d.animation != subclass+"_attack":
-			if king_direction.x < 0:
-				animated_sprite_2d.flip_h = true
-			else:
-				animated_sprite_2d.flip_h = false
-			print("ATTACK")
-		if game_manager.party_ended == false:
-			transition_to_state(State.ASSASSINATION)
+		if !game_manager.party_ended:
+			animated_sprite_2d.flip_h = king_direction.x < 0
+			animated_sprite_2d.play(subclass+"_attack")
+			
+			print(subclass)
+
 			GlobalDifficulty.losses +=1
 			var lose_text = "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \nWINS: " + str(GlobalDifficulty.wins) + "\n \nLOSSES: " + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY: " + str(GlobalDifficulty.difficulty_name()) + "\n \nHistory keeps repeating itself, and strangely, there are always two Assassins within the King's Guard. Press 'R' to restart… and trust no one!"
 			GlobalText.set_text("")
@@ -155,7 +149,8 @@ func starvation_death() -> void:
 		game_manager = get_parent().get_parent()
 		
 func handle_inactive_state() -> void:
-	self.animated_sprite_2d.play(subclass+"_default")
+	if !game_manager.party_ended:
+		self.animated_sprite_2d.play(subclass+"_default")
 
 func handle_idle_state() -> void:
 	 #, #GameManager.soldier_changing
