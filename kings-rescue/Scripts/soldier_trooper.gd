@@ -15,7 +15,6 @@ var mercenary = false
 
 var number = 0
 var subclass
-var click_resolved = false
 var im_new = true
 var active = false
 var next_cycle = false
@@ -98,9 +97,7 @@ func _physics_process(_delta: float) -> void:
 			animated_sprite_2d.play(subclass+"_death")
 			animated_sprite_2d.frame = 3
 			
-	if click_resolved == true: #CHANGE TO CLICK MANAGER
-		click_resolved == false
-
+			
 func assasination_check() -> bool:
 	if assassin and !dead:
 		for bodies in neighbours_check.get_overlapping_bodies():
@@ -132,7 +129,6 @@ func leave_board() -> void:
 		stop_movement()
 		active = false
 		game_manager.active_soldier = false
-		game_manager.click_resolved = false
 		game_manager.currently_moving = false
 		var text=subclass + " left. Hope they bring some help. Godspeed."
 		GlobalText.set_text(text)
@@ -245,7 +241,6 @@ func stop_movement():
 func death():
 	stop_movement()
 	visual_deactivation()
-	click_resolved == true
 	game_manager.troop.current_soldier = null
 	if animated_sprite_2d.animation != subclass+"_death":
 		animated_sprite_2d.play(subclass+"_death")
@@ -267,7 +262,6 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 			im_new = true
 			active = false
 		game_manager.active_soldier = false
-		game_manager.click_resolved = false
 		game_manager.currently_moving = false
 		return
 	if animated_sprite_2d.animation == subclass+"_attack":
