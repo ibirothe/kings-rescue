@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 class_name Soldier
-enum State {INACTIVE, IDLE, MOVING, DEAD}
+enum State {INACTIVE, IDLE, MOVING, DEAD, ASSASSINATION}
 @onready var game_manager: Node2D = get_parent().get_parent()
 @onready var neighbours_check: Area2D = $Neighbours_check
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -26,7 +26,8 @@ var role
 var bodies
 var movestart_position
 var returning = false
-
+var possible_assassination = false
+var soldier_close = true
 var dead = false
 var king_direction
 var move_dir
@@ -93,6 +94,9 @@ func _physics_process(_delta: float) -> void:
 			# Movement is handled by tween, we just watch for new input
 			#handle_movement_input(move_dir)
 			pass
+		State.ASSASSINATION:
+			animated_sprite_2d.play(subclass+"_attack")
+			
 		State.DEAD:
 			animated_sprite_2d.play(subclass+"_death")
 			animated_sprite_2d.frame = 3
@@ -101,8 +105,6 @@ func _physics_process(_delta: float) -> void:
 		click_resolved == false
 
 func assasination_check() -> bool:
-	var possible_assassination = false
-	var soldier_close = true
 	if assassin and !dead:
 		for bodies in neighbours_check.get_overlapping_bodies():
 			if bodies.role=="King":
@@ -121,8 +123,9 @@ func assasination() -> void:
 				animated_sprite_2d.flip_h = true
 			else:
 				animated_sprite_2d.flip_h = false
-			animated_sprite_2d.play(subclass+"_attack")
+			print("ATTACK")
 		if game_manager.party_ended == false:
+			transition_to_state(State.ASSASSINATION)
 			GlobalDifficulty.losses +=1
 			var lose_text = "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \nWINS: " + str(GlobalDifficulty.wins) + "\n \nLOSSES: " + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY: " + str(GlobalDifficulty.difficulty_name()) + "\n \nHistory keeps repeating itself, and strangely, there are always two Assassins within the King's Guard. Press 'R' to restart… and trust no one!"
 			GlobalText.set_text("")
@@ -272,6 +275,11 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		game_manager.click_resolved = false
 		game_manager.currently_moving = false
 		return
+	if animated_sprite_2d.animation == subclass+"_attack":
+		print("Finish attack")
+		animated_sprite_2d.stop()
+		
+		
 		
 func take_coin():
 	coin_tween = create_tween()
@@ -368,6 +376,11 @@ func soldier():
 	pass
 	#just for bumping purposes
 
-
-func _on_neighbours_check_body_shape_exited(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
-	pass # Replace with function body.
+# 
+func _on_neighbours_check_body_exited(body: Node2D) -> void:
+		if body.role == "Soldier":
+			if assassin == true:
+				soldier_close = false
+		elif body.role == "King":
+			if assassin == true:
+				possible_assassination = false

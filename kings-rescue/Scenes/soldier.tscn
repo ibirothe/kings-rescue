@@ -1411,7 +1411,7 @@ script = ExtResource("1_ywy20")
 z_index = 2
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_i3egf")
-animation = &"Marquise_death"
+animation = &"Thoralf_walk"
 autoplay = "Arianna_default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
