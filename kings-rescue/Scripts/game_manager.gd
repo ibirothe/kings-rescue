@@ -3,18 +3,12 @@ var coin_scene = preload("res://Scenes/coin.tscn")
 var food_scene = preload("res://Scenes/food.tscn")
 var informant_scene = preload("res://Scenes/informant.tscn")
 var trap_scene = preload("res://Scenes/trap.tscn")
-var rng = RandomNumberGenerator.new()
 var x = 0  # Initialize x
 var y = 0  # Initialize y
 var occupied_positions = []
 var food = 10
 var setup_done = false
-var soldier_in_a_way = false
-var skip_cycle = true
 var active_soldier: bool
-var soldier_changing = false
-var click_resolved = true
-var cycle_odd = true
 var currently_moving = false
 var party_ended = false
 @export var coins_number = 6
@@ -27,7 +21,7 @@ var magic = false
 @onready var win_lose_label: Label = $"../CanvasLayer/Win-lose-label"
 @onready var color_rect: ColorRect = $"../CanvasLayer/ColorRect"
 @onready var troop = $"../Game Manager/Troop"
-var inside_board = true
+var inside_board = false
 
 
 func _ready() -> void:
@@ -48,7 +42,6 @@ func _ready() -> void:
 	
 
 func _physics_process(delta: float) -> void:
-	#print(active_soldier, " ", click_resolved, " ", currently_moving)
 	if Input.is_action_just_pressed("Magic"):
 		if magic == false:
 			var trap = trap_scene.instantiate()
