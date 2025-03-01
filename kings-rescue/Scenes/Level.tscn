@@ -1,15 +1,13 @@
-[gd_scene load_steps=17 format=3 uid="uid://c5qlik5x313qp"]
+[gd_scene load_steps=15 format=3 uid="uid://c5qlik5x313qp"]
 
 [ext_resource type="Texture2D" uid="uid://ows0y8w8e8rn" path="res://Assets/ingame_background.png" id="1_rfxam"]
 [ext_resource type="PackedScene" uid="uid://p8xuqhivfi58" path="res://Scenes/troop.tscn" id="2_hjf0c"]
 [ext_resource type="PackedScene" uid="uid://bny6i5an3s0g0" path="res://Scenes/king.tscn" id="2_tgcop"]
 [ext_resource type="Script" path="res://Scripts/game_manager.gd" id="4_2wxqe"]
-[ext_resource type="PackedScene" uid="uid://b0jdb1hdv5101" path="res://Scenes/virtual_keyboard.tscn" id="4_l3gnr"]
 [ext_resource type="FontFile" uid="uid://c6fxatwakvveq" path="res://Fonts/Vest 9.ttf" id="7_rm11i"]
 [ext_resource type="Script" path="res://Scenes/label.gd" id="8_83tln"]
 [ext_resource type="Script" path="res://Scenes/food_label.gd" id="8_hmn42"]
 [ext_resource type="Script" path="res://Scenes/coin_label.gd" id="9_ffase"]
-[ext_resource type="Texture2D" uid="uid://c1njsxs66tmbo" path="res://Assets/gameend_background.png" id="10_mlj3l"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ryrto"]
 line_spacing = -5.0
@@ -49,14 +47,6 @@ script = ExtResource("4_2wxqe")
 
 [node name="Troop" parent="Game Manager" instance=ExtResource("2_hjf0c")]
 position = Vector2(-8, 8)
-
-[node name="VirtualKeyboard" parent="." instance=ExtResource("4_l3gnr")]
-visible = false
-offset_left = 96.0
-offset_top = -84.0
-offset_right = 136.0
-offset_bottom = -44.0
-metadata/_edit_use_anchors_ = true
 
 [node name="CoinLabel" type="Label" parent="."]
 texture_filter = 1
@@ -129,31 +119,6 @@ collision_mask = 128
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bot Win"]
 position = Vector2(-3, 118)
 shape = SubResource("RectangleShape2D_641yk")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-scale = Vector2(3, 3)
-transform = Transform2D(3, 0, 0, 3, 0, 0)
-
-[node name="background" type="Sprite2D" parent="CanvasLayer"]
-modulate = Color(1, 1, 1, 0)
-position = Vector2(176, 99)
-texture = ExtResource("10_mlj3l")
-
-[node name="Win-lose-label" type="Label" parent="CanvasLayer"]
-z_index = 3
-texture_filter = 1
-anchors_preset = -1
-offset_left = 137.25
-offset_right = 265.25
-offset_bottom = 198.0
-scale = Vector2(0.6, 0.6)
-text = "The crown is safe. Would you like to try again? It may not be that easy this time.
-Press R to try"
-label_settings = SubResource("LabelSettings_ryrto")
-autowrap_mode = 3
-script = ExtResource("8_83tln")
-custom_typing_speed = 0.02
-metadata/_edit_use_anchors_ = true
 
 [node name="Board-click-area" type="Area2D" parent="."]
 

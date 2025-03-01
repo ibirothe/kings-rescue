@@ -4,6 +4,7 @@ var food_scene = preload("res://Scenes/food.tscn")
 var informant_scene = preload("res://Scenes/informant.tscn")
 var trap_scene = preload("res://Scenes/trap.tscn")
 var txt_scene = preload("res://Scenes/Texts.tscn")
+var resume_scene = preload("res://Scenes/party_resume.tscn")
 var x = 0  # Initialize x
 var y = 0  # Initialize y
 var occupied_positions = []
@@ -23,8 +24,6 @@ var magic = false
 @export var informant_number = 2
 
 @onready var king: CharacterBody2D = $"../King"
-@onready var win_lose_label: Label = $"../CanvasLayer/Win-lose-label"
-@onready var background: Sprite2D = $"../CanvasLayer/background"
 @onready var troop = $"../Game Manager/Troop"
 @onready var txt = txt_scene.instantiate()
 
@@ -42,7 +41,6 @@ func _ready() -> void:
 		spawn_informant(informant_number)
 		spawn_traps(trap_number)
 		setup_done = true
-		win_lose_label.modulate.a = 0
 	
 
 func _physics_process(delta: float) -> void:
@@ -153,11 +151,11 @@ func end_party(text_key, win) -> void:
 	GlobalText.set_text("")
 	AudioManager.stop_music()
 	if win:
-		GlobalDifficulty.wins +=1
+		GlobalDifficulty.add_win()
 		GlobalDifficulty.difficulty =+1
 		AudioManager.play_music("win_jingle", -8, false)
 	else:
-		GlobalDifficulty.losses +=1
+		GlobalDifficulty.add_loss()
 		AudioManager.play_music("lose_jingle", -8, false)
 	win_fade_out(txt.get_party_end(text_key))
 	party_ended = true
@@ -168,16 +166,14 @@ func win_fade_out(display_text, wait_time = 1.8):
 
 	var tween = create_tween().set_trans(Tween.TRANS_LINEAR)
 	# Fade from transparent to black
-	tween.tween_property(background, "modulate", Color(0, 0, 0, 1), 1.0)
+	var party_resume = resume_scene.instantiate()
+	add_child(party_resume)
+	tween.tween_property(party_resume, "modulate:a", 1, 1.0)
 	await tween.finished
 	# Short pause
 	await get_tree().create_timer(0.5).timeout
-	
-	if win_lose_label:
-		var text_tween = create_tween()
-		text_tween.tween_property(win_lose_label, "modulate:a", 1.0, 1.0)
-		GlobalText.set_text(display_text)
-		
+	GlobalText.set_text(display_text)
+
 
 func _on_boardclickarea_mouse_entered() -> void:
 	inside_board = true
