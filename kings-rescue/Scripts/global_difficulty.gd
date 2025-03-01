@@ -3,6 +3,7 @@ var difficulty = 0
 #run metrics:
 var wins = 0
 var losses = 0
+var streak = 0
 
 func difficulty_name() -> String:
 	match difficulty:
@@ -13,3 +14,11 @@ func difficulty_name() -> String:
 		4: return "Rage Quit"
 		5: return "Masochist"
 	return "God Mode"
+
+func add_win() -> void:
+	wins += 1
+	streak += 1
+
+func add_loss() -> void:
+	losses += 1
+	streak = 0
