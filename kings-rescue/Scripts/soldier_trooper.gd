@@ -121,6 +121,7 @@ func starvation_death() -> void:
 	if game_manager:
 		if game_manager.party_ended == true:
 			if game_manager.food == 0:
+				game_manager.troop.soldiers.erase(self)
 				if animated_sprite_2d.animation != subclass+"_death":
 					animated_sprite_2d.play(subclass+"_death")
 			active = false
@@ -225,6 +226,7 @@ func death():
 	stop_movement()
 	visual_deactivation()
 	game_manager.troop.current_soldier = null
+	game_manager.troop.soldiers.erase(self)
 	if animated_sprite_2d.animation != subclass+"_death":
 		animated_sprite_2d.play(subclass+"_death")
 		
@@ -241,7 +243,14 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 		game_manager.active_soldier = false
 		game_manager.currently_moving = false
+		await get_tree().create_timer(10).timeout
+		var tween = create_tween()
+		tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 2.0)
+		await tween.finished
+		queue_free()
+		
 		return
+		
 	if animated_sprite_2d.animation == subclass+"_attack":
 		print("Finish attack")
 		transition_to_state(State.IDLE)
@@ -249,6 +258,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		
 		
 func take_coin():
+	game_manager.troop.soldiers.erase(self)
 	coin_tween = create_tween()
 	# Fade out over 1 second
 	coin_tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)

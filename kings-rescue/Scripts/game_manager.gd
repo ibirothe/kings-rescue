@@ -87,7 +87,7 @@ func spawn_coins(coins_numb):
 func spawn_food(food_numb):
 	var i = 0
 	while i < max(0, food_numb - GlobalDifficulty.difficulty):
-		var food = food_scene.instantiate()
+		var food_item = food_scene.instantiate()
 		x = round(randf_range(0, 10))
 		y = round(randf_range(0, 10))
 		
@@ -100,9 +100,9 @@ func spawn_food(food_numb):
 			
 			if pos not in occupied_positions:
 				i += 1
-				food.position = pos
+				food_item.position = pos
 				occupied_positions.append(pos)
-				add_child(food)
+				add_child(food_item)
 
 func spawn_informant(informant_numb):
 	var i = 0
@@ -167,8 +167,9 @@ func win_fade_out(display_text, wait_time = 1.8):
 	var tween = create_tween().set_trans(Tween.TRANS_LINEAR)
 	# Fade from transparent to black
 	var party_resume = resume_scene.instantiate()
+	party_resume.modulate.a = 0
 	add_child(party_resume)
-	tween.tween_property(party_resume, "modulate:a", 1, 1.0)
+	tween.tween_property(party_resume, "modulate:a", 1, 1.2)
 	await tween.finished
 	# Short pause
 	await get_tree().create_timer(0.5).timeout

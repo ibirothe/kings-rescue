@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://tqo1aj8lf2qt"]
+[gd_scene load_steps=23 format=3 uid="uid://tqo1aj8lf2qt"]
 
 [ext_resource type="Texture2D" uid="uid://c1njsxs66tmbo" path="res://Assets/gameend_background.png" id="1_ekdx6"]
 [ext_resource type="Script" path="res://Scripts/party_resume.gd" id="1_gr106"]
@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://db71j25sg5c0a" path="res://Assets/shiny_logo.png" id="2_do5mm"]
 [ext_resource type="Script" path="res://Scenes/label.gd" id="3_7h860"]
 [ext_resource type="PackedScene" uid="uid://b0jdb1hdv5101" path="res://Scenes/virtual_keyboard.tscn" id="6_h4mss"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_25a5f"]
+atlas = ExtResource("2_do5mm")
+region = Rect2(0, 0, 105, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jm1bc"]
 atlas = ExtResource("2_do5mm")
@@ -62,7 +66,10 @@ region = Rect2(0, 96, 105, 24)
 [sub_resource type="SpriteFrames" id="SpriteFrames_7x217"]
 animations = [{
 "frames": [{
-"duration": 50.0,
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_25a5f")
+}, {
+"duration": 15.0,
 "texture": SubResource("AtlasTexture_jm1bc")
 }, {
 "duration": 1.0,
@@ -98,7 +105,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tp0hy")
 }, {
-"duration": 1.0,
+"duration": 34.0,
 "texture": SubResource("AtlasTexture_igaum")
 }],
 "loop": true,
@@ -195,8 +202,8 @@ custom_typing_speed = 0.02
 metadata/_edit_use_anchors_ = true
 
 [node name="VirtualKeyboard" parent="." instance=ExtResource("6_h4mss")]
-offset_left = -44.0
-offset_top = 55.0
-offset_right = -4.0
-offset_bottom = 95.0
+offset_left = -192.0
+offset_top = 81.0
+offset_right = -152.0
+offset_bottom = 121.0
 metadata/_edit_use_anchors_ = true

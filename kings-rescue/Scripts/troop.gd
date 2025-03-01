@@ -120,10 +120,10 @@ func reset_clicks():
 
 # Condition checks
 func soldier_can_move() -> bool:
-	return movement_click and !activation_click and !click_resolved and current_soldier != null
+	return movement_click and !activation_click and !game_manager.party_ended and current_soldier != null
 	
 func soldier_can_change() -> bool:
-	return activation_click and current_soldier != null and !click_resolved
+	return activation_click and current_soldier != null and !game_manager.party_ended
 	
 func soldier_can_activate() -> bool:
-	return activation_click and !click_resolved
+	return activation_click and !game_manager.party_ended
