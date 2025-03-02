@@ -113,7 +113,7 @@ func leave_board() -> void:
 		active = false
 		game_manager.active_soldier = false
 		game_manager.currently_moving = false
-		var text= subclass + game_manager.txt.ingame["soldier_leaving"]
+		var text= subclass + game_manager.txt.ingame["soldier_leaving"].pick_random()
 		GlobalText.set_text(text)
 		queue_free()
 
@@ -193,7 +193,7 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 		if !dead and !active:
 			game_manager.troop.activation_query(self)
 		elif dead and game_manager.troop.current_soldier == null:
-			GlobalText.set_text(game_manager.txt.ingame["dead_body"])
+			GlobalText.set_text(game_manager.txt.ingame["dead_body"].pick_random())
 
 
 func turn_back():

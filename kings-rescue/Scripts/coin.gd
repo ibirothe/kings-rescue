@@ -19,7 +19,7 @@ func _on_body_entered(body):
 		game_manager.currently_moving = false
 		body.take_coin()
 		AudioManager.play_sound("mercenary_flee")
-		GlobalText.set_text(game_manager.txt.ingame["mercenary_flee"])
+		GlobalText.set_text(game_manager.txt.ingame["mercenary_flee"].pick_random())
 	else:
 		game_manager.coins += 1
 		AudioManager.play_sound("food_collect")

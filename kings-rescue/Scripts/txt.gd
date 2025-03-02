@@ -1,18 +1,18 @@
 extends Node
 
 var party_end = {
-	"flee": "The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one? \n \n \nHistory keeps repeating itself, and saving just one King per century won’t break the cycle. Press 'R' to restart with increased difficulty!",
-	"starvation": "Your food stores are depleted. The soldiers begin to fall one by one-and soon, the king does as well. If you only listened to my instructions... \n \n \nHistory keeps repeating itself! Press 'R' to retry and keep an eye on your Food Rations.",
-	"assasination": "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \n \nHistory keeps repeating itself, and strangely, there are always two Assassins within the King's Guard. Press 'R' to restart… and trust no one!",
-	"trap": "You managed to stop the Assassins from killing the King... by doing it yourself. \n \n \nHistory keeps repeating itself-maybe next time, you won’t be the one to slay the King. Press 'R' to retry... and perhaps find a safer path!"
+	"flee": "The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one? \n \n \nHistory keeps repeating itself, and saving just one King per century won’t break the cycle. Increase your win streak to unlock more misery!",
+	"starvation": "Your food stores are depleted. The soldiers begin to fall one by one-and soon, the king does as well. If you only listened to my instructions... \n \n \nHistory keeps repeating itself! Next time try to keep an eye on your Food Rations, maybe?",
+	"assasination": "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \n \nHistory keeps repeating itself, and strangely, there are always two Assassins within the King's Guard… and trust no one!",
+	"trap": "You managed to stop the Assassins from killing the King... by doing it yourself. \n \n \nHistory keeps repeating itself-maybe next time, you won’t be the one to slay the King. Let me take care of your Coins so they don´t distract you from finding a safer path!"
 }
 
 var ingame = {
-	"start": "An assassination plot has been uncovered! Click to select a Soldier and move them. Soldiers can push the King to escort him safely from the board-but beware, if an Assassin gets close, only a Soldier standing next to them can stop the deadly strike.",
-	"food": "You gathered some Food. Running out of supplies leads to starvation, so this was a wise choice. If only it weren’t an apple...",
-	"mercenary_flee": "A mercenary fled. They value gold higher than loyalty, but even the best King’s Guard has two of them.",
-	"dead_body": "He's dead, Jim.",
-	"soldier_leaving": " left. Hope they bring some help. Godspeed."
+	"start": ["An assassination plot has been uncovered! Click to select a Soldier and move them. Soldiers can push the King to escort him safely from the board-but beware, if an Assassin gets close, only a Soldier standing next to them can stop the deadly strike."],
+	"food": ["You gathered some Food. Running out of supplies leads to starvation, so this was a wise choice. If only it weren’t an apple..."],
+	"mercenary_flee": ["A mercenary fled. They value gold higher than loyalty, but even the best King’s Guard has two of them."],
+	"dead_body": ["He's dead, Jim.", "You cannot move dead bodies. That´s another game.", "Pretty sure he is just sleeping."],
+	"soldier_leaving": [" left. Hope they bring some help. Godspeed.", " is going to buy cigarettes. Won´t be long.", " glitched through the map and is now fighting the end boss alone."]
 }
 
 var assassin_manuals = ["This one is a cooking recipe. No information about assassins.", 

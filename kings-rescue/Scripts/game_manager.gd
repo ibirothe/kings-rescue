@@ -34,16 +34,18 @@ func _ready() -> void:
 	#active_soldier = false
 	x=king.position.x-16
 	y=king.position.y-16
+
+
+func _physics_process(delta: float) -> void:
 	if setup_done == false:
 		troop.spawn_soldiers()
 		spawn_coins(coins_number)
 		spawn_food(food_number)
 		spawn_informant(informant_number)
 		spawn_traps(trap_number)
+		GlobalText.set_text(txt.ingame["start"].pick_random())
 		setup_done = true
 	
-
-func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Magic"):
 		if magic == false:
 			var trap = trap_scene.instantiate()
@@ -61,7 +63,7 @@ func _physics_process(delta: float) -> void:
 		get_tree().reload_current_scene()
 
 	if Input.is_action_just_pressed("Help"):
-		GlobalText.set_text(txt.ingame["start"])
+		GlobalText.set_text(txt.ingame["start"].pick_random())
 	
 		
 func spawn_coins(coins_numb):

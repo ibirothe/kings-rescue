@@ -81,7 +81,6 @@ offset_top = -22.0
 offset_right = -67.0
 offset_bottom = 176.0
 scale = Vector2(0.6, 0.6)
-text = "An assassination plot has been uncovered! Click to select a Soldier and move them. Soldiers can push the King to escort him safely from the board-but beware, if an Assassin gets close, only a Soldier standing next to them can stop the deadly strike."
 label_settings = SubResource("LabelSettings_ryrto")
 autowrap_mode = 3
 script = ExtResource("8_83tln")
