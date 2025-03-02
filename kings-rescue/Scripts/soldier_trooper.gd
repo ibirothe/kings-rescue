@@ -110,12 +110,17 @@ func assasination() -> void:
 func leave_board() -> void:
 	if len(border_check.get_overlapping_bodies()) > 0:
 		stop_movement()
+		disable_shader()
+		visual_deactivation()
 		active = false
 		game_manager.active_soldier = false
 		game_manager.currently_moving = false
 		var text= subclass + game_manager.txt.ingame["soldier_leaving"].pick_random()
 		GlobalText.set_text(text)
-		queue_free()
+		coin_tween = create_tween()
+		coin_tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
+		await coin_tween.finished
+		queue_free() 
 
 func starvation_death() -> void:
 	if game_manager:
@@ -311,10 +316,7 @@ func visual_deactivation():
 	# Tween the shader parameter
 	#await tween1.finished
 	#await tween2.finished
-	tint_tween = create_tween()
-	tint_tween.tween_method(func(value): 
-		animated_sprite_2d.material.set_shader_parameter("tint_effect", value), 
-		0.0, 0.0, 0.0)
+	disable_shader()
 	animation_player.stop()
 	border_tween = create_tween()
 	border_tween.tween_property(square_border, "self_modulate:a", 0.0, 0.5)
@@ -345,7 +347,7 @@ func send_move_click(direction):
 		game_manager.troop.movement_query(direction, self)
 	
 func _on_bumping_area_body_entered(body: Node2D) -> void:
-	if body.subclass != self.subclass and game_manager.troop.current_soldier != self:
+	if body.subclass != self.subclass and game_manager.troop.current_soldier != self and dead == false:
 		print("Hello there", body.subclass, " says ", self.subclass)
 		body.turn_back()
 		
@@ -361,3 +363,7 @@ func _on_neighbours_check_body_exited(body: Node2D) -> void:
 		elif body.role == "King":
 			if assassin == true:
 				possible_assassination = false
+
+func disable_shader():
+	#tint_tween.kill
+	animated_sprite_2d.material = null
