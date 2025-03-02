@@ -10,7 +10,7 @@ func _ready():
 
 func _on_body_entered(body):
 	pass
-	if body.mercenary:
+	if body.mercenary and !body.paid:
 		body.animated_sprite_2d.play(body.subclass+"_default")
 		body.stop_movement()
 		body.active = false
@@ -20,9 +20,14 @@ func _on_body_entered(body):
 		body.take_coin()
 		AudioManager.play_sound("mercenary_flee")
 		GlobalText.set_text(game_manager.txt.ingame["mercenary_flee"].pick_random())
-	else:
+	elif body.mercenary and body.paid:
 		game_manager.coins += 1
-		AudioManager.play_sound("food_collect")
+		AudioManager.play_sound("coin_collect")
+		GlobalText.set_text(game_manager.txt.ingame["mercenary_not_flee"].pick_random())
+	else :
+		game_manager.coins += 1
+		AudioManager.play_sound("coin_collect")
+		
 	# Fade out over 1 second
 	var tween = create_tween()
 	tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
