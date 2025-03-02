@@ -34,6 +34,7 @@ func _load_sound_effects():
 	_sound_effects = {
 		"ambience": preload("res://Assets/SFX/ambience.wav"),
 		"disselect_soldier": preload("res://Assets/SFX/disselect_soldier.wav"),
+		"coin_collect": preload("res://Assets/SFX/food_collect.wav"),
 		"food_collect": preload("res://Assets/SFX/food_collect.wav"),
 		"mercenary_flee": preload("res://Assets/SFX/mercenary_flee.wav"),
 		"player_death": preload("res://Assets/SFX/player_death.wav"),

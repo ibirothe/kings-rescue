@@ -13,7 +13,9 @@ var target_position := Vector2.ZERO
 var assassin = false
 var mercenary = false
 
+# Shoppable Upgrades
 var trapper = true
+var paid = true
 
 var number = 0
 var subclass
