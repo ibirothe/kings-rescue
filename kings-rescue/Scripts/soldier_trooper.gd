@@ -35,6 +35,7 @@ var border_tween
 var arrows_tween
 var movement_tween
 var coin_tween
+var leaving_board = false
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var border_check: Area2D = $Border_check
 @onready var square_border: AnimatedSprite2D = $Square_border
@@ -108,7 +109,8 @@ func assasination() -> void:
 			game_manager.end_party("assasination", false)
 
 func leave_board() -> void:
-	if len(border_check.get_overlapping_bodies()) > 0:
+	if len(border_check.get_overlapping_bodies()) > 0 and !leaving_board:
+		leaving_board = true
 		stop_movement()
 		disable_shader()
 		visual_deactivation()
@@ -265,6 +267,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 func take_coin():
 	game_manager.troop.soldiers.erase(self)
 	coin_tween = create_tween()
+	disable_shader()
 	# Fade out over 1 second
 	coin_tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
 	await coin_tween.finished
@@ -352,7 +355,7 @@ func _on_bumping_area_body_entered(body: Node2D) -> void:
 		body.turn_back()
 		
 func soldier():
-	pass
+	pass	
 	#just for bumping purposes
 
 # 
@@ -365,5 +368,5 @@ func _on_neighbours_check_body_exited(body: Node2D) -> void:
 				possible_assassination = false
 
 func disable_shader():
-	#tint_tween.kill
+	tint_tween.kill
 	animated_sprite_2d.material = null
