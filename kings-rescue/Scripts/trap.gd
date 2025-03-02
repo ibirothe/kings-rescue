@@ -35,6 +35,9 @@ func attempt_trap_dismantle():
 		fade_out_and_remove()
 
 func disable_trap():
+	animated_sprite_2d.modulate.a = 0
+	var tween = create_tween().set_trans(Tween.TRANS_LINEAR)
+	tween.tween_property(animated_sprite_2d, "modulate:a", 1, 0.6)
 	AudioManager.play_sound("remove_trap")
 	animated_sprite_2d.play("disable")
 	trap_disabled = true
