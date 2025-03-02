@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnfos7wyajw2o"
-path="res://.godot/imported/wizard_48px.png-517040f403735771283fc86621d4e137.ctex"
+uid="uid://dukpsajpgc3ql"
+path="res://.godot/imported/whale_trap.png-a74942fdd94dfbd1f7f42277abcd2ca4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/wizard_48px.png"
-dest_files=["res://.godot/imported/wizard_48px.png-517040f403735771283fc86621d4e137.ctex"]
+source_file="res://Assets/whale_trap.png"
+dest_files=["res://.godot/imported/whale_trap.png-a74942fdd94dfbd1f7f42277abcd2ca4.ctex"]
 
 [params]
 

@@ -12,7 +12,9 @@ var ingame = {
 	"food": ["You gathered some Food. Running out of supplies leads to starvation, so this was a wise choice. If only it weren’t an apple..."],
 	"mercenary_flee": ["A mercenary fled. They value gold higher than loyalty, but even the best King’s Guard has two of them."],
 	"dead_body": ["He's dead, Jim.", "You cannot move dead bodies. That´s another game.", "Pretty sure he is just sleeping."],
-	"soldier_leaving": [" left. Hope they bring some help. Godspeed.", " is going to buy cigarettes. Won´t be long.", " glitched through the map and is now fighting the end boss alone."]
+	"soldier_leaving": [" left. Hope they bring some help. Godspeed.", " is going to buy cigarettes. Won´t be long.", " glitched through the map and is now fighting the end boss alone."],
+	"dismantle_trap": ["Trap dismatling text goes here"],
+	"soldier_trap_death": ["Soldier dead in trap text"]
 }
 
 var assassin_manuals = ["This one is a cooking recipe. No information about assassins.", 

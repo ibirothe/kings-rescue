@@ -19,13 +19,14 @@ func _on_body_entered(body):
 
 func handle_soldier_interaction(soldier):
 	if soldier.trapper:
-		attempt_trap_dismantle()
-		return
+		var dismantle_success = attempt_trap_dismantle()
+		if dismantle_success:
+			return
 		
 	trigger_trap()
 	kill_soldier(soldier)
 
-func attempt_trap_dismantle():
+func attempt_trap_dismantle() -> bool:
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	var success = rng.randi_range(0, 1) == 0
@@ -33,13 +34,14 @@ func attempt_trap_dismantle():
 	if success:
 		disable_trap()
 		fade_out_and_remove()
+	return success
 
 func disable_trap():
 	animated_sprite_2d.modulate.a = 0
 	var tween = create_tween().set_trans(Tween.TRANS_LINEAR)
 	tween.tween_property(animated_sprite_2d, "modulate:a", 1, 0.6)
 	AudioManager.play_sound("remove_trap")
-	animated_sprite_2d.play("disable")
+	animated_sprite_2d.play("disabled")
 	trap_disabled = true
 	GlobalText.set_text(game_manager.txt.ingame["dismantle_trap"].pick_random())
 
@@ -56,7 +58,7 @@ func trigger_trap():
 
 func kill_soldier(soldier):
 	soldier.animated_sprite_2d.play(soldier.subclass + "_death")
-	GlobalText.set_text(game_manager.txt.ingame["trap"].pick_random())
+	GlobalText.set_text(game_manager.txt.ingame["soldier_trap_death"].pick_random())
 	soldier.death()
 	soldier.z_index = 0
 

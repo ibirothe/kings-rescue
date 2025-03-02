@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6nwsf8e0yl3q"
-path="res://.godot/imported/warrior_48px.png-0c18981d795afb249fbdede77b446cb4.ctex"
+uid="uid://xpoix0xov2cq"
+path="res://.godot/imported/disabled_trap.png-31fe9dd95f79492488334fa755a814ec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/warrior_48px.png"
-dest_files=["res://.godot/imported/warrior_48px.png-0c18981d795afb249fbdede77b446cb4.ctex"]
+source_file="res://Assets/disabled_trap.png"
+dest_files=["res://.godot/imported/disabled_trap.png-31fe9dd95f79492488334fa755a814ec.ctex"]
 
 [params]
 

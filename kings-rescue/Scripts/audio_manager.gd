@@ -39,6 +39,7 @@ func _load_sound_effects():
 		"player_death": preload("res://Assets/SFX/player_death.wav"),
 		"player_hurt": preload("res://Assets/SFX/player_hurt.wav"),
 		"player_run": preload("res://Assets/SFX/player_run.wav"),
+		"remove_trap": preload("res://Assets/SFX/food_collect.wav"),
 		"select_soldier": preload("res://Assets/SFX/select_soldier.wav")
 	}
 

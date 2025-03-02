@@ -13,6 +13,8 @@ var target_position := Vector2.ZERO
 var assassin = false
 var mercenary = false
 
+var trapper = true
+
 var number = 0
 var subclass
 var im_new = true
