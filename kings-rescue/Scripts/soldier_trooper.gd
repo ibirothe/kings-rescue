@@ -14,8 +14,8 @@ var assassin = false
 var mercenary = false
 
 # Shoppable Upgrades
-var trapper = true
-var paid = true
+var trapper = false
+var paid = false
 
 var number = 0
 var subclass

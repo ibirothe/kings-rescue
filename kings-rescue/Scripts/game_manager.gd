@@ -9,7 +9,6 @@ var x = 0  # Initialize x
 var y = 0  # Initialize y
 var occupied_positions = []
 var food = 10
-var coins = 0
 var setup_done = false
 var active_soldier: bool
 var currently_moving = false

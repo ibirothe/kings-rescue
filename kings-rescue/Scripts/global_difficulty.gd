@@ -6,9 +6,10 @@ var losses = 0
 var streak = 0
 
 #shop:
-var shop_items = []
+var coins = 0
+var shop_items = ["Trap Specialists", "Pay Mercenaries"]
 #upgrades:
-var upgrade_items = ["trapper", "paid"]
+var upgrade_items = ["Trap Specialists", "Pay Mercenaries"]
 
 func difficulty_name() -> String:
 	match difficulty:
@@ -27,8 +28,17 @@ func add_win() -> void:
 func add_loss() -> void:
 	losses += 1
 	streak = 0
+	clear_shop()
+	clear_upgrades()
+	coins = 0
 
 func add_shop_item(item) -> void:
-	if shop_items.len() = 3:
-              shop_items.pop_front()
-        shop_items.append(item)
+	if shop_items.len() == 3:
+		shop_items.pop_front()
+	shop_items.append(item)
+
+func clear_shop() -> void:
+	shop_items = []
+
+func clear_upgrades() -> void:
+	upgrade_items = []

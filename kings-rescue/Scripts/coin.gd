@@ -2,8 +2,6 @@ extends Area2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var game_manager: Node2D = get_parent()
 
-@export var food_efficiency = 10
-var mercenary
 func _ready():
 	# Connect the body_entered signal
 	body_entered.connect(_on_body_entered)
@@ -21,11 +19,11 @@ func _on_body_entered(body):
 		AudioManager.play_sound("mercenary_flee")
 		GlobalText.set_text(game_manager.txt.ingame["mercenary_flee"].pick_random())
 	elif body.mercenary and body.paid:
-		game_manager.coins += 1
+		GlobalDifficulty.coins += 1
 		AudioManager.play_sound("coin_collect")
 		GlobalText.set_text(game_manager.txt.ingame["mercenary_not_flee"].pick_random())
 	else :
-		game_manager.coins += 1
+		GlobalDifficulty.coins += 1
 		AudioManager.play_sound("coin_collect")
 		
 	# Fade out over 1 second
