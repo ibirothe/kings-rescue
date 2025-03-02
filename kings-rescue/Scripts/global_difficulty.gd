@@ -5,6 +5,11 @@ var wins = 0
 var losses = 0
 var streak = 0
 
+#shop:
+var shop_items = []
+#upgrades:
+var upgrade_items = ["trapper", "paid"]
+
 func difficulty_name() -> String:
 	match difficulty:
 		0: return "Baby Mode"
@@ -22,3 +27,8 @@ func add_win() -> void:
 func add_loss() -> void:
 	losses += 1
 	streak = 0
+
+func add_shop_item(item) -> void:
+	if shop_items.len() = 3:
+              shop_items.pop_front()
+        shop_items.append(item)
