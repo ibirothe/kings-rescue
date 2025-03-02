@@ -1,26 +1,65 @@
 extends Area2D
 
 @onready var game_manager: Node2D = get_parent()
-@export var food_efficiency = 10
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+var trap_disabled = false
 
 func _ready():
-	# Connect the body_entered signal
 	body_entered.connect(_on_body_entered)
 	animated_sprite_2d.play("default")
 
 func _on_body_entered(body):
+	if trap_disabled:
+		return
+		
 	if body is Soldier:
-		animated_sprite_2d.play("trigger")
-		body.animated_sprite_2d.play(body.subclass+"_death")
-		GlobalText.set_text("A hidden trap killed a Soldier of the King’s Guard. Well, technically, it was you.")
-		body.death()
-		body.z_index = 0
-		AudioManager.play_sound("player_hurt")
+		handle_soldier_interaction(body)
+	elif body.has_method("king"):
+		handle_king_interaction(body)
 
-	if body.has_method("king"):
-		animated_sprite_2d.play("trigger")
-		body.trap = true
-		AudioManager.play_sound("player_hurt")
-		if !game_manager.party_ended:
-			game_manager.end_party("trap", false)
+func handle_soldier_interaction(soldier):
+	if soldier.trapper:
+		attempt_trap_dismantle()
+		return
+		
+	trigger_trap()
+	kill_soldier(soldier)
+
+func attempt_trap_dismantle():
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	var success = rng.randi_range(0, 1) == 0
+	
+	if success:
+		disable_trap()
+		fade_out_and_remove()
+
+func disable_trap():
+	AudioManager.play_sound("remove_trap")
+	animated_sprite_2d.play("disable")
+	trap_disabled = true
+	GlobalText.set_text(game_manager.txt.ingame["dismantle_trap"].pick_random())
+
+func fade_out_and_remove():
+	await get_tree().create_timer(10).timeout
+	var tween = create_tween()
+	tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 2.0)
+	await tween.finished
+	queue_free()
+
+func trigger_trap():
+	animated_sprite_2d.play("trigger")
+	AudioManager.play_sound("player_hurt")
+
+func kill_soldier(soldier):
+	soldier.animated_sprite_2d.play(soldier.subclass + "_death")
+	GlobalText.set_text(game_manager.txt.ingame["trap"].pick_random())
+	soldier.death()
+	soldier.z_index = 0
+
+func handle_king_interaction(king):
+	trigger_trap()
+	king.trap = true
+	
+	if !game_manager.party_ended:
+		game_manager.end_party("trap", false)
