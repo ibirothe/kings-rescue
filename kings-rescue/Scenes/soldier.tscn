@@ -1,6 +1,6 @@
-[gd_scene load_steps=181 format=3 uid="uid://v3anqebutw1r"]
+[gd_scene load_steps=182 format=3 uid="uid://v3anqebutw1r"]
 
-[ext_resource type="Script" path="res://Scripts/soldier.gd" id="1_8wkfs"]
+[ext_resource type="Script" path="res://Scripts/soldier_trooper.gd" id="1_ywy20"]
 [ext_resource type="Texture2D" uid="uid://cxjwj0qe476fq" path="res://Assets/arianna_48px.png" id="2_rg8em"]
 [ext_resource type="Texture2D" uid="uid://c4xlfovm2celc" path="res://Assets/bartholo_48px.png" id="3_ujwu1"]
 [ext_resource type="Texture2D" uid="uid://d3xhe5iu2260x" path="res://Assets/edwin_48px.png" id="4_wsfh6"]
@@ -1271,7 +1271,7 @@ animations = [{
 radius = 6.08276
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dm2i7"]
-size = Vector2(16, 18)
+size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dl8vv"]
 size = Vector2(28, 5)
@@ -1334,35 +1334,35 @@ _data = {
 "RESET": SubResource("Animation_cl3qk")
 }
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cb3ld"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ru2gp"]
 atlas = ExtResource("10_wq6ns")
 region = Rect2(24, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wa5wl"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8t0v4"]
 atlas = ExtResource("10_wq6ns")
 region = Rect2(24, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uv4ns"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_xu8y5"]
 atlas = ExtResource("10_wq6ns")
 region = Rect2(72, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nksqd"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bn8ee"]
 atlas = ExtResource("10_wq6ns")
 region = Rect2(96, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hgmpj"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5poli"]
 atlas = ExtResource("10_wq6ns")
 region = Rect2(120, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hw2p1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_2vlu2"]
 atlas = ExtResource("10_wq6ns")
 region = Rect2(120, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qh0n3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7alrj"]
 atlas = ExtResource("10_wq6ns")
 region = Rect2(144, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0h4b8"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_dyhax"]
 atlas = ExtResource("10_wq6ns")
 region = Rect2(168, 0, 24, 24)
 
@@ -1370,45 +1370,48 @@ region = Rect2(168, 0, 24, 24)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cb3ld")
+"texture": SubResource("AtlasTexture_ru2gp")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wa5wl")
+"texture": SubResource("AtlasTexture_8t0v4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_uv4ns")
+"texture": SubResource("AtlasTexture_xu8y5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nksqd")
+"texture": SubResource("AtlasTexture_bn8ee")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hgmpj")
+"texture": SubResource("AtlasTexture_5poli")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hw2p1")
+"texture": SubResource("AtlasTexture_2vlu2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qh0n3")
+"texture": SubResource("AtlasTexture_7alrj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0h4b8")
+"texture": SubResource("AtlasTexture_dyhax")
 }],
 "loop": true,
 "name": &"default",
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_7rabu"]
+radius = 4.12311
+
 [node name="Soldier" type="CharacterBody2D"]
 z_index = 1
 position = Vector2(0, -2)
-collision_layer = 517
-script = ExtResource("1_8wkfs")
+collision_layer = 18949
+script = ExtResource("1_ywy20")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 2
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_i3egf")
-animation = &"Marquise_death"
+animation = &"Thoralf_walk"
 autoplay = "Arianna_default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -1458,24 +1461,43 @@ sprite_frames = SubResource("SpriteFrames_q2s4w")
 autoplay = "default"
 
 [node name="Right" type="Area2D" parent="."]
+collision_layer = 32768
+collision_mask = 32768
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Right"]
+top_level = true
 polygon = PackedVector2Array(12, 8, 90, 24, 120, 0, 90, -24, 12, -8)
 
 [node name="Left" type="Area2D" parent="."]
+collision_layer = 32768
+collision_mask = 32768
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Left"]
+top_level = true
+z_index = 6
 polygon = PackedVector2Array(-12, 8, -90, 24, -120, 0, -90, -24, -12, -8)
 
 [node name="Down" type="Area2D" parent="."]
+collision_layer = 32768
+collision_mask = 32768
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Down"]
 polygon = PackedVector2Array(12, 8, 24, 90, 0, 120, -24, 90, -12, 8)
 
 [node name="Up" type="Area2D" parent="."]
+collision_layer = 32768
+collision_mask = 32768
 
 [node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Up"]
+top_level = true
 polygon = PackedVector2Array(12, -8, 24, -90, 0, -120, -24, -90, -12, -8)
+
+[node name="Bumping_area" type="Area2D" parent="."]
+collision_layer = 16384
+collision_mask = 16384
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bumping_area"]
+shape = SubResource("CircleShape2D_7rabu")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="input_event" from="Activation_area" to="." method="_on_area_2d_input_event"]
@@ -1485,3 +1507,4 @@ polygon = PackedVector2Array(12, -8, 24, -90, 0, -120, -24, -90, -12, -8)
 [connection signal="input_event" from="Left" to="." method="_on_left_input_event"]
 [connection signal="input_event" from="Down" to="." method="_on_down_input_event"]
 [connection signal="input_event" from="Up" to="." method="_on_up_input_event"]
+[connection signal="body_entered" from="Bumping_area" to="." method="_on_bumping_area_body_entered"]

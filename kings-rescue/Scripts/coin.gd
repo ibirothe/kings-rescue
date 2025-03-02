@@ -1,7 +1,7 @@
 extends Area2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
-
 @onready var game_manager: Node2D = get_parent()
+
 @export var food_efficiency = 10
 var mercenary
 func _ready():
@@ -9,21 +9,23 @@ func _ready():
 	body_entered.connect(_on_body_entered)
 
 func _on_body_entered(body):
-	if body.mercenary == true:
-		#body.active = false
+	pass
+	if body.mercenary:
 		body.animated_sprite_2d.play(body.subclass+"_default")
-		body.stop()
+		body.stop_movement()
 		body.active = false
 		body.animated_sprite_2d.play(body.subclass+"_walk")
-		body.get_parent().active_soldier = false
-		body.get_parent().click_resolved = false
-		body.get_parent().currently_moving = false
+		game_manager.active_soldier = false
+		game_manager.currently_moving = false
 		body.take_coin()
 		AudioManager.play_sound("mercenary_flee")
-		GlobalText.set_text("A mercenary fled. They value gold higher than loyalty, but even the best King’s Guard has two of them.")
-		var tween = create_tween()
-	
+		GlobalText.set_text(game_manager.txt.ingame["mercenary_flee"].pick_random())
+	else:
+		game_manager.coins += 1
+		AudioManager.play_sound("food_collect")
 	# Fade out over 1 second
-		tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
-		await tween.finished
-		queue_free()  # Remove the node after fading out
+	var tween = create_tween()
+	tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
+	await tween.finished
+	queue_free()
+		

@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b0jdb1hdv5101"]
+[gd_scene load_steps=3 format=3 uid="uid://b0jdb1hdv5101"]
 
-[ext_resource type="Texture2D" uid="uid://c6l88f685xmal" path="res://Assets/Button_L.png" id="1_gfint"]
+[ext_resource type="FontFile" uid="uid://c6fxatwakvveq" path="res://Fonts/Vest 9.ttf" id="1_b5ior"]
 [ext_resource type="Script" path="res://Scripts/button.gd" id="2_inp75"]
-[ext_resource type="Texture2D" uid="uid://drtsrce7mmbk0" path="res://Assets/Button_R.png" id="3_q2g5f"]
 
 [node name="VirtualKeyboard" type="Control"]
 layout_mode = 3
@@ -10,23 +9,17 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ButtonL" type="Button" parent="."]
-layout_mode = 0
-offset_top = 15.0
-offset_right = 28.0
-offset_bottom = 43.0
-scale = Vector2(0.5, 0.5)
-action_mode = 0
-icon = ExtResource("1_gfint")
-script = ExtResource("2_inp75")
-action_name = "Magic"
-
 [node name="ButtonR" type="Button" parent="."]
+z_index = 5
 layout_mode = 0
 offset_right = 28.0
 offset_bottom = 28.0
 scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(0.894118, 0.862745, 0.839216, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("1_b5ior")
+theme_override_font_sizes/font_size = 16
 action_mode = 0
-icon = ExtResource("3_q2g5f")
+text = " Click to Continue  "
 script = ExtResource("2_inp75")
 action_name = "Restart"

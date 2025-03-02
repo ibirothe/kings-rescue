@@ -4,3 +4,6 @@
 
 [node name="AudioManager" type="Node"]
 script = ExtResource("1_20nhb")
+SFXvolume = null
+SYSvolume = null
+MSCvolume = null

@@ -18,6 +18,7 @@ const MOVE_TIME := 0.5  # Time in seconds to complete movement
 var trap = false
 var win_check = false
 
+
 func _ready() -> void:
 	#print(position)
 	pass
@@ -43,12 +44,8 @@ func _physics_process(_delta: float) -> void:
 	if len(win.get_overlapping_bodies()) > 0:
 		win_anim()
 		if game_manager.party_ended == false:
-			GlobalDifficulty.wins +=1
-			GlobalText.set_text("")
-			var win_text = "The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one? \n \nWINS: " + str(GlobalDifficulty.wins) + "\n \nLOSSES: " + str(GlobalDifficulty.losses) + "\n \nDIFFICULTY: " + str(GlobalDifficulty.difficulty_name()) + "\n \nHistory keeps repeating itself, and saving just one King per century won’t break the cycle. Press 'R' to restart with increased difficulty!"
-			GlobalDifficulty.difficulty =+1
-			game_manager.win_fade_out(win_text)
-			game_manager.party_ended = true
+			game_manager.end_party("flee", true)
+			
 			
 func king():
 	direction_check = false
@@ -65,28 +62,28 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 				print(right.get_overlapping_bodies())
 				print("illegal")
 			else:
-				move_character(body.movement)
+				move_character(game_manager.troop.move_dir)
 		if direction.x > 0 and direction.y == 0:
 			print("left")
 			if len(left.get_overlapping_bodies()) > 0:
 				body.turn_back()
 				print("illegal")
 			else:
-				move_character(body.movement)
+				move_character(game_manager.troop.move_dir)
 		if direction.x == 0 and direction.y > 0:
 			print("up")
 			if len(up.get_overlapping_bodies()) > 0:
 				body.turn_back()
 				print("illegal")
 			else:
-				move_character(body.movement)
+				move_character(game_manager.troop.move_dir)
 		if direction.x == 0 and direction.y < 0:
 			print("down")
 			if len(down.get_overlapping_bodies()) > 0:
 				body.turn_back()
 				print("illegal")
 			else:
-				move_character(body.movement)
+				move_character(game_manager.troop.move_dir)
 		#direction_check = true
 	
 func handle_idle_state() -> void:
