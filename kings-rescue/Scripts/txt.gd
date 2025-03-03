@@ -22,7 +22,8 @@ var ingame = {
 var shop = {
 	"no_money": ["You not only look poor."],
 	"Pay Mercenaries": "Blablabla, much they will form a trade union.",
-	"Trap Specialists": "Dismantle not die blablalba"
+	"Trap Specialists": "Dismantle not die blablalba",
+	"Food Ration": "Let the game guess your favorite food, then add 10 apples to your food storage!"
 }
 
 var assassin_manuals = ["This one is a cooking recipe. No information about assassins.", 

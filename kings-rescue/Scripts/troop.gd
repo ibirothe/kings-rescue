@@ -36,8 +36,6 @@ func spawn_soldiers():
 		else:
 			soldier.role = "Soldier"
 		roles.erase(role)
-		soldier.trapper = GlobalDifficulty.upgrade_items.has("Trap Specialists")
-		soldier.paid = GlobalDifficulty.upgrade_items.has("Pay Mercenaries")
 		
 		match i:
 			0:

@@ -31,7 +31,7 @@ func _on_body_entered(body):
 			attempts += 1
 		
 		if found:
-			GlobalDifficulty.shop_items.append(item)
+			GlobalDifficulty.add_shop_item(item)
 			
 			# Delete the item
 			var tween = create_tween()

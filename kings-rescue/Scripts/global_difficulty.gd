@@ -33,7 +33,7 @@ func add_loss() -> void:
 	coins = 0
 
 func add_shop_item(item) -> void:
-	if shop_items.len() == 3:
+	if shop_items.size() == 3:
 		shop_items.pop_front()
 	shop_items.append(item)
 
