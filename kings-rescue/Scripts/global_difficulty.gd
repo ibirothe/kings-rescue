@@ -6,10 +6,10 @@ var losses = 0
 var streak = 0
 
 #shop:
-var coins = 0
+var coins = 100
 var shop_items = ["Trap Specialists", "Pay Mercenaries"]
 #upgrades:
-var upgrade_items = ["Trap Specialists", "Pay Mercenaries"]
+var upgrade_items = []
 
 func difficulty_name() -> String:
 	match difficulty:

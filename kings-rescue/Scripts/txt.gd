@@ -18,6 +18,12 @@ var ingame = {
 	"soldier_trap_death": ["Soldier dead in trap text"]
 }
 
+var shop = {
+	"no_money": ["You not only look poor."],
+	"Pay Mercenaries": "Blablabla, much they will form a trade union.",
+	"Trap Specialists": "Dismantle not die blablalba"
+}
+
 var assassin_manuals = ["This one is a cooking recipe. No information about assassins.", 
 "A note about knife sharpening techniques.",
 "A page from human anatomy book.",
