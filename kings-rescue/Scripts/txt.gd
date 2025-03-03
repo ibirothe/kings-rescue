@@ -15,7 +15,8 @@ var ingame = {
 	"dead_body": ["He's dead, Jim.", "You cannot move dead bodies. That´s another game.", "Pretty sure he is just sleeping."],
 	"soldier_leaving": [" left. Hope they bring some help. Godspeed.", " is going to buy cigarettes. Won´t be long.", " glitched through the map and is now fighting the end boss alone."],
 	"dismantle_trap": ["Trap dismatling text goes here"],
-	"soldier_trap_death": ["Soldier dead in trap text"]
+	"soldier_trap_death": ["Soldier dead in trap text"],
+	"shop_collect": ["You collected stuff for shop blablablablablabla"]
 }
 
 var shop = {

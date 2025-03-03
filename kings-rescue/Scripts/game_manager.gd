@@ -3,6 +3,7 @@ var coin_scene = preload("res://Scenes/coin.tscn")
 var food_scene = preload("res://Scenes/food.tscn")
 var informant_scene = preload("res://Scenes/informant.tscn")
 var trap_scene = preload("res://Scenes/trap.tscn")
+var shop_item_scene = preload("res://Scenes/restock_item.tscn")
 var txt_scene = preload("res://Scenes/Texts.tscn")
 var resume_scene = preload("res://Scenes/party_resume.tscn")
 var x = 0  # Initialize x
@@ -21,6 +22,7 @@ var magic = false
 @export var food_number = 7
 @export var trap_number = 14
 @export var informant_number = 2
+@export var shop_item_number = 1
 
 @onready var king: CharacterBody2D = $"../King"
 @onready var troop = $"../Game Manager/Troop"
@@ -42,6 +44,7 @@ func _physics_process(delta: float) -> void:
 		spawn_food(food_number)
 		spawn_informant(informant_number)
 		spawn_traps(trap_number)
+		spawn_shop_item(shop_item_number)
 		GlobalText.set_text(txt.ingame["start"].pick_random())
 		setup_done = true
 	
@@ -144,6 +147,26 @@ func spawn_traps(traps_numb):
 				trap.position = pos
 				occupied_positions.append(pos)
 				add_child(trap)
+
+func spawn_shop_item(amount):
+	var i = 0
+	while i < amount:
+		var shop_item = shop_item_scene.instantiate()
+		x = round(randf_range(0, 10))
+		y = round(randf_range(0, 10))
+		
+		if x > 2 and y > 2 and x < 8 and y < 8:
+			pass
+		else:
+			x = king.position.x-(5*16) + x*16
+			y = king.position.y+(5*16) - y*16
+			var pos = Vector2(x, y)
+			
+			if pos not in occupied_positions:
+				i += 1
+				shop_item.position = pos
+				occupied_positions.append(pos)
+				add_child(shop_item)
 
 func refire_king():
 	king.king()

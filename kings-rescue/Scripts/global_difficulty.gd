@@ -7,7 +7,7 @@ var streak = 0
 
 #shop:
 var coins = 100
-var shop_items = ["Trap Specialists", "Pay Mercenaries"]
+var shop_items = []
 #upgrades:
 var upgrade_items = []
 

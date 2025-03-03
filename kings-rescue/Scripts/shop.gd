@@ -20,9 +20,10 @@ var buy_buttons = []
 @onready var info2 = $Shop_2_info
 var info_buttons = []
 
-var prize_list = {
-	"Pay Mercenaries": 15,
-	"Trap Specialists": 25
+var item_list = {
+	"Pay Mercenaries": [15, true],
+	"Trap Specialists": [25, true],
+	"Food Ration": [10, false]
 }
 
 func _ready() -> void:
@@ -40,7 +41,7 @@ func _process(delta: float) -> void:
 			info_buttons[i].visible = false
 		else:
 			var item_name = GlobalDifficulty.shop_items[i]
-			var price = prize_list.get(item_name, "???")
+			var price = item_list.get(item_name, "???")[0]
 			prizes[i].text = str(price) + " Gold"
 			labels[i].text = item_name
 			buy_buttons[i].visible = true
