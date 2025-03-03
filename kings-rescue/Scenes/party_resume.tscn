@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://tqo1aj8lf2qt"]
+[gd_scene load_steps=24 format=3 uid="uid://tqo1aj8lf2qt"]
 
 [ext_resource type="Texture2D" uid="uid://c1njsxs66tmbo" path="res://Assets/gameend_background.png" id="1_ekdx6"]
 [ext_resource type="Script" path="res://Scripts/party_resume.gd" id="1_gr106"]
@@ -118,6 +118,8 @@ line_spacing = -5.0
 font = ExtResource("2_adk5r")
 font_color = Color(0.894118, 0.862745, 0.839216, 1)
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_dags3"]
+
 [node name="PartyResume" type="Node2D"]
 z_index = 4
 script = ExtResource("1_gr106")
@@ -207,3 +209,6 @@ offset_top = 81.0
 offset_right = -152.0
 offset_bottom = 121.0
 metadata/_edit_use_anchors_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dags3")

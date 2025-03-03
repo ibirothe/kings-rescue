@@ -63,6 +63,10 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("Restart"):
 		get_tree().reload_current_scene()
+	
+	if Input.is_action_just_pressed("Delete"):
+		RunStats.reset_save_file()
+		RunStats.load_game()
 
 	if Input.is_action_just_pressed("Help"):
 		GlobalText.set_text(txt.ingame["start"].pick_random())
@@ -70,7 +74,7 @@ func _physics_process(delta: float) -> void:
 		
 func spawn_coins(coins_numb):
 	var i = 0
-	while i < coins_numb + GlobalDifficulty.difficulty:
+	while i < coins_numb + RunStats.difficulty:
 		var coin = coin_scene.instantiate()
 		x = round(randf_range(0, 10))
 		y = round(randf_range(0, 10))
@@ -90,7 +94,7 @@ func spawn_coins(coins_numb):
 
 func spawn_food(food_numb):
 	var i = 0
-	while i < max(0, food_numb - GlobalDifficulty.difficulty):
+	while i < max(0, food_numb - RunStats.difficulty):
 		var food_item = food_scene.instantiate()
 		x = round(randf_range(0, 10))
 		y = round(randf_range(0, 10))
@@ -130,7 +134,7 @@ func spawn_informant(informant_numb):
 
 func spawn_traps(traps_numb):
 	var i = 0
-	while i < traps_numb + 2 * GlobalDifficulty.difficulty:
+	while i < traps_numb + 2 * RunStats.difficulty:
 		var trap = trap_scene.instantiate()
 		x = round(randf_range(0, 10))
 		y = round(randf_range(0, 10))
@@ -178,13 +182,13 @@ func end_party(text_key, win) -> void:
 	var text = txt.party_end[text_key]
 
 	if win:
-		GlobalDifficulty.add_win()
-		GlobalDifficulty.difficulty =+1
+		RunStats.add_win()
+		RunStats.difficulty =+1
 		AudioManager.play_music("win_jingle", -8, false)
 	else:
-		if GlobalDifficulty.upgrade_items.has("Hourglass"):
+		if RunStats.upgrade_items.has("Hourglass"):
 			text = text + txt.ingame["Hourglass"].pick_random()
-		GlobalDifficulty.add_loss()
+		RunStats.add_loss()
 		AudioManager.play_music("lose_jingle", -8, false)
 
 	win_fade_out(text)

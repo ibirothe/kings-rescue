@@ -19,11 +19,11 @@ func _on_body_entered(body):
 		AudioManager.play_sound("mercenary_flee")
 		GlobalText.set_text(game_manager.txt.ingame["mercenary_flee"].pick_random())
 	elif body.mercenary and body.paid:
-		GlobalDifficulty.coins += 1
+		RunStats.coins += 1
 		AudioManager.play_sound("coin_collect")
 		GlobalText.set_text(game_manager.txt.ingame["mercenary_not_flee"].pick_random())
 	else :
-		GlobalDifficulty.coins += 1
+		RunStats.coins += 1
 		AudioManager.play_sound("coin_collect")
 		
 	# Fade out over 1 second

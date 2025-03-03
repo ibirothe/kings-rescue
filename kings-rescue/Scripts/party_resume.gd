@@ -6,10 +6,10 @@ extends Node2D
 @onready var labels = [win_label, streak_label, loss_label, difficulty_label]
 
 func _ready() -> void:
-	win_label.text = "Total Wins: " + str(GlobalDifficulty.wins)
-	streak_label.text = "Win Streak: " + str(GlobalDifficulty.streak)
-	loss_label.text = "Total Losses: " + str(GlobalDifficulty.losses)
-	difficulty_label.text = "Current Difficulty: " + GlobalDifficulty.difficulty_name()
+	win_label.text = "Total Wins: " + str(RunStats.wins)
+	streak_label.text = "Win Streak: " + str(RunStats.streak)
+	loss_label.text = "Total Losses: " + str(RunStats.losses)
+	difficulty_label.text = "Current Difficulty: " + RunStats.difficulty_name()
 	
 	for label in labels:
 		await fade_in(label)

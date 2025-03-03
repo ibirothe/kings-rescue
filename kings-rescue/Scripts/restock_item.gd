@@ -25,13 +25,13 @@ func _on_body_entered(body):
 			# Check if item is unique
 			if !shop.item_list[item][1]:
 				found = true
-			elif !GlobalDifficulty.upgrade_items.has(item) and !GlobalDifficulty.shop_items.has(item):
+			elif !RunStats.upgrade_items.has(item) and !RunStats.shop_items.has(item):
 				found = true
 			
 			attempts += 1
 		
 		if found:
-			GlobalDifficulty.add_shop_item(item)
+			RunStats.add_shop_item(item)
 			
 			# Delete the item
 			var tween = create_tween()

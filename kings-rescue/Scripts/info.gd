@@ -9,7 +9,7 @@ func _ready():
 	button_down.connect(_on_button_down)
 
 func _on_button_down():
-	if GlobalDifficulty.shop_items.size() <= shop_index:
+	if RunStats.shop_items.size() <= shop_index:
 		return
 	else:
-		GlobalText.set_text(game_manager.txt.shop[GlobalDifficulty.shop_items[shop_index]])
+		GlobalText.set_text(game_manager.txt.shop[RunStats.shop_items[shop_index]])
