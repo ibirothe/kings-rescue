@@ -20,6 +20,22 @@ theme_override_constants/outline_size = 2
 theme_override_fonts/font = ExtResource("1_b5ior")
 theme_override_font_sizes/font_size = 16
 action_mode = 0
-text = " Click to Continue  "
+text = " Click to Continue "
 script = ExtResource("2_inp75")
 action_name = "Restart"
+
+[node name="ButtonD" type="Button" parent="."]
+z_index = 5
+layout_mode = 0
+offset_left = 76.0
+offset_right = 186.0
+offset_bottom = 28.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(0.894118, 0.862745, 0.839216, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("1_b5ior")
+theme_override_font_sizes/font_size = 16
+action_mode = 0
+text = "Delete Progress"
+script = ExtResource("2_inp75")
+action_name = "Delete"

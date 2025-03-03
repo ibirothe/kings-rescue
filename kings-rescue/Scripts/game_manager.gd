@@ -63,6 +63,10 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("Restart"):
 		get_tree().reload_current_scene()
+	
+	if Input.is_action_just_pressed("Delete"):
+		RunStats.reset_save_file()
+		RunStats.load_game()
 
 	if Input.is_action_just_pressed("Help"):
 		GlobalText.set_text(txt.ingame["start"].pick_random())
