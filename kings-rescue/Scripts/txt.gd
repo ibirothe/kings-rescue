@@ -58,15 +58,3 @@ var  CHARACTER_DESCRIPTIONS = {
 	"Marquise": "Marquise's archery is masterful. Sadly, the developers didn't put arrows in the game.",
 	"Arianna": "Arianna joined the King's Guard recently. She had exceptional results in the job interview."
 }
-
-func get_party_end(key) -> String:
-	refresh_party_end()
-	return party_end[key]
-
-func refresh_party_end() -> void:
-	party_end = {
-	"flee": "The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one? \n \n \nHistory keeps repeating itself, and saving just one King per century won’t break the cycle. Press 'R' to restart with increased difficulty!",
-	"starvation": "Your food stores are depleted. The soldiers begin to fall one by one-and soon, the king does as well. If you only listened to my instructions... \n \n \nHistory keeps repeating itself! Press 'R' to retry and keep an eye on your Food Rations.",
-	"assasination": "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \n \nHistory keeps repeating itself, and strangely, there are always two Assassins within the King's Guard. Press 'R' to restart… and trust no one!",
-	"trap": "You managed to stop the Assassins from killing the King... by doing it yourself. \n \n \nHistory keeps repeating itself-maybe next time, you won’t be the one to slay the King. Press 'R' to retry... and perhaps find a safer path!"
-}
