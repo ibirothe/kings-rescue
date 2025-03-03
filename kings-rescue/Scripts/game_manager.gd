@@ -177,7 +177,7 @@ func end_party(text_key, win) -> void:
 	
 	var text = txt.get_party_end(text_key)
 	if GlobalDifficulty.upgrade_items.has("Hourglass"):
-		text = text + txt.get_party_end("Hourglass")
+		text = text + txt.ingame["Hourglass"].pick_random()
 	
 	if win:
 		GlobalDifficulty.add_win()
