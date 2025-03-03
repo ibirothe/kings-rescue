@@ -4,7 +4,8 @@ var party_end = {
 	"flee": "The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one? \n \n \nHistory keeps repeating itself, and saving just one King per century won’t break the cycle. Increase your win streak to unlock more misery!",
 	"starvation": "Your food stores are depleted. The soldiers begin to fall one by one-and soon, the king does as well. If you only listened to my instructions... \n \n \nHistory keeps repeating itself! Next time try to keep an eye on your Food Rations, maybe?",
 	"assasination": "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \n \nHistory keeps repeating itself, and strangely, there are always two Assassins within the King's Guard… and trust no one!",
-	"trap": "You managed to stop the Assassins from killing the King... by doing it yourself. \n \n \nHistory keeps repeating itself-maybe next time, you won’t be the one to slay the King. Let me take care of your Coins so they don´t distract you from finding a safer path!"
+	"trap": "You managed to stop the Assassins from killing the King... by doing it yourself. \n \n \nHistory keeps repeating itself-maybe next time, you won’t be the one to slay the King. Let me take care of your Coins so they don´t distract you from finding a safer path!",
+	"Hourglass": "\n\nYour hourglass shattered—what a shame. That was a family heirloom for generations..."
 }
 
 var ingame = {
@@ -23,7 +24,8 @@ var shop = {
 	"no_money": ["You not only look poor."],
 	"Pay Mercenaries": "Blablabla, much they will form a trade union.",
 	"Trap Specialists": "Dismantle not die blablalba",
-	"Food Ration": "Let the game guess your favorite food, then add 10 apples to your food storage!"
+	"Food Ration": "Let the game guess your favorite food, then add 10 apples to your food storage!",
+	"Hourglass": "The hourglass shatters when the king dies, yet somehow flings you back in time. Stranger still, the hourglass never existed in the past, but your win streak does."
 }
 
 var assassin_manuals = ["This one is a cooking recipe. No information about assassins.", 

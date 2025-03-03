@@ -174,6 +174,11 @@ func refire_king():
 func end_party(text_key, win) -> void:
 	GlobalText.set_text("")
 	AudioManager.stop_music()
+	
+	var text = txt.get_party_end(text_key)
+	if GlobalDifficulty.upgrade_items.has("Hourglass"):
+		text = text + txt.get_party_end("Hourglass")
+	
 	if win:
 		GlobalDifficulty.add_win()
 		GlobalDifficulty.difficulty =+1
@@ -181,7 +186,8 @@ func end_party(text_key, win) -> void:
 	else:
 		GlobalDifficulty.add_loss()
 		AudioManager.play_music("lose_jingle", -8, false)
-	win_fade_out(txt.get_party_end(text_key))
+	
+	win_fade_out(text)
 	party_ended = true
 
 func win_fade_out(display_text, wait_time = 1.8):

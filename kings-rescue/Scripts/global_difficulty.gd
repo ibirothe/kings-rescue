@@ -26,6 +26,9 @@ func add_win() -> void:
 	streak += 1
 
 func add_loss() -> void:
+	if upgrade_items.has("Hourglass"):
+		upgrade_items.erase("Hourglass")
+		return
 	losses += 1
 	streak = 0
 	clear_shop()

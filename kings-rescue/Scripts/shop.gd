@@ -23,7 +23,8 @@ var info_buttons = []
 var item_list = {
 	"Pay Mercenaries": [15, true],
 	"Trap Specialists": [25, true],
-	"Food Ration": [10, false]
+	"Food Ration": [10, false],
+	"Hourglass": [15, true]
 }
 
 func _ready() -> void:
