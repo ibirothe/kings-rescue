@@ -23,7 +23,7 @@ general/default_playback_type.web=0
 
 AudioManager="*res://Scenes/AudioManager.tscn"
 GlobalText="*res://Scripts/global_text.gd"
-GlobalDifficulty="*res://Scenes/global_difficulty.tscn"
+RunStats="*res://Scenes/run_stats.tscn"
 
 [display]
 

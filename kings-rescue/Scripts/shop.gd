@@ -35,13 +35,13 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	for i in range(3):
-		if i >= GlobalDifficulty.shop_items.size():
+		if i >= RunStats.shop_items.size():
 			labels[i].text = ""
 			prizes[i].text = ""
 			buy_buttons[i].visible = false
 			info_buttons[i].visible = false
 		else:
-			var item_name = GlobalDifficulty.shop_items[i]
+			var item_name = RunStats.shop_items[i]
 			var price = item_list.get(item_name, "???")[0]
 			prizes[i].text = str(price) + " Gold"
 			labels[i].text = item_name
