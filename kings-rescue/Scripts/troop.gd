@@ -37,7 +37,6 @@ func spawn_soldiers():
 			soldier.role = "Soldier"
 		roles.erase(role)
 		
-		
 		match i:
 			0:
 				x -= 16

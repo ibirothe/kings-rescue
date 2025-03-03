@@ -3,13 +3,13 @@ var coin_scene = preload("res://Scenes/coin.tscn")
 var food_scene = preload("res://Scenes/food.tscn")
 var informant_scene = preload("res://Scenes/informant.tscn")
 var trap_scene = preload("res://Scenes/trap.tscn")
+var shop_item_scene = preload("res://Scenes/restock_item.tscn")
 var txt_scene = preload("res://Scenes/Texts.tscn")
 var resume_scene = preload("res://Scenes/party_resume.tscn")
 var x = 0  # Initialize x
 var y = 0  # Initialize y
 var occupied_positions = []
 var food = 10
-var coins = 0
 var setup_done = false
 var active_soldier: bool
 var currently_moving = false
@@ -22,6 +22,7 @@ var magic = false
 @export var food_number = 7
 @export var trap_number = 14
 @export var informant_number = 2
+@export var shop_item_number = 1
 
 @onready var king: CharacterBody2D = $"../King"
 @onready var troop = $"../Game Manager/Troop"
@@ -43,6 +44,7 @@ func _physics_process(delta: float) -> void:
 		spawn_food(food_number)
 		spawn_informant(informant_number)
 		spawn_traps(trap_number)
+		spawn_shop_item(shop_item_number)
 		GlobalText.set_text(txt.ingame["start"].pick_random())
 		setup_done = true
 	
@@ -146,20 +148,46 @@ func spawn_traps(traps_numb):
 				occupied_positions.append(pos)
 				add_child(trap)
 
+func spawn_shop_item(amount):
+	var i = 0
+	while i < amount:
+		var shop_item = shop_item_scene.instantiate()
+		x = round(randf_range(0, 10))
+		y = round(randf_range(0, 10))
+		
+		if x > 2 and y > 2 and x < 8 and y < 8:
+			pass
+		else:
+			x = king.position.x-(5*16) + x*16
+			y = king.position.y+(5*16) - y*16
+			var pos = Vector2(x, y)
+			
+			if pos not in occupied_positions:
+				i += 1
+				shop_item.position = pos
+				occupied_positions.append(pos)
+				add_child(shop_item)
+
 func refire_king():
 	king.king()
 
 func end_party(text_key, win) -> void:
 	GlobalText.set_text("")
 	AudioManager.stop_music()
+	
+	var text = txt.party_end[text_key]
+
 	if win:
 		GlobalDifficulty.add_win()
 		GlobalDifficulty.difficulty =+1
 		AudioManager.play_music("win_jingle", -8, false)
 	else:
+		if GlobalDifficulty.upgrade_items.has("Hourglass"):
+			text = text + txt.ingame["Hourglass"].pick_random()
 		GlobalDifficulty.add_loss()
 		AudioManager.play_music("lose_jingle", -8, false)
-	win_fade_out(txt.get_party_end(text_key))
+
+	win_fade_out(text)
 	party_ended = true
 
 func win_fade_out(display_text, wait_time = 1.8):

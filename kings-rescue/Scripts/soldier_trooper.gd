@@ -14,8 +14,8 @@ var assassin = false
 var mercenary = false
 
 # Shoppable Upgrades
-var trapper = true
-var paid = true
+var trapper = false
+var paid = false
 
 var number = 0
 var subclass
@@ -71,6 +71,7 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	self.update_traits()
 	# Soldier leaving the board
 	self.leave_board()
 	# Check if food ran out
@@ -91,7 +92,10 @@ func _physics_process(_delta: float) -> void:
 			animated_sprite_2d.play(subclass+"_death")
 			animated_sprite_2d.frame = 3
 			
-			
+func update_traits() -> void:
+	trapper = GlobalDifficulty.upgrade_items.has("Trap Specialists")
+	paid = GlobalDifficulty.upgrade_items.has("Pay Mercenaries")
+	
 func assasination_check() -> bool:
 	if assassin and !dead:
 		for bodies in neighbours_check.get_overlapping_bodies():
