@@ -176,9 +176,7 @@ func end_party(text_key, win) -> void:
 	AudioManager.stop_music()
 	
 	var text = txt.get_party_end(text_key)
-	if GlobalDifficulty.upgrade_items.has("Hourglass"):
-		text = text + txt.ingame["Hourglass"].pick_random()
-	
+
 	if win:
 		GlobalDifficulty.add_win()
 		GlobalDifficulty.difficulty =+1
@@ -186,6 +184,8 @@ func end_party(text_key, win) -> void:
 	else:
 		GlobalDifficulty.add_loss()
 		AudioManager.play_music("lose_jingle", -8, false)
+		if GlobalDifficulty.upgrade_items.has("Hourglass"):
+			text = text + txt.ingame["Hourglass"].pick_random()
 	
 	win_fade_out(text)
 	party_ended = true
