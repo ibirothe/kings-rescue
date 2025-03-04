@@ -23,10 +23,12 @@ var ingame = {
 
 var shop = {
 	"no_money": ["You not only look poor."],
+	"bought": ["Thanks for thy gold, wise shopper! May your deals be plenty and your coin never empty!"],
 	"Pay Mercenaries": "Blablabla, much they will form a trade union.",
 	"Trap Specialists": "Dismantle not die blablalba",
 	"Food Ration": "Let the game guess your favorite food, then add 10 apples to your food storage!",
-	"Hourglass": "The hourglass shatters when the king dies, yet somehow flings you back in time. Stranger still, the hourglass never existed in the past, but your win streak does."
+	"Hourglass": "The hourglass shatters when the king dies, yet somehow flings you back in time. Stranger still, the hourglass never existed in the past, but your win streak does.",
+	"Life Insurance": "Having life insurance on eight people sounds like fraud waiting to happen - but what else would you expect in a kingdom where assassinating the monarch is practically a national pastime?"
 }
 
 var assassin_manuals = ["This one is a cooking recipe. No information about assassins.", 

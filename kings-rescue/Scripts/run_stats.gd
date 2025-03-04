@@ -115,8 +115,8 @@ func reset_save_file() -> void:
 	streak = 0
 
 	#shop:
-	coins = 0
-	shop_items = []
+	coins = 100
+	shop_items = ["Life Insurance"]
 	#upgrades:
 	upgrade_items = []
 	save_game()
