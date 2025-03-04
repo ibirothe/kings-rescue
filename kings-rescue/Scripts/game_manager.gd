@@ -25,6 +25,7 @@ var magic = false
 @export var shop_item_number = 1
 
 @onready var king: CharacterBody2D = $"../King"
+@onready var camera: Camera2D = $"../Camera2D"
 @onready var troop = $"../Game Manager/Troop"
 @onready var txt = txt_scene.instantiate()
 
