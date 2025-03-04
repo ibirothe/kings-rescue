@@ -24,7 +24,8 @@ var item_list = {
 	"Pay Mercenaries": [15, true],
 	"Trap Specialists": [25, true],
 	"Food Ration": [10, false],
-	"Hourglass": [15, true]
+	"Hourglass": [15, true],
+	"Life Insurance": [10, true]
 }
 
 func _ready() -> void:
