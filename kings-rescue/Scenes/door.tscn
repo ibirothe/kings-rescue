@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://52mibe77ktsm"]
+
+[ext_resource type="Texture2D" uid="uid://df2shas6872xa" path="res://Assets/duck_trap_48.png" id="2_ubwxg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gr22t"]
+radius = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cdokf"]
+atlas = ExtResource("2_ubwxg")
+region = Rect2(96, 96, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_as65x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cdokf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Door" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gr22t")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_as65x")

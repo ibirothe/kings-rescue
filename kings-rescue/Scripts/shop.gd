@@ -25,7 +25,8 @@ var item_list = {
 	"Trap Specialists": [25, true],
 	"Food Ration": [10, false],
 	"Hourglass": [15, true],
-	"Life Insurance": [10, true]
+	"Life Insurance": [10, true],
+	"Dimensional Key": [1, true]
 }
 
 func _ready() -> void:

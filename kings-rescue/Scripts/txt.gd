@@ -28,7 +28,8 @@ var shop = {
 	"Trap Specialists": "Dismantle not die blablalba",
 	"Food Ration": "Let the game guess your favorite food, then add 10 apples to your food storage!",
 	"Hourglass": "The hourglass shatters when the king dies, yet somehow flings you back in time. Stranger still, the hourglass never existed in the past, but your win streak does.",
-	"Life Insurance": "Having life insurance on eight people sounds like fraud waiting to happen - but what else would you expect in a kingdom where assassinating the monarch is practically a national pastime?"
+	"Life Insurance": "Having life insurance on eight people sounds like fraud waiting to happen - but what else would you expect in a kingdom where assassinating the monarch is practically a national pastime?",
+	"Dimensional Key": "A key to elevate the difficulty level. Don´t expect us to sell the door seperately."
 }
 
 var assassin_manuals = ["This one is a cooking recipe. No information about assassins.", 

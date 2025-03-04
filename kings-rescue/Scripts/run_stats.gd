@@ -112,11 +112,11 @@ func reset_save_file() -> void:
 	#run metrics:
 	wins = 0
 	losses = 0
-	streak = 0
+	streak = 3
 
 	#shop:
 	coins = 100
-	shop_items = ["Life Insurance"]
+	shop_items = ["Dimensional Key"]
 	#upgrades:
 	upgrade_items = []
 	save_game()
