@@ -242,6 +242,9 @@ func death():
 	visual_deactivation()
 	game_manager.troop.current_soldier = null
 	game_manager.troop.soldiers.erase(self)
+	if RunStats.upgrade_items.has("Life Insurance"):
+		RunStats.coins += 1
+		AudioManager.play_sound("coin_collect")
 	if animated_sprite_2d.animation != subclass+"_death":
 		animated_sprite_2d.play(subclass+"_death")
 		
