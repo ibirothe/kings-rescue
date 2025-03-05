@@ -1,11 +1,11 @@
 extends Node
 
 var party_end = {
-	"flee": "The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one? \n \n \nHistory keeps repeating itself, and saving just one King per century won’t break the cycle. Increase your win streak to unlock more misery!",
-	"starvation": "Your food stores are depleted. The soldiers begin to fall one by one-and soon, the king does as well. If you only listened to my instructions... \n \n \nHistory keeps repeating itself! Next time try to keep an eye on your Food Rations, maybe?",
-	"assasination": "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \n \nHistory keeps repeating itself, and strangely, there are always two Assassins within the King's Guard… and trust no one!",
-	"trap": "You managed to stop the Assassins from killing the King... by doing it yourself. \n \n \nHistory keeps repeating itself-maybe next time, you won’t be the one to slay the King. Let me take care of your Coins so they don´t distract you from finding a safer path!",
-	"Hourglass": "\n\nYour hourglass shattered - what a shame. That was a family heirloom for generations..."
+	"flee": "The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one? \n \n \nHistory keeps repeating itself - but do not despair. A safe haven awaits you somewhere… or perhaps only deeper misery.",
+	"starvation": "Your food stores are depleted. The soldiers begin to fall one by one - and soon, the king does as well. If you only listened to my instructions... \n \n \nYou can find Food Rations in the Shop or use Soldiers to collect your favorite Food.",
+	"assasination": "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \n \nBut fear not—we never seem to run out of monarchs. Strangely, the same goes for Assassins. Best keep a watchful eye on their every move!",
+	"trap": "You managed to stop the Assassins from killing the King... by doing it yourself. \n \n \nWe disregard any legal consequences - after all, someone must lead the Kings Guard. Although we cannot deny having employed better personnel in the past.",
+	"Hourglass": "\n\nYour Hourglass shattered—such a shame. That was a family heirloom. But hey, at least it teleported you back to a time before you failed so miserably."
 }
 
 var ingame = {
