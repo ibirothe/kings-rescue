@@ -21,7 +21,7 @@ func spawn_soldiers():
 	for i in range(8):
 		var soldier = soldier_scene.instantiate()
 		var j = round(randf_range(0, len(subclasses)-1))
-		#print(j)
+
 		var subclass = subclasses[j]
 		soldier.subclass = subclass
 		subclasses.erase(subclass)
@@ -75,10 +75,10 @@ func _physics_process(_delta: float) -> void:
 		activate_soldier(activating_soldier)
 		deactivate_soldier(current_soldier)
 		current_soldier = activating_soldier
-		print("Changing soldier")
+
 		reset_clicks()
 	elif soldier_can_activate():
-		print("First activation")
+
 		activate_soldier(activating_soldier)
 		current_soldier = activating_soldier
 		reset_clicks()

@@ -15,6 +15,9 @@ var upgrade_items = []
 func _ready() -> void:
 	load_game()
 
+func increase_difficulty():
+	difficulty += 1
+
 func difficulty_name() -> String:
 	match difficulty:
 		0: return "Baby Mode"
@@ -112,11 +115,11 @@ func reset_save_file() -> void:
 	#run metrics:
 	wins = 0
 	losses = 0
-	streak = 0
+	streak = 3
 
 	#shop:
 	coins = 100
-	shop_items = ["Life Insurance"]
+	shop_items = []
 	#upgrades:
-	upgrade_items = []
+	upgrade_items = ["Hourglass", "Dimensional Key"]
 	save_game()
