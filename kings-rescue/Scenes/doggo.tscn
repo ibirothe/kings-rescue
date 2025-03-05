@@ -177,8 +177,9 @@ radius = 5.09902
 script = ExtResource("1_wqtpr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -17)
 sprite_frames = SubResource("SpriteFrames_6n82u")
-animation = &"idle"
+animation = &"walk"
 autoplay = "idle"
 
 [node name="Up" type="Area2D" parent="."]
