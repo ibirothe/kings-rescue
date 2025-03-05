@@ -14,8 +14,8 @@ var ingame = {
 	"mercenary_not_flee": ["You paid. not flee. Good text."],
 	"dead_body": ["He's dead, Jim.", "You cannot move dead bodies. That´s another game.", "Pretty sure he is just sleeping."],
 	"soldier_leaving": [" left. Hope they bring some help. Godspeed.", " is going to buy cigarettes. Won´t be long.", " glitched through the map and is now fighting the end boss alone.", ": 'Look to my coming on the first light of the fifth day, at dawn look to the east.'"],
-	"dismantle_trap": ["Trap dismatling text goes here"],
-	"soldier_trap_death": ["Soldier dead in trap text"],
+	"dismantle_trap": ["Looks like aimlessly fummbling with the mechanism for a bit, helped dismantling the trap.", "A few random twists and turns, and somehow the trap’s dismantled. Don’t ask how.", "With zero finesse, you managed to disarm the trap by sheer luck. Looks like the training paid off."],
+	"soldier_trap_death": ["The suspiciously placed floor tile was easy to step over - unfortunately, the ceiling trap waiting right above it was not as considerate.", "The sign reading "Not a trap, trust me" was obviously a lie.", "The suspicious tile was clearly a trap - so you stepped around it, triggering the even more suspicious tile right next to it.", "Instead of checking for traps, you decide speed is the best defense. Did it work?"],
 	"shop_collect": ["You collected stuff for shop blablablablablabla"],
 	"Hourglass": ["\n\nYour Hourglass shattered - such a shame. That was a family heirloom. But hey, at least it teleported you back to a time before you failed so miserably."],
 	"door": ["Your dimensional key accidentally falls into the 11th-dimensional space. You've been teleported into a parallel universe where everything is exactly the same - except that kings are much harder to save here. Difficulty increased!"]
