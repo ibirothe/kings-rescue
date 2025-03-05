@@ -52,7 +52,7 @@ func dog():
 func move(body: Node2D) -> void:
 	#if direction_check == false:
 		var direction = monsters._get_direction("dog", number)
-		print(direction)
+		print("Doggo is moving ", direction)
 		if direction.x < 0 and direction.y == 0:
 			print("right")
 			if len(right.get_overlapping_bodies()) > 0:
@@ -60,31 +60,32 @@ func move(body: Node2D) -> void:
 				print(right.get_overlapping_bodies())
 				print("illegal")
 			else:
-				move_character(game_manager.troop.move_dir)
+				move_character(direction)
 		if direction.x > 0 and direction.y == 0:
 			print("left")
 			if len(left.get_overlapping_bodies()) > 0:
 				body.turn_back()
 				print("illegal")
 			else:
-				move_character(game_manager.troop.move_dir)
+				move_character(direction)
 		if direction.x == 0 and direction.y > 0:
 			print("up")
 			if len(up.get_overlapping_bodies()) > 0:
 				body.turn_back()
 				print("illegal")
 			else:
-				move_character(game_manager.troop.move_dir)
+				move_character(direction)
 		if direction.x == 0 and direction.y < 0:
 			print("down")
 			if len(down.get_overlapping_bodies()) > 0:
 				body.turn_back()
 				print("illegal")
 			else:
-				move_character(game_manager.troop.move_dir)
+				move_character(direction)
 		#direction_check = true
 	
 func handle_idle_state() -> void:
+	animated_sprite_2d.play()
 	pass
 			
 func move_character(movement: Vector2) -> void:

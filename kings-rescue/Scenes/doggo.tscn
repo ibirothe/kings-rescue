@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bvjjoc88i4mlj"]
+[gd_scene load_steps=28 format=3 uid="uid://dtsb5ek2ffqx6"]
 
 [ext_resource type="Script" path="res://Scripts/doggo.gd" id="1_wqtpr"]
 [ext_resource type="Texture2D" uid="uid://n6fw1vo7cka5" path="res://Assets/doggo.png" id="2_mvc8r"]
@@ -140,7 +140,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_vxw0t")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
 "speed": 5.0
 }, {
 "frames": [{
@@ -178,7 +178,8 @@ script = ExtResource("1_wqtpr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6n82u")
-animation = &"walk"
+animation = &"idle"
+autoplay = "idle"
 
 [node name="Up" type="Area2D" parent="."]
 collision_mask = 4
