@@ -15,10 +15,11 @@ func _on_body_entered(body):
 		body.disable_shader()
 		# Fade out over 1 second
 		soldier_tween.tween_property(body.animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
+		AudioManager.play_sound("swoosh", -5, 0.5)
 		await soldier_tween.finished
 		body.queue_free()  # Remove the node after fading out
+		AudioManager.play_sound("door_activate", -12, 2)
 		animated_sprite_2d.play("Activate")
-		AudioManager.play_sound("door_activate")
 		await get_tree().create_timer(0.8).timeout
 		RunStats.increase_difficulty()
 		RunStats.upgrade_items.erase("Dimensional Key")
