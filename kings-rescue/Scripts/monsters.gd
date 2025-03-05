@@ -17,7 +17,7 @@ var setup_done = false
 var soldiers = []
 var move_dir: Vector2
 var direct
-@onready var king: CharacterBody2D = $King
+@onready var king: CharacterBody2D = game_manager.king
 var doggo_directions = []
 var buddy
 var monsters = []
