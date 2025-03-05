@@ -36,26 +36,7 @@ func spawn_doggos(canine_numb):
 			x = king.position.x-(5*16) + x*16
 			y = king.position.y+(5*16) - y*16
 			var pos = Vector2(x, y)
-			
 			if pos not in game_manager.occupied_positions:
-				match i:
-					0:
-						x -= 48
-						y -= 48
-					1: 
-						x += 16
-					2: 
-						x += 16
-					3: 
-						y += 16
-					4: 
-						y += 16
-					5: 
-						x -= 16
-					6: 
-						x -= 16
-					7: 
-						y -= 16
 				i += 1
 				doggo.position = pos
 				game_manager.occupied_positions.append(pos)

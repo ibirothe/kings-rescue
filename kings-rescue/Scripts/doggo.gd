@@ -53,6 +53,8 @@ func move(body: Node2D) -> void:
 	#if direction_check == false:
 		var direction = monsters._get_direction("dog", number)
 		print("Doggo is moving ", direction)
+		if direction.x != 0:
+			animated_sprite_2d.flip_h = direction.x < 0
 		if direction.x < 0 and direction.y == 0:
 			print("right")
 			if len(right.get_overlapping_bodies()) > 0:
