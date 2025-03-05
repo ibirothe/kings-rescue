@@ -176,10 +176,8 @@ func spawn_shop_item(amount):
 				add_child(shop_item)
 
 func spawn_difficulty_door() -> void:
-	print("call")
 	if RunStats.upgrade_items.has("Dimensional Key") and RunStats.streak >= (RunStats.difficulty+1)*3:
 		var i = 0
-		print("condition")
 		while i < 1:
 			var door = door_scene.instantiate()
 			x = round(randf_range(0, 10))
@@ -197,7 +195,6 @@ func spawn_difficulty_door() -> void:
 					door.position = pos
 					occupied_positions.append(pos)
 					add_child(door)
-					print("added")
 
 func refire_king():
 	king.king()
@@ -210,7 +207,6 @@ func end_party(text_key, win) -> void:
 
 	if win:
 		RunStats.add_win()
-		RunStats.difficulty =+1
 		AudioManager.play_music("win_jingle", -8, false)
 	else:
 		if RunStats.upgrade_items.has("Hourglass"):

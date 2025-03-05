@@ -270,7 +270,6 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		return
 		
 	if animated_sprite_2d.animation == subclass+"_attack":
-		print("Finish attack")
 		transition_to_state(State.IDLE)
 		
 		
@@ -285,7 +284,6 @@ func take_coin():
 	queue_free()  # Remove the node after fading out
 
 func visual_activation():
-	print("Visual activation")
 	
 	# Create a shader material with an improved shader
 	var shader_material = ShaderMaterial.new()
@@ -326,7 +324,6 @@ func visual_deactivation():
 	arrows_tween.kill()
 	"""if !animated_sprite_2d.material:
 		return"""
-	print("Visual deactivation")
 	# Tween the shader parameter
 	#await tween1.finished
 	#await tween2.finished
@@ -362,7 +359,6 @@ func send_move_click(direction):
 	
 func _on_bumping_area_body_entered(body: Node2D) -> void:
 	if body.subclass != self.subclass and game_manager.troop.current_soldier != self and dead == false:
-		print("Hello there", body.subclass, " says ", self.subclass)
 		body.turn_back()
 		
 func soldier():

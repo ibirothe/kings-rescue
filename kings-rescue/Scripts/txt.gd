@@ -5,7 +5,7 @@ var party_end = {
 	"starvation": "Your food stores are depleted. The soldiers begin to fall one by one-and soon, the king does as well. If you only listened to my instructions... \n \n \nHistory keeps repeating itself! Next time try to keep an eye on your Food Rations, maybe?",
 	"assasination": "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \n \nHistory keeps repeating itself, and strangely, there are always two Assassins within the King's Guard… and trust no one!",
 	"trap": "You managed to stop the Assassins from killing the King... by doing it yourself. \n \n \nHistory keeps repeating itself-maybe next time, you won’t be the one to slay the King. Let me take care of your Coins so they don´t distract you from finding a safer path!",
-	"Hourglass": "\n\nYour hourglass shattered—what a shame. That was a family heirloom for generations..."
+	"Hourglass": "\n\nYour hourglass shattered - what a shame. That was a family heirloom for generations..."
 }
 
 var ingame = {
@@ -14,11 +14,12 @@ var ingame = {
 	"mercenary_flee": ["A mercenary fled. They value gold higher than loyalty, but even the best King’s Guard has two of them."],
 	"mercenary_not_flee": ["You paid. not flee. Good text."],
 	"dead_body": ["He's dead, Jim.", "You cannot move dead bodies. That´s another game.", "Pretty sure he is just sleeping."],
-	"soldier_leaving": [" left. Hope they bring some help. Godspeed.", " is going to buy cigarettes. Won´t be long.", " glitched through the map and is now fighting the end boss alone."],
+	"soldier_leaving": [" left. Hope they bring some help. Godspeed.", " is going to buy cigarettes. Won´t be long.", " glitched through the map and is now fighting the end boss alone.", ": 'Look to my coming on the first light of the fifth day, at dawn look to the east.'"],
 	"dismantle_trap": ["Trap dismatling text goes here"],
 	"soldier_trap_death": ["Soldier dead in trap text"],
 	"shop_collect": ["You collected stuff for shop blablablablablabla"],
-	"Hourglass": ["\n\nYour hourglass shattered—what a shame. That was a family heirloom for generations..."]
+	"Hourglass": ["\n\nYour hourglass shattered - what a shame. That was a family heirloom for generations..."],
+	"door": ["Your dimensional key accidentally falls into the 11th-dimensional space. You've been teleported into a parallel universe where everything is exactly the same - except that kings are much harder to save here. Difficulty increased!"]
 }
 
 var shop = {
