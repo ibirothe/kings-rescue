@@ -8,7 +8,7 @@ enum State {INACTIVE, IDLE, MOVING, DEAD}
 var direction_check = false
 @onready var center: Marker2D = $Center
 @onready var king_shape: CollisionShape2D = $King_shape
-@onready var game_manager: Node2D = $"../Game Manager"
+@onready var game_manager = get_parent().get_parent()
 var right_legal
 var current_state
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -25,16 +25,14 @@ func _ready() -> void:
 	
 func _physics_process(_delta: float) -> void:
 	#print(direction_check)
-	if game_manager.party_ended and len(win.get_overlapping_bodies()) == 0 or trap == true:
+	if trap == true:
 		if animated_sprite_2d.animation != "death":
 			animated_sprite_2d.play("death")
 			"""replace audio with doggo death"""
 			AudioManager.play_sound("player_death")
 		return
 	if game_manager.currently_moving == true:
-		king_shape.disabled = true
-	else:
-		king_shape.disabled = false
+		pass
 
 	match current_state:
 		State.IDLE:
@@ -42,8 +40,8 @@ func _physics_process(_delta: float) -> void:
 		State.MOVING:
 			# Movement is handled by tween, we just watch for new input
 			pass
-	if len(win.get_overlapping_bodies()) > 0:
-		leave_anim()
+	"""if len(win.get_overlapping_bodies()) > 0:
+		leave_anim()"""
 			
 			
 func dog():
@@ -123,3 +121,4 @@ func leave_anim():
 	tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
 	await tween.finished
 	queue_free()  # Remove the node after fading out
+	

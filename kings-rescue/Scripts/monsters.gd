@@ -76,8 +76,8 @@ func _physics_process(_delta: float) -> void:
 	
 func move_all():
 	for buddy in monsters:
-		buddy.move()
+		buddy.move(buddy)
 		
 func _get_direction(monster, number):
 	if monster == "dog":
-		return doggo_directions[number]
+		return doggo_directions[number-1]

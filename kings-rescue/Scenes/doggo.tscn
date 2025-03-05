@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bvjjoc88i4mlj"]
+[gd_scene load_steps=28 format=3 uid="uid://bvjjoc88i4mlj"]
 
 [ext_resource type="Script" path="res://Scripts/doggo.gd" id="1_wqtpr"]
 [ext_resource type="Texture2D" uid="uid://n6fw1vo7cka5" path="res://Assets/doggo.png" id="2_mvc8r"]
@@ -161,9 +161,50 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_h2chb"]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lun26"]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nwcg6"]
+radius = 5.09902
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mfgkw"]
+radius = 5.09902
+
 [node name="Doggo" type="CharacterBody2D"]
 script = ExtResource("1_wqtpr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6n82u")
 animation = &"walk"
+
+[node name="Up" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Up"]
+position = Vector2(0, -16)
+shape = SubResource("CircleShape2D_h2chb")
+
+[node name="Down" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Down"]
+position = Vector2(0, 13)
+shape = SubResource("CircleShape2D_lun26")
+
+[node name="Left" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left"]
+position = Vector2(-15, 0)
+shape = SubResource("CircleShape2D_nwcg6")
+
+[node name="Right" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right"]
+position = Vector2(16, 0)
+shape = SubResource("CircleShape2D_mfgkw")
