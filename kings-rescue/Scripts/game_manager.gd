@@ -23,11 +23,13 @@ var magic = false
 @export var trap_number = 14
 @export var informant_number = 2
 @export var shop_item_number = 1
+@export var canine_number = 1
 
 @onready var king: CharacterBody2D = $"../King"
 @onready var camera: Camera2D = $"../Camera2D"
 @onready var troop = $"../Game Manager/Troop"
 @onready var txt = txt_scene.instantiate()
+@onready var monsters: Node2D = $Monsters
 
 
 func _ready() -> void:
@@ -46,6 +48,7 @@ func _physics_process(delta: float) -> void:
 		spawn_informant(informant_number)
 		spawn_traps(trap_number)
 		spawn_shop_item(shop_item_number)
+		monsters.spawn_doggos(canine_number)
 		GlobalText.set_text(txt.ingame["start"].pick_random())
 		setup_done = true
 	
@@ -172,6 +175,8 @@ func spawn_shop_item(amount):
 				shop_item.position = pos
 				occupied_positions.append(pos)
 				add_child(shop_item)
+				
+
 
 func refire_king():
 	king.king()
@@ -217,3 +222,9 @@ func _on_boardclickarea_mouse_entered() -> void:
 
 func _on_boardclickarea_mouse_exited() -> void:
 	inside_board = false
+
+func movement_complete():
+	monsters.move_all()
+	food = max(0, food-1)
+	currently_moving = false
+	

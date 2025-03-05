@@ -187,9 +187,8 @@ func move_character(movement: Vector2) -> void:
 	movement_tween.tween_callback(func():
 		animated_sprite_2d.play(subclass+"_idle")
 		transition_to_state(State.IDLE)
-		game_manager.food = max(0, game_manager.food-1)
+		game_manager.movement_complete()
 		movement_locked = false
-		game_manager.currently_moving = false
 		game_manager.refire_king() 
 		) 
 """remove refire king"""
