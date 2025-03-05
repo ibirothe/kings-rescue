@@ -63,13 +63,14 @@ func spawn_doggos(canine_numb):
 			doggo.position = pos
 			game_manager.occupied_positions.append(pos)
 			add_child(doggo)
-			doggo.number = i
+			doggo.number = i-1
 			if x > 0:
 				direct = Vector2(-16, 0)
 			else:
 				direct = Vector2(16, 0)
 			doggo_directions.append(direct)
 			monsters.append(doggo)
+			print(doggo_directions)
 
 func _physics_process(_delta: float) -> void:
 	pass
@@ -80,4 +81,4 @@ func move_all():
 		
 func _get_direction(monster, number):
 	if monster == "dog":
-		return doggo_directions[number-1]
+		return doggo_directions[number]

@@ -9,6 +9,7 @@ var direction_check = false
 @onready var center: Marker2D = $Center
 @onready var king_shape: CollisionShape2D = $King_shape
 @onready var game_manager = get_parent().get_parent()
+@onready var monsters = get_parent()
 var right_legal
 var current_state
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -50,8 +51,8 @@ func dog():
 
 func move(body: Node2D) -> void:
 	#if direction_check == false:
-		var direction = game_manager.monsters._get_direction("dog", number)
-		print(direction/3.14*180)
+		var direction = monsters._get_direction("dog", number)
+		print(direction)
 		if direction.x < 0 and direction.y == 0:
 			print("right")
 			if len(right.get_overlapping_bodies()) > 0:
