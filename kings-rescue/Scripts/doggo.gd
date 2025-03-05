@@ -26,10 +26,7 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	#print(direction_check)
-	var direction = monsters._get_direction("dog", number)
-	if direction.x != 0:
-		animated_sprite_2d.flip_h = direction.x < 0
-	pass
+
 	
 	if trap == true:
 		if animated_sprite_2d.animation != "death":
@@ -57,6 +54,8 @@ func dog():
 func move(body: Node2D) -> void:
 	#if direction_check == false:
 		var direction = monsters._get_direction("dog", number)
+		if direction.x != 0:
+			animated_sprite_2d.flip_h = direction.x < 0
 		print("Doggo is moving ", direction)
 
 		if direction.x < 0 and direction.y == 0:

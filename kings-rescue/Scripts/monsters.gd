@@ -37,6 +37,7 @@ func spawn_doggos(canine_numb):
 			y = king.position.y+(5*16) - y*16
 			var pos = Vector2(x, y)
 			if pos not in game_manager.occupied_positions:
+
 				i += 1
 				doggo.position = pos
 				game_manager.occupied_positions.append(pos)
@@ -46,8 +47,14 @@ func spawn_doggos(canine_numb):
 					direct = Vector2(-16, 0)
 				else:
 					direct = Vector2(16, 0)
-				doggo_directions.append(direct)
 				monsters.append(doggo)
+				doggo_directions.append(direct)
+				var direction = _get_direction("dog", doggo.number)
+				if direction.x != 0:
+					doggo.animated_sprite_2d.flip_h = direction.x < 0
+
+
+
 				print(doggo_directions)
 
 func _physics_process(_delta: float) -> void:
