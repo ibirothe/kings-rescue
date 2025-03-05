@@ -61,6 +61,7 @@ func kill_soldier(soldier):
 	GlobalText.set_text(game_manager.txt.ingame["soldier_trap_death"].pick_random())
 	soldier.death()
 	soldier.z_index = 0
+	game_manager.movement_complete()
 
 func handle_king_interaction(king):
 	trigger_trap()

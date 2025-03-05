@@ -122,6 +122,7 @@ func leave_board() -> void:
 		stop_movement()
 		disable_shader()
 		visual_deactivation()
+		game_manager.movement_complete()
 		active = false
 		game_manager.active_soldier = false
 		game_manager.currently_moving = false
@@ -280,6 +281,7 @@ func take_coin():
 	# Fade out over 1 second
 	coin_tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
 	await coin_tween.finished
+	game_manager.movement_complete()
 	queue_free()  # Remove the node after fading out
 
 func visual_activation():
