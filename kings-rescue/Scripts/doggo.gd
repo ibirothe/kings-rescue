@@ -58,7 +58,6 @@ func move(body: Node2D) -> void:
 		if direction.x < 0 and direction.y == 0:
 			print("right")
 			if len(right.get_overlapping_bodies()) > 0:
-				body.turn_back()
 				print(right.get_overlapping_bodies())
 				print("illegal")
 			else:
@@ -66,21 +65,18 @@ func move(body: Node2D) -> void:
 		if direction.x > 0 and direction.y == 0:
 			print("left")
 			if len(left.get_overlapping_bodies()) > 0:
-				body.turn_back()
 				print("illegal")
 			else:
 				move_character(direction)
 		if direction.x == 0 and direction.y > 0:
 			print("up")
 			if len(up.get_overlapping_bodies()) > 0:
-				body.turn_back()
 				print("illegal")
 			else:
 				move_character(direction)
 		if direction.x == 0 and direction.y < 0:
 			print("down")
 			if len(down.get_overlapping_bodies()) > 0:
-				body.turn_back()
 				print("illegal")
 			else:
 				move_character(direction)
