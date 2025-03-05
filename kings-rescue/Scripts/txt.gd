@@ -17,7 +17,7 @@ var ingame = {
 	"dismantle_trap": ["Trap dismatling text goes here"],
 	"soldier_trap_death": ["Soldier dead in trap text"],
 	"shop_collect": ["You collected stuff for shop blablablablablabla"],
-	"Hourglass": "\n\nYour Hourglass shattered—such a shame. That was a family heirloom. But hey, at least it teleported you back to a time before you failed so miserably.",
+	"Hourglass": ["\n\nYour Hourglass shattered - such a shame. That was a family heirloom. But hey, at least it teleported you back to a time before you failed so miserably."],
 	"door": ["Your dimensional key accidentally falls into the 11th-dimensional space. You've been teleported into a parallel universe where everything is exactly the same - except that kings are much harder to save here. Difficulty increased!"]
 }
 
@@ -38,10 +38,10 @@ var assassin_manuals = ["This one is a cooking recipe. No information about assa
 "King is an assassin.",
 "There are no traps on this level.",
 "If you run out of food, only traitors die.",
-"**shreds the paper**",
+"*shreds the paper*",
 "Bring this letter to the king, make sure he's alone.",
-"It's a magical spell. Press L to use it.",
-"On this level you win if the king dies."
+"On this level you win if the king dies.",
+"Just a love letter to apples."
 ]
 
 var mercenary_manuals = ["This is not the dollar bill, you were looking for.", 
