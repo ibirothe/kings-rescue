@@ -29,7 +29,7 @@ var shop = {
 	"Food Ration": "Starving? Desperate? Barely clinging to life? Worry not - introducing the Overpriced Apple! A single bite costs a fortune, but hey, it’s still cheaper than famine!",
 	"Hourglass": "The Hourglass shatters upon the king’s death, yet somehow flings you back in time. Not that you’ll save him next time either…",
 	"Life Insurance": "Having life insurance on eight people sounds like fraud waiting to happen - but what else would you expect in a kingdom where assassinating the monarch is practically a national pastime?",
-	"Dimensional Key": A key crafted by the realm's top quantum scientists to boost both mortality rates and fun—simultaneously. Fitting doors sold separately."
+	"Dimensional Key": "A key crafted by the realm's top quantum scientists to boost both mortality rates and fun—simultaneously. Fitting doors sold separately."
 }
 
 var assassin_manuals = ["This one is a cooking recipe. No information about assassins.", 
