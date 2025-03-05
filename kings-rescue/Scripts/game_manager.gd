@@ -4,6 +4,7 @@ var food_scene = preload("res://Scenes/food.tscn")
 var informant_scene = preload("res://Scenes/informant.tscn")
 var trap_scene = preload("res://Scenes/trap.tscn")
 var shop_item_scene = preload("res://Scenes/restock_item.tscn")
+var door_scene = preload("res://Scenes/door.tscn")
 var txt_scene = preload("res://Scenes/Texts.tscn")
 var resume_scene = preload("res://Scenes/party_resume.tscn")
 var x = 0  # Initialize x
@@ -49,6 +50,7 @@ func _physics_process(delta: float) -> void:
 		spawn_traps(trap_number)
 		spawn_shop_item(shop_item_number)
 		monsters.spawn_doggos(canine_number)
+		spawn_difficulty_door()
 		GlobalText.set_text(txt.ingame["start"].pick_random())
 		setup_done = true
 	
@@ -178,6 +180,27 @@ func spawn_shop_item(amount):
 				
 
 
+func spawn_difficulty_door() -> void:
+	if RunStats.upgrade_items.has("Dimensional Key") and RunStats.streak >= (RunStats.difficulty+1)*3:
+		var i = 0
+		while i < 1:
+			var door = door_scene.instantiate()
+			x = round(randf_range(0, 10))
+			y = round(randf_range(0, 10))
+			
+			if x > 2 and y > 2 and x < 8 and y < 8:
+				pass
+			else:
+				x = king.position.x-(5*16) + x*16
+				y = king.position.y+(5*16) - y*16
+				var pos = Vector2(x, y)
+				
+				if pos not in occupied_positions:
+					i += 1
+					door.position = pos
+					occupied_positions.append(pos)
+					add_child(door)
+
 func refire_king():
 	king.king()
 
@@ -189,7 +212,6 @@ func end_party(text_key, win) -> void:
 
 	if win:
 		RunStats.add_win()
-		RunStats.difficulty =+1
 		AudioManager.play_music("win_jingle", -8, false)
 	else:
 		if RunStats.upgrade_items.has("Hourglass"):
