@@ -4,8 +4,7 @@ var party_end = {
 	"flee": "The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one? \n \n \nHistory keeps repeating itself - but do not despair. A safe haven awaits you somewhere… or perhaps only deeper misery.",
 	"starvation": "Your food stores are depleted. The soldiers begin to fall one by one - and soon, the king does as well. If you only listened to my instructions... \n \n \nYou can find Food Rations in the Shop or use Soldiers to collect your favorite Food.",
 	"assasination": "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \n \nBut fear not—we never seem to run out of monarchs. Strangely, the same goes for Assassins. Best keep a watchful eye on their every move!",
-	"trap": "You managed to stop the Assassins from killing the King... by doing it yourself. \n \n \nWe disregard any legal consequences - after all, someone must lead the Kings Guard. Although we cannot deny having employed better personnel in the past.",
-	"Hourglass": "\n\nYour Hourglass shattered—such a shame. That was a family heirloom. But hey, at least it teleported you back to a time before you failed so miserably."
+	"trap": "You managed to stop the Assassins from killing the King... by doing it yourself. \n \n \nWe disregard any legal consequences - after all, someone must lead the Kings Guard. Although we cannot deny having employed better personnel in the past."
 }
 
 var ingame = {
@@ -18,19 +17,19 @@ var ingame = {
 	"dismantle_trap": ["Trap dismatling text goes here"],
 	"soldier_trap_death": ["Soldier dead in trap text"],
 	"shop_collect": ["You collected stuff for shop blablablablablabla"],
-	"Hourglass": ["\n\nYour hourglass shattered - what a shame. That was a family heirloom for generations..."],
+	"Hourglass": "\n\nYour Hourglass shattered—such a shame. That was a family heirloom. But hey, at least it teleported you back to a time before you failed so miserably.",
 	"door": ["Your dimensional key accidentally falls into the 11th-dimensional space. You've been teleported into a parallel universe where everything is exactly the same - except that kings are much harder to save here. Difficulty increased!"]
 }
 
 var shop = {
-	"no_money": ["You not only look poor."],
-	"bought": ["Thanks for thy gold, wise shopper! May your deals be plenty and your coin never empty!"],
-	"Pay Mercenaries": "Blablabla, much they will form a trade union.",
-	"Trap Specialists": "Dismantle not die blablalba",
-	"Food Ration": "Let the game guess your favorite food, then add 10 apples to your food storage!",
-	"Hourglass": "The hourglass shatters when the king dies, yet somehow flings you back in time. Stranger still, the hourglass never existed in the past, but your win streak does.",
+	"no_money": ["You not only look poor.", "Echo? \n \n ECHO! \n \nThat's how empty your wallet is.", "Your coin pouch is looking even emptier than the king’s promises of prosperity.", "You’ve got just enough Coins for some quality window shopping."],
+	"bought": ["Thanks for thy gold, wise shopper! May your deals be plenty and your coin never empty!", "Thanks for your coin, noble spender! May your new possession bring you the happiness it promised in the brochure.", "Ah, a successful purchase! Now you can look forward to the existential dread of wondering if it was really worth it.", "Ah, the joy of consumerism!", "There you go. You’ve made your purchase. May it serve you well until the return policy expires."],
+	"Pay Mercenaries": "Pay the mercenaries now, or they'll form a union - demanding dental plans and a 40-hour work week.",
+	"Trap Specialists": "Unlock thriving life expectancy by learning to dismantle traps before they dismantle you. Sometimes...",
+	"Food Ration": "Starving? Desperate? Barely clinging to life? Worry not - introducing the Overpriced Apple! A single bite costs a fortune, but hey, it’s still cheaper than famine!",
+	"Hourglass": "The Hourglass shatters upon the king’s death, yet somehow flings you back in time. Not that you’ll save him next time either…",
 	"Life Insurance": "Having life insurance on eight people sounds like fraud waiting to happen - but what else would you expect in a kingdom where assassinating the monarch is practically a national pastime?",
-	"Dimensional Key": "A key to elevate the difficulty level. Don´t expect us to sell the door seperately."
+	"Dimensional Key": A key crafted by the realm's top quantum scientists to boost both mortality rates and fun—simultaneously. Fitting doors sold separately."
 }
 
 var assassin_manuals = ["This one is a cooking recipe. No information about assassins.", 
