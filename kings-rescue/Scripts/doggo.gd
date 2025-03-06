@@ -135,3 +135,9 @@ func death():
 	if animated_sprite_2d.animation != "death":
 		animated_sprite_2d.play("death")
 		transition_to_state(State.DEAD)
+
+
+func _on_bumping_area_body_entered(body: Node2D) -> void:
+	if body is Soldier and body.dead == false:
+		body.turn_back()
+	pass # Replace with function body.

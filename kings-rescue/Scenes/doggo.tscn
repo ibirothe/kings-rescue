@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dtsb5ek2ffqx6"]
+[gd_scene load_steps=31 format=3 uid="uid://dtsb5ek2ffqx6"]
 
 [ext_resource type="Script" path="res://Scripts/doggo.gd" id="1_wqtpr"]
 [ext_resource type="Texture2D" uid="uid://n6fw1vo7cka5" path="res://Assets/doggo.png" id="2_mvc8r"]
@@ -178,6 +178,9 @@ radius = 6.08276
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3ah8o"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ei3xx"]
+radius = 4.12311
+
 [node name="Doggo" type="CharacterBody2D"]
 collision_layer = 517
 collision_mask = 513
@@ -229,3 +232,12 @@ collision_mask = 128
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Leave"]
 shape = SubResource("CircleShape2D_3ah8o")
+
+[node name="Bumping_area" type="Area2D" parent="."]
+collision_layer = 16384
+collision_mask = 16384
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bumping_area"]
+shape = SubResource("CircleShape2D_ei3xx")
+
+[connection signal="body_entered" from="Bumping_area" to="." method="_on_bumping_area_body_entered"]
