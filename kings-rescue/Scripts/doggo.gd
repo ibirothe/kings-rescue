@@ -49,6 +49,7 @@ func dog():
 
 func move(body: Node2D) -> void:
 	#if direction_check == false:
+
 	if dead:
 		return
 	else:
@@ -64,21 +65,24 @@ func move(body: Node2D) -> void:
 				print("illegal")
 			else:
 				move_character(direction)
-		if direction.x < 0 and direction.y == 0:
+		elif direction.x < 0 and direction.y == 0:
 			print("left")
 			if len(left.get_overlapping_bodies()) > 0:
+				print(left.get_overlapping_bodies())
 				print("illegal")
 			else:
 				move_character(direction)
-		if direction.x == 0 and direction.y > 0:
+		elif direction.x == 0 and direction.y > 0:
 			print("up")
 			if len(up.get_overlapping_bodies()) > 0:
+				print(up.get_overlapping_bodies())
 				print("illegal")
 			else:
 				move_character(direction)
-		if direction.x == 0 and direction.y < 0:
+		elif direction.x == 0 and direction.y < 0:
 			print("down")
 			if len(down.get_overlapping_bodies()) > 0:
+				print(down.get_overlapping_bodies())
 				print("illegal")
 			else:
 				move_character(direction)

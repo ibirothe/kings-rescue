@@ -194,29 +194,32 @@ animation = &"death"
 autoplay = "idle"
 
 [node name="Up" type="Area2D" parent="."]
-collision_mask = 4
+collision_layer = 7
+collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Up"]
 position = Vector2(0, -16)
 shape = SubResource("CircleShape2D_h2chb")
 
 [node name="Down" type="Area2D" parent="."]
-collision_mask = 4
+collision_layer = 7
+collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Down"]
 position = Vector2(0, 13)
 shape = SubResource("CircleShape2D_lun26")
 
 [node name="Left" type="Area2D" parent="."]
-collision_mask = 4
+collision_layer = 7
+collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Left"]
 position = Vector2(-15, 0)
 shape = SubResource("CircleShape2D_nwcg6")
 
 [node name="Right" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 4
+collision_layer = 7
+collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Right"]
 position = Vector2(16, 0)

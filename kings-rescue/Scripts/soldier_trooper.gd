@@ -71,11 +71,6 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if active == true and assassin == true:
-		for bodies in neighbours_check.get_overlapping_bodies():
-			print(game_manager.currently_moving)
-			print(bodies.subclass)
-			print(possible_assassination, soldier_close)
 	self.update_traits()
 	# Soldier leaving the board
 	self.leave_board()

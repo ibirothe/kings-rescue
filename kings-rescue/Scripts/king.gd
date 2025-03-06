@@ -32,10 +32,11 @@ func _physics_process(_delta: float) -> void:
 			animated_sprite_2d.play("death")
 			AudioManager.play_sound("player_death")
 		return
-	if game_manager.currently_moving == true:
+		#NO IDEA WHY WE HAD THESE
+	"""if game_manager.currently_moving == true:
 		king_shape.disabled = true
 	else:
-		king_shape.disabled = false
+		king_shape.disabled = false"""
 
 	match current_state:
 		State.IDLE:
@@ -55,6 +56,7 @@ func king():
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	#if direction_check == false:
+	if body is Soldier:
 		var direction = center.global_position.direction_to(body.center.global_position)
 		print(direction/3.14*180)
 		if direction.x < 0 and direction.y == 0:
