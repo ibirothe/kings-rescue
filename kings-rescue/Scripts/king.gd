@@ -1,5 +1,7 @@
 extends CharacterBody2D
+class_name King
 enum State {INACTIVE, IDLE, MOVING}
+
 var role = "King"
 @onready var up: Area2D = $Up
 @onready var down: Area2D = $Down
@@ -17,7 +19,7 @@ const MOVE_TIME := 0.5  # Time in seconds to complete movement
 @onready var win: Area2D = $Win
 var trap = false
 var win_check = false
-var subclass = "King"
+
 
 
 
@@ -61,33 +63,16 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		print(direction/3.14*180)
 		if direction.x < 0 and direction.y == 0:
 			print("right")
-			if len(right.get_overlapping_bodies()) > 0:
-				body.turn_back()
-				print(right.get_overlapping_bodies())
-				print("illegal")
-			else:
-				move_character(game_manager.troop.move_dir)
+			collision_check(right.get_overlapping_bodies(), body)
 		if direction.x > 0 and direction.y == 0:
 			print("left")
-			if len(left.get_overlapping_bodies()) > 0:
-				body.turn_back()
-				print("illegal")
-			else:
-				move_character(game_manager.troop.move_dir)
+			collision_check(left.get_overlapping_bodies(), body)
 		if direction.x == 0 and direction.y > 0:
 			print("up")
-			if len(up.get_overlapping_bodies()) > 0:
-				body.turn_back()
-				print("illegal")
-			else:
-				move_character(game_manager.troop.move_dir)
+			collision_check(up.get_overlapping_bodies(), body)
 		if direction.x == 0 and direction.y < 0:
 			print("down")
-			if len(down.get_overlapping_bodies()) > 0:
-				body.turn_back()
-				print("illegal")
-			else:
-				move_character(game_manager.troop.move_dir)
+			collision_check(down.get_overlapping_bodies(), body)
 		#direction_check = true
 	
 func handle_idle_state() -> void:
@@ -119,6 +104,15 @@ func transition_to_state(new_state: State) -> void:
 			animated_sprite_2d.play("idle")
 	
 	current_state = new_state
+
+func collision_check(guys, body):
+	for bodies in guys:
+		if bodies is Soldier:
+			body.turn_back()
+			print(right.get_overlapping_bodies())
+			print("illegal")
+			return
+	move_character(game_manager.troop.move_dir)
 
 func win_anim():
 	animated_sprite_2d.play("walk")

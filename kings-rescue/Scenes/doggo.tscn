@@ -1,7 +1,23 @@
-[gd_scene load_steps=31 format=3 uid="uid://dtsb5ek2ffqx6"]
+[gd_scene load_steps=35 format=3 uid="uid://dtsb5ek2ffqx6"]
 
 [ext_resource type="Script" path="res://Scripts/doggo.gd" id="1_wqtpr"]
 [ext_resource type="Texture2D" uid="uid://n6fw1vo7cka5" path="res://Assets/doggo.png" id="2_mvc8r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndmcl"]
+atlas = ExtResource("2_mvc8r")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebski"]
+atlas = ExtResource("2_mvc8r")
+region = Rect2(48, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qrp8v"]
+atlas = ExtResource("2_mvc8r")
+region = Rect2(96, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0m3xe"]
+atlas = ExtResource("2_mvc8r")
+region = Rect2(144, 48, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r1s33"]
 atlas = ExtResource("2_mvc8r")
@@ -85,6 +101,23 @@ region = Rect2(144, 96, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6n82u"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ndmcl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebski")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qrp8v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0m3xe")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_r1s33")
@@ -183,14 +216,14 @@ radius = 4.12311
 
 [node name="Doggo" type="CharacterBody2D"]
 collision_layer = 517
-collision_mask = 513
+collision_mask = 515
 script = ExtResource("1_wqtpr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 4
 position = Vector2(0, -17)
 sprite_frames = SubResource("SpriteFrames_6n82u")
-animation = &"death"
+animation = &"attack"
 autoplay = "idle"
 
 [node name="Up" type="Area2D" parent="."]
@@ -237,10 +270,13 @@ collision_mask = 128
 shape = SubResource("CircleShape2D_3ah8o")
 
 [node name="Bumping_area" type="Area2D" parent="."]
-collision_layer = 16384
-collision_mask = 16384
+collision_layer = 16386
+collision_mask = 16386
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bumping_area"]
 shape = SubResource("CircleShape2D_ei3xx")
 
+[node name="Center" type="Marker2D" parent="."]
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="Bumping_area" to="." method="_on_bumping_area_body_entered"]

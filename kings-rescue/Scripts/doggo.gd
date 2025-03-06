@@ -22,6 +22,7 @@ var role = "Monster"
 var dead = false
 @onready var leave: Area2D = $Leave
 var leaving_board = false
+var bite = false
 
 
 func _ready() -> void:
@@ -142,6 +143,49 @@ func death():
 
 
 func _on_bumping_area_body_entered(body: Node2D) -> void:
-	if body is Soldier and body.dead == false:
-		body.turn_back()
-	pass # Replace with function body.
+	if body is Soldier:
+		var direction = center.global_position.direction_to(body.center.global_position)
+		print(direction/3.14*180)
+		if direction.x < 0 and direction.y == 0:
+			print("right")
+			if len(right.get_overlapping_bodies()) > 0:
+				body.turn_back()
+				print(right.get_overlapping_bodies())
+				print("illegal")
+			else:
+				move_character(game_manager.troop.move_dir)
+		elif direction.x > 0 and direction.y == 0:
+			print("left")
+			if len(left.get_overlapping_bodies()) > 0:
+				body.turn_back()
+				print("illegal")
+			else:
+				move_character(game_manager.troop.move_dir)
+		elif direction.x == 0 and direction.y > 0:
+			print("up")
+			if len(up.get_overlapping_bodies()) > 0:
+				body.turn_back()
+				print("illegal")
+			else:
+				move_character(game_manager.troop.move_dir)
+		elif direction.x == 0 and direction.y < 0:
+			print("down")
+			if len(down.get_overlapping_bodies()) > 0:
+				body.turn_back()
+				print("illegal")
+			else:
+				move_character(game_manager.troop.move_dir)
+		game_manager.monsters.flip_direction("dog", number)
+	elif body is King:
+		if bite == false:
+			bite = true
+			animated_sprite_2d.play("attack")
+			body.trap = true
+			body.tween.kill()
+			if !game_manager.party_ended:
+				game_manager.end_party("trap", false)
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if animated_sprite_2d.animation == "attack":
+		animated_sprite_2d.play("idle")

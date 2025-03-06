@@ -67,3 +67,7 @@ func move_all():
 func _get_direction(monster, number):
 	if monster == "dog":
 		return doggo_directions[number]
+
+func flip_direction(monster, number):
+	if monster == "dog":
+		doggo_directions[number].x *= -1 
