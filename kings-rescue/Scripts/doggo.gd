@@ -177,6 +177,7 @@ func _on_bumping_area_body_entered(body: Node2D) -> void:
 				move_character(game_manager.troop.move_dir)
 		game_manager.monsters.flip_direction("dog", number)
 	elif body is King:
+		tween.kill()
 		if bite == false:
 			bite = true
 			animated_sprite_2d.play("attack")

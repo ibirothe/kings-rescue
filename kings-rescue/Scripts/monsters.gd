@@ -22,6 +22,7 @@ var doggo_directions = []
 var buddy
 var monsters = []
 var canine_numb
+var action_queue = []
 
 
 func spawn_doggos(canine_numb):
@@ -58,11 +59,15 @@ func spawn_doggos(canine_numb):
 				print(doggo_directions)
 
 func _physics_process(_delta: float) -> void:
+	if len(action_queue) > 0:
+		for buddy in monsters:
+			buddy.move(buddy)
+			action_queue.erase("move")
 	pass
 	
 func move_all():
-	for buddy in monsters:
-		buddy.move(buddy)
+	action_queue.append("move")
+
 		
 func _get_direction(monster, number):
 	if monster == "dog":
