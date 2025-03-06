@@ -18,6 +18,10 @@ const MOVE_TIME := 0.5  # Time in seconds to complete movement
 @onready var win: Area2D = $Win
 var trap = false
 var number
+var role = "Monster"
+var dead = false
+@onready var leave: Area2D = $Leave
+var leaving_board = false
 
 
 func _ready() -> void:
@@ -26,22 +30,14 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	#print(direction_check)
-
-	
-	if trap == true:
-		if animated_sprite_2d.animation != "death":
-			animated_sprite_2d.play("death")
-			"""replace audio with doggo death"""
-			AudioManager.play_sound("player_death")
-		return
-	if game_manager.currently_moving == true:
-		pass
-
+	self.leave_board()
 	match current_state:
 		State.IDLE:
 			handle_idle_state()
 		State.MOVING:
 			# Movement is handled by tween, we just watch for new input
+			pass
+		State.DEAD:
 			pass
 	"""if len(win.get_overlapping_bodies()) > 0:
 		leave_anim()"""
@@ -53,19 +49,22 @@ func dog():
 
 func move(body: Node2D) -> void:
 	#if direction_check == false:
+	if dead:
+		return
+	else:
 		var direction = monsters._get_direction("dog", number)
 		if direction.x != 0:
 			animated_sprite_2d.flip_h = direction.x < 0
 		print("Doggo is moving ", direction)
 
-		if direction.x < 0 and direction.y == 0:
+		if direction.x > 0 and direction.y == 0:
 			print("right")
 			if len(right.get_overlapping_bodies()) > 0:
 				print(right.get_overlapping_bodies())
 				print("illegal")
 			else:
 				move_character(direction)
-		if direction.x > 0 and direction.y == 0:
+		if direction.x < 0 and direction.y == 0:
 			print("left")
 			if len(left.get_overlapping_bodies()) > 0:
 				print("illegal")
@@ -116,6 +115,11 @@ func transition_to_state(new_state: State) -> void:
 	
 	current_state = new_state
 
+func leave_board():
+	if len(leave.get_overlapping_bodies()) > 0 and !leaving_board:
+		leaving_board = true
+		leave_anim()
+
 func leave_anim():
 	animated_sprite_2d.play("walk")
 	var tween = create_tween()
@@ -124,4 +128,10 @@ func leave_anim():
 	tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
 	await tween.finished
 	queue_free()  # Remove the node after fading out
-	
+
+func death():
+	tween.kill()
+	dead = true
+	if animated_sprite_2d.animation != "death":
+		animated_sprite_2d.play("death")
+		transition_to_state(State.DEAD)

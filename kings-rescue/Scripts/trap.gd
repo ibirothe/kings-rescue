@@ -14,6 +14,8 @@ func _on_body_entered(body):
 		
 	if body is Soldier:
 		handle_soldier_interaction(body)
+	if body is Monster:
+		handle_monster_interaction(body)
 	elif body.has_method("king"):
 		handle_king_interaction(body)
 
@@ -25,6 +27,11 @@ func handle_soldier_interaction(soldier):
 		
 	trigger_trap()
 	kill_soldier(soldier)
+
+func handle_monster_interaction(monster):
+	trigger_trap()
+	kill_monster(monster)
+	
 
 func attempt_trap_dismantle() -> bool:
 	var rng = RandomNumberGenerator.new()
@@ -62,6 +69,11 @@ func kill_soldier(soldier):
 	soldier.death()
 	soldier.z_index = 0
 	game_manager.movement_complete()
+
+func kill_monster(monster):
+	monster.animated_sprite_2d.play("death")
+	monster.death()
+	monster.z_index = 0
 
 func handle_king_interaction(king):
 	trigger_trap()

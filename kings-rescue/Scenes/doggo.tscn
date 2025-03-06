@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dtsb5ek2ffqx6"]
+[gd_scene load_steps=30 format=3 uid="uid://dtsb5ek2ffqx6"]
 
 [ext_resource type="Script" path="res://Scripts/doggo.gd" id="1_wqtpr"]
 [ext_resource type="Texture2D" uid="uid://n6fw1vo7cka5" path="res://Assets/doggo.png" id="2_mvc8r"]
@@ -122,7 +122,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xd4yw")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -173,14 +173,21 @@ radius = 5.09902
 [sub_resource type="CircleShape2D" id="CircleShape2D_mfgkw"]
 radius = 5.09902
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_w1qp1"]
+radius = 6.08276
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3ah8o"]
+
 [node name="Doggo" type="CharacterBody2D"]
+collision_layer = 517
+collision_mask = 513
 script = ExtResource("1_wqtpr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 4
 position = Vector2(0, -17)
 sprite_frames = SubResource("SpriteFrames_6n82u")
-animation = &"idle"
+animation = &"death"
 autoplay = "idle"
 
 [node name="Up" type="Area2D" parent="."]
@@ -211,3 +218,14 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Right"]
 position = Vector2(16, 0)
 shape = SubResource("CircleShape2D_mfgkw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_w1qp1")
+
+[node name="Leave" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Leave"]
+shape = SubResource("CircleShape2D_3ah8o")

@@ -17,6 +17,8 @@ const MOVE_TIME := 0.5  # Time in seconds to complete movement
 @onready var win: Area2D = $Win
 var trap = false
 var win_check = false
+var subclass = "King"
+
 
 
 func _ready() -> void:
