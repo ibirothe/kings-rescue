@@ -1,10 +1,11 @@
 extends Node
 
 var party_end = {
-	"flee": "The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one? \n \n \nHistory keeps repeating itself - but do not despair. A safe haven awaits you somewhere… or perhaps only deeper misery.",
-	"starvation": "Your food stores are depleted. The soldiers begin to fall one by one - and soon, the king does as well. If you only listened to my instructions... \n \n \nYou can find Food Rations in the Shop or use Soldiers to collect your favorite Food.",
-	"assasination": "Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \n \nBut fear not—we never seem to run out of monarchs. Strangely, the same goes for Assassins. Best keep a watchful eye on their every move!",
-	"trap": "You managed to stop the Assassins from killing the King... by doing it yourself. \n \n \nWe disregard any legal consequences - after all, someone must lead the Kings Guard. Although we cannot deny having employed better personnel in the past."
+	"flee": ["The King hath fled, the traitors dangle, and order is restored. Dost thou sleep soundly now, oh righteous one? \n \n \nHistory keeps repeating itself - but do not despair. A safe haven awaits you somewhere… or perhaps only deeper misery."],
+	"starvation": ["Your food stores are depleted. The soldiers begin to fall one by one - and soon, the king does as well. If you only listened to my instructions... \n \n \nYou can find Food Rations in the Shop or use Soldiers to collect your favorite Food."],
+	"assasination": ["Without cautious eyes watching, the assassins were able to kill the King. Your mission failed, the King is dead. Long live the King! \n \n \nBut fear not—we never seem to run out of monarchs. Strangely, the same goes for Assassins. Best keep a watchful eye on their every move!"],
+  "dog": ["A particularly loud bark startled him so badly that he suffered a fatal stroke mid-scream.", "The sheer audacity of being bitten by a stray dog sent his royal heart into overdrive, killing him before a single wound could fester.", "The sight of the filthy creatures gnawing at his royal flesh triggered a noble-blood allergy so severe that his throat swelled shut on the spot."],
+	"trap": ["You managed to stop the Assassins from killing the King... by doing it yourself. \n \n \nWe disregard any legal consequences - after all, someone must lead the Kings Guard. Although we cannot deny having employed better personnel in the past."]
 }
 
 var ingame = {
