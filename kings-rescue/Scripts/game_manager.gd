@@ -203,7 +203,7 @@ func end_party(text_key, win) -> void:
 	GlobalText.set_text("")
 	AudioManager.stop_music()
 	
-	var text = txt.party_end[text_key]
+	var text = txt.party_end[text_key].pick_random()
 
 	if win:
 		RunStats.add_win()
