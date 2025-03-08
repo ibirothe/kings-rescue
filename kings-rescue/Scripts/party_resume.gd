@@ -37,10 +37,10 @@ func _ready() -> void:
 	monsters_spawned_label.text = "Spawned: "  + str(RunStats.monsters_spawned)
 	monsters_killed_label.text = "Killed: "  + str(RunStats.monsters_killed)
 	
-	RunStats.handle_loss()
-	
 	fade_in_labels()
 	update_crowns()
+	
+	RunStats.handle_loss()
 
 func update_crowns() -> void:
 	for crown in crowns:

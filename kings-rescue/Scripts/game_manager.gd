@@ -37,7 +37,9 @@ func _ready() -> void:
 	#active_soldier = false
 	x=king.position.x-16
 	y=king.position.y-16
-
+	
+	if RunStats.upgrade_items.has("Trained Chef"):
+		food += 2
 
 func _physics_process(delta: float) -> void:
 	if setup_done == false:

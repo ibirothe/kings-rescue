@@ -135,7 +135,7 @@ func load_game() -> void:
 func reset_save_file() -> void:
 	difficulty = 0
 	#run metrics:
-	wins = 3
+	wins = 0
 	hourglasses = 0
 	stored_loss = false
 	soldiers_died = 0
@@ -149,5 +149,5 @@ func reset_save_file() -> void:
 	coins_total = 0
 	shop_items = []
 	#upgrades:
-	upgrade_items = ["Hourglass", "Dimensional Key"]
+	upgrade_items = []
 	save_game()
