@@ -127,6 +127,7 @@ func leave_board():
 
 func leave_anim():
 	animated_sprite_2d.play("walk")
+	game_manager.monsters.monsters.erase(self)
 	var tween = create_tween()
 	
 	# Fade out over 1 second
