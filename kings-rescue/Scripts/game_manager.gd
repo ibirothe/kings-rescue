@@ -176,7 +176,7 @@ func spawn_shop_item(amount):
 				add_child(shop_item)
 
 func spawn_difficulty_door() -> void:
-	if RunStats.upgrade_items.has("Dimensional Key") and RunStats.streak >= (RunStats.difficulty+1)*3:
+	if RunStats.upgrade_items.has("Dimensional Key") and RunStats.wins >= (RunStats.difficulty+1)*3:
 		var i = 0
 		while i < 1:
 			var door = door_scene.instantiate()

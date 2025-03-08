@@ -574,10 +574,108 @@ modulate = Color(1, 1, 1, 0)
 z_index = 5
 texture_filter = 1
 layout_direction = 1
-offset_left = -23.0
+offset_left = -26.0
 offset_top = -47.0
-offset_right = 227.0
+offset_right = 84.0
 offset_bottom = -30.0
+scale = Vector2(0.6, 0.6)
+label_settings = SubResource("LabelSettings_oct5s")
+autowrap_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="HourglassLabel" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = 5
+texture_filter = 1
+layout_direction = 1
+offset_left = -26.0
+offset_top = -38.0
+offset_right = 84.0
+offset_bottom = -21.0
+scale = Vector2(0.6, 0.6)
+label_settings = SubResource("LabelSettings_oct5s")
+autowrap_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="MonstersSpawnedLabel" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = 5
+texture_filter = 1
+layout_direction = 1
+offset_left = -26.0
+offset_top = -15.0
+offset_right = 84.0
+offset_bottom = 2.0
+scale = Vector2(0.6, 0.6)
+label_settings = SubResource("LabelSettings_oct5s")
+autowrap_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="MonstersKilledLabel" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = 5
+texture_filter = 1
+layout_direction = 1
+offset_left = -26.0
+offset_top = -6.0
+offset_right = 84.0
+offset_bottom = 11.0
+scale = Vector2(0.6, 0.6)
+label_settings = SubResource("LabelSettings_oct5s")
+autowrap_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="CoinSpentLabel" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = 5
+texture_filter = 1
+layout_direction = 1
+offset_left = 72.0
+offset_top = -38.0
+offset_right = 182.0
+offset_bottom = -21.0
+scale = Vector2(0.6, 0.6)
+label_settings = SubResource("LabelSettings_oct5s")
+autowrap_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="CoinTotalLabel" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = 5
+texture_filter = 1
+layout_direction = 1
+offset_left = 72.0
+offset_top = -47.0
+offset_right = 182.0
+offset_bottom = -30.0
+scale = Vector2(0.6, 0.6)
+label_settings = SubResource("LabelSettings_oct5s")
+autowrap_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="SoldiersDiedLabel" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = 5
+texture_filter = 1
+layout_direction = 1
+offset_left = 72.0
+offset_top = -15.0
+offset_right = 182.0
+offset_bottom = 2.0
+scale = Vector2(0.6, 0.6)
+label_settings = SubResource("LabelSettings_oct5s")
+autowrap_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="SoldiersFledLabel" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = 5
+texture_filter = 1
+layout_direction = 1
+offset_left = 72.0
+offset_top = -6.0
+offset_right = 182.0
+offset_bottom = 11.0
 scale = Vector2(0.6, 0.6)
 label_settings = SubResource("LabelSettings_oct5s")
 autowrap_mode = 3
