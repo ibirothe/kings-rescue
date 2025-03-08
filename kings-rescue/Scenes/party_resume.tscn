@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://tqo1aj8lf2qt"]
+[gd_scene load_steps=84 format=3 uid="uid://tqo1aj8lf2qt"]
 
 [ext_resource type="Texture2D" uid="uid://c1njsxs66tmbo" path="res://Assets/gameend_background.png" id="1_ekdx6"]
 [ext_resource type="Script" path="res://Scripts/party_resume.gd" id="1_gr106"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://Scenes/label.gd" id="3_7h860"]
 [ext_resource type="PackedScene" uid="uid://b0jdb1hdv5101" path="res://Scenes/virtual_keyboard.tscn" id="6_h4mss"]
 [ext_resource type="Texture2D" uid="uid://cm5c8wntompnr" path="res://Assets/disc_loading.png" id="7_ewtmy"]
+[ext_resource type="Texture2D" uid="uid://c7pouvvt02lc1" path="res://Assets/crown.png" id="8_hws6f"]
+[ext_resource type="Texture2D" uid="uid://cey4fbfjsq18b" path="res://Assets/resume_icons.png" id="9_m124o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_25a5f"]
 atlas = ExtResource("2_do5mm")
@@ -388,6 +390,169 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_861gw"]
+atlas = ExtResource("8_hws6f")
+region = Rect2(0, 0, 37, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7gggt"]
+atlas = ExtResource("8_hws6f")
+region = Rect2(0, 0, 37, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fawc"]
+atlas = ExtResource("8_hws6f")
+region = Rect2(37, 0, 37, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbjdo"]
+atlas = ExtResource("8_hws6f")
+region = Rect2(74, 0, 37, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86w7d"]
+atlas = ExtResource("8_hws6f")
+region = Rect2(111, 0, 37, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bosbf"]
+atlas = ExtResource("8_hws6f")
+region = Rect2(148, 0, 37, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dxo1c"]
+atlas = ExtResource("8_hws6f")
+region = Rect2(0, 37, 37, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqqjh"]
+atlas = ExtResource("8_hws6f")
+region = Rect2(37, 37, 37, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jh5to"]
+atlas = ExtResource("8_hws6f")
+region = Rect2(74, 37, 37, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yiayj"]
+atlas = ExtResource("8_hws6f")
+region = Rect2(111, 37, 37, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qxad7"]
+atlas = ExtResource("8_hws6f")
+region = Rect2(148, 37, 37, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_65yf2"]
+atlas = ExtResource("8_hws6f")
+region = Rect2(0, 74, 37, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20607"]
+atlas = ExtResource("8_hws6f")
+region = Rect2(0, 74, 37, 37)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_go6bm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_861gw")
+}],
+"loop": false,
+"name": &"false",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7gggt")
+}, {
+"duration": 15.0,
+"texture": SubResource("AtlasTexture_7gggt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2fawc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vbjdo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86w7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bosbf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dxo1c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yqqjh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jh5to")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yiayj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qxad7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_65yf2")
+}],
+"loop": false,
+"name": &"ignite",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_20607")
+}],
+"loop": false,
+"name": &"true",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6luab"]
+atlas = ExtResource("9_m124o")
+region = Rect2(18, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_akfru"]
+atlas = ExtResource("9_m124o")
+region = Rect2(36, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ryne"]
+atlas = ExtResource("9_m124o")
+region = Rect2(0, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_upsmx"]
+atlas = ExtResource("9_m124o")
+region = Rect2(54, 0, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dhjdi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6luab")
+}],
+"loop": false,
+"name": &"Coin",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_akfru")
+}],
+"loop": false,
+"name": &"Goblin",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ryne")
+}],
+"loop": false,
+"name": &"King",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_upsmx")
+}],
+"loop": false,
+"name": &"Skull",
+"speed": 5.0
+}]
+
 [node name="PartyResume" type="Node2D"]
 z_index = 4
 script = ExtResource("1_gr106")
@@ -404,54 +569,15 @@ z_index = 4
 position = Vector2(-29, 8)
 texture = ExtResource("1_ekdx6")
 
-[node name="StreakLabel" type="Label" parent="."]
-modulate = Color(1, 1, 1, 0)
-z_index = 5
-texture_filter = 1
-offset_left = -44.0
-offset_top = -54.0
-offset_right = 206.0
-offset_bottom = -37.0
-scale = Vector2(0.6, 0.6)
-label_settings = SubResource("LabelSettings_oct5s")
-autowrap_mode = 3
-metadata/_edit_use_anchors_ = true
-
-[node name="LossLabel" type="Label" parent="."]
-modulate = Color(1, 1, 1, 0)
-z_index = 5
-texture_filter = 1
-offset_left = -44.0
-offset_top = -30.0
-offset_right = 206.0
-offset_bottom = -13.0
-scale = Vector2(0.6, 0.6)
-label_settings = SubResource("LabelSettings_oct5s")
-autowrap_mode = 3
-metadata/_edit_use_anchors_ = true
-
 [node name="WinLabel" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0)
 z_index = 5
 texture_filter = 1
 layout_direction = 1
-offset_left = -44.0
-offset_top = -78.0
-offset_right = 206.0
-offset_bottom = -61.0
-scale = Vector2(0.6, 0.6)
-label_settings = SubResource("LabelSettings_oct5s")
-autowrap_mode = 3
-metadata/_edit_use_anchors_ = true
-
-[node name="DifficultyLabel" type="Label" parent="."]
-modulate = Color(1, 1, 1, 0)
-z_index = 5
-texture_filter = 1
-offset_left = -44.0
-offset_top = -5.99998
-offset_right = 206.0
-offset_bottom = 11.0
+offset_left = -23.0
+offset_top = -47.0
+offset_right = 227.0
+offset_bottom = -30.0
 scale = Vector2(0.6, 0.6)
 label_settings = SubResource("LabelSettings_oct5s")
 autowrap_mode = 3
@@ -486,3 +612,62 @@ z_index = 4
 position = Vector2(126, 88)
 sprite_frames = SubResource("SpriteFrames_xdw6w")
 autoplay = "default"
+
+[node name="Crowns" type="Node2D" parent="."]
+z_index = 5
+
+[node name="Crown01" type="AnimatedSprite2D" parent="Crowns"]
+position = Vector2(-29, -73)
+sprite_frames = SubResource("SpriteFrames_go6bm")
+animation = &"ignite"
+autoplay = "false"
+
+[node name="Crown02" type="AnimatedSprite2D" parent="Crowns"]
+position = Vector2(9, -73)
+sprite_frames = SubResource("SpriteFrames_go6bm")
+animation = &"false"
+autoplay = "false"
+
+[node name="Crown03" type="AnimatedSprite2D" parent="Crowns"]
+position = Vector2(46, -73)
+sprite_frames = SubResource("SpriteFrames_go6bm")
+animation = &"false"
+autoplay = "false"
+
+[node name="Crown04" type="AnimatedSprite2D" parent="Crowns"]
+position = Vector2(83, -73)
+sprite_frames = SubResource("SpriteFrames_go6bm")
+animation = &"false"
+autoplay = "false"
+
+[node name="Crown05" type="AnimatedSprite2D" parent="Crowns"]
+position = Vector2(120, -73)
+sprite_frames = SubResource("SpriteFrames_go6bm")
+animation = &"false"
+autoplay = "false"
+
+[node name="Icons" type="Node2D" parent="."]
+
+[node name="King" type="AnimatedSprite2D" parent="Icons"]
+z_index = 4
+position = Vector2(-36, -37)
+sprite_frames = SubResource("SpriteFrames_dhjdi")
+animation = &"King"
+
+[node name="Coin" type="AnimatedSprite2D" parent="Icons"]
+z_index = 4
+position = Vector2(62, -37)
+sprite_frames = SubResource("SpriteFrames_dhjdi")
+animation = &"Coin"
+
+[node name="Goblin" type="AnimatedSprite2D" parent="Icons"]
+z_index = 4
+position = Vector2(-36, -5)
+sprite_frames = SubResource("SpriteFrames_dhjdi")
+animation = &"Goblin"
+
+[node name="Skull" type="AnimatedSprite2D" parent="Icons"]
+z_index = 4
+position = Vector2(62, -5)
+sprite_frames = SubResource("SpriteFrames_dhjdi")
+animation = &"Skull"

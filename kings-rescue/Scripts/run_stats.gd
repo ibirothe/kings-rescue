@@ -5,9 +5,12 @@ var difficulty = 0
 var wins = 0
 var losses = 0
 var streak = 0
+var stored_difficulty = false
 
 #shop:
 var coins = 100
+var coins_spent = 0
+var coins_total = 0
 var shop_items = []
 #upgrades:
 var upgrade_items = []
@@ -16,7 +19,8 @@ func _ready() -> void:
 	load_game()
 
 func increase_difficulty():
-	difficulty += 1
+	stored_difficulty = true
+	difficulty = min(5, difficulty+1)
 
 func difficulty_name() -> String:
 	match difficulty:
@@ -42,6 +46,8 @@ func add_loss() -> void:
 	clear_shop()
 	clear_upgrades()
 	coins = 0
+	coins_spent = 0
+	coins_total = 0
 	save_game()
 
 func add_shop_item(item) -> void:
@@ -68,6 +74,8 @@ func save_game() -> void:
 		"losses": losses,
 		"streak": streak,
 		"coins": coins,
+		"coins_spent": coins_spent,
+		"coins_total": coins_total,
 		"shop_items": shop_items,
 		"upgrade_items": upgrade_items
 	}
@@ -105,6 +113,8 @@ func load_game() -> void:
 	losses = save_data.get("losses")
 	streak = save_data.get("streak")
 	coins = save_data.get("coins")
+	coins_spent = save_data.get("coins_spent")
+	coins_total = save_data.get("coins_total")
 	shop_items = save_data.get("shop_items")
 	upgrade_items = save_data.get("upgrade_items")
 	
@@ -119,6 +129,8 @@ func reset_save_file() -> void:
 
 	#shop:
 	coins = 100
+	coins_spent = 0
+	coins_total = 0
 	shop_items = []
 	#upgrades:
 	upgrade_items = ["Hourglass", "Dimensional Key"]
