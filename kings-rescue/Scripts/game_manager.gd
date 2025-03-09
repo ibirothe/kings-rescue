@@ -165,24 +165,45 @@ func spawn_traps(traps_numb):
 
 func spawn_shop_item(amount):
 	var i = 0
+	
 	while i < amount:
-		var shop_item = shop_item_scene.instantiate()
-		x = round(randf_range(0, 10))
-		y = round(randf_range(0, 10))
+		var x = round(randf_range(0, 10))
+		var y = round(randf_range(0, 10))
 		
+		# Skip central area and generate new coordinates
 		if x > 2 and y > 2 and x < 8 and y < 8:
-			pass
-		else:
-			x = king.position.x-(5*16) + x*16
-			y = king.position.y+(5*16) - y*16
-			var pos = Vector2(x, y)
+			continue
 			
-			if pos not in occupied_positions:
-				i += 1
-				shop_item.position = pos
-				occupied_positions.append(pos)
-				add_child(shop_item)
-				
+		var pos_x = king.position.x-(5*16) + x*16
+		var pos_y = king.position.y+(5*16) - y*16
+		var pos = Vector2(pos_x, pos_y)
+		
+		if pos not in occupied_positions:
+			i += 1
+			var shop_item = shop_item_scene.instantiate()
+			shop_item.position = pos
+			occupied_positions.append(pos)
+			add_child(shop_item)
+	
+	# spawn mimic (with probability)
+	if randi_range(0,10) >= 8:
+		var x = round(randf_range(0, 10))
+		var y = round(randf_range(0, 10))
+		
+		# Skip central area and generate new coordinates
+		if x > 2 and y > 2 and x < 8 and y < 8:
+			return
+			
+		var pos_x = king.position.x-(5*16) + x*16
+		var pos_y = king.position.y+(5*16) - y*16
+		var pos = Vector2(pos_x, pos_y)
+		
+		if pos not in occupied_positions:
+			var mimic_shop_item = shop_item_scene.instantiate()
+			mimic_shop_item.position = pos
+			mimic_shop_item.mimic = true
+			occupied_positions.append(pos)
+			add_child(mimic_shop_item)
 
 
 func spawn_difficulty_door() -> void:

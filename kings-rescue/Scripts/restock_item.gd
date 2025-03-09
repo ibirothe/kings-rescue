@@ -3,6 +3,7 @@ extends Area2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var game_manager = get_parent()
 @onready var shop: Node2D = get_parent().get_node("Shop")
+var mimic = false
 
 func _ready():
 	# Connect the body_entered signal
@@ -10,7 +11,6 @@ func _ready():
 
 func _on_body_entered(body):
 	if body is Soldier:
-		GlobalText.set_text(game_manager.txt.ingame["shop_collect"].pick_random())
 		AudioManager.play_sound("shop_collect")
 		
 		var max_attempts = 100  # Prevent infinite loop
@@ -18,25 +18,28 @@ func _on_body_entered(body):
 		var item = null
 		var found = false
 		
-		while !found and attempts < max_attempts:
-			var keys = shop.item_list.keys()
-			item = keys[randi() % keys.size()]
+		if not mimic:
+			while !found and attempts < max_attempts:
+				var keys = shop.item_list.keys()
+				item = keys[randi() % keys.size()]
+				
+				# Check if item is unique
+				if !shop.item_list[item][1]:
+					found = true
+				elif !RunStats.upgrade_items.has(item) and !RunStats.shop_items.has(item):
+					found = true
+				
+				attempts += 1
 			
-			# Check if item is unique
-			if !shop.item_list[item][1]:
-				found = true
-			elif !RunStats.upgrade_items.has(item) and !RunStats.shop_items.has(item):
-				found = true
+			if found:
+				RunStats.add_shop_item(item)
+				GlobalText.set_text(game_manager.txt.ingame["shop_collect"].pick_random())
+		elif mimic:
+			RunStats.shop_items = []
+			GlobalText.set_text(game_manager.txt.ingame["mimic_collect"].pick_random())
 			
-			attempts += 1
-		
-		if found:
-			RunStats.add_shop_item(item)
-			
-			# Delete the item
-			var tween = create_tween()
-			tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
-			await tween.finished
-			queue_free()  # Remove the node after fading out
-		else:
-			print("Could not find a suitable item after", max_attempts, "attempts")
+		# Delete the item
+		var tween = create_tween()
+		tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
+		await tween.finished
+		queue_free()  # Remove the node after fading out
