@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=3 uid="uid://tqo1aj8lf2qt"]
+[gd_scene load_steps=108 format=3 uid="uid://tqo1aj8lf2qt"]
 
 [ext_resource type="Texture2D" uid="uid://c1njsxs66tmbo" path="res://Assets/gameend_background.png" id="1_ekdx6"]
 [ext_resource type="Script" path="res://Scripts/party_resume.gd" id="1_gr106"]
@@ -9,6 +9,15 @@
 [ext_resource type="Texture2D" uid="uid://cm5c8wntompnr" path="res://Assets/disc_loading.png" id="7_ewtmy"]
 [ext_resource type="Texture2D" uid="uid://c7pouvvt02lc1" path="res://Assets/crown.png" id="8_hws6f"]
 [ext_resource type="Texture2D" uid="uid://cey4fbfjsq18b" path="res://Assets/resume_icons.png" id="9_m124o"]
+[ext_resource type="Texture2D" uid="uid://winlowac27y6" path="res://Assets/twinkling_stars.png" id="10_5aq7w"]
+[ext_resource type="Texture2D" uid="uid://i43ycxbujq6n" path="res://Assets/clouds.png" id="10_r11wm"]
+[ext_resource type="Script" path="res://Scripts/scrolling_texture.gd" id="11_6fybe"]
+[ext_resource type="Texture2D" uid="uid://sa77ca62236n" path="res://Assets/landscape_bg.png" id="13_gg7vg"]
+[ext_resource type="Texture2D" uid="uid://dmebq5t0as4xa" path="res://Assets/landscape_mg.png" id="14_1pmv3"]
+[ext_resource type="Texture2D" uid="uid://c3qcjwgfcjoyv" path="res://Assets/ibrahim_48px.png" id="15_f3khv"]
+[ext_resource type="Texture2D" uid="uid://oe3ngriv3sva" path="res://Assets/fog.png" id="15_t04ns"]
+[ext_resource type="Texture2D" uid="uid://roep6wnv7w2v" path="res://Assets/landscape_fg.png" id="16_icv88"]
+[ext_resource type="Texture2D" uid="uid://bpp6puobs6l21" path="res://Assets/thoralf_48px.png" id="16_rqeun"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_25a5f"]
 atlas = ExtResource("2_do5mm")
@@ -553,6 +562,114 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_5252u"]
+atlas = ExtResource("10_5aq7w")
+region = Rect2(0, 0, 189, 87)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_anx4w"]
+atlas = ExtResource("10_5aq7w")
+region = Rect2(0, 87, 189, 87)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b3jsr"]
+atlas = ExtResource("10_5aq7w")
+region = Rect2(0, 174, 189, 87)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_180pd"]
+atlas = ExtResource("10_5aq7w")
+region = Rect2(0, 261, 189, 87)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7qgwg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5252u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_anx4w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b3jsr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_180pd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpij5"]
+atlas = ExtResource("15_f3khv")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3gk6"]
+atlas = ExtResource("15_f3khv")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3cnqj"]
+atlas = ExtResource("15_f3khv")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y85cr"]
+atlas = ExtResource("15_f3khv")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6s1y3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hpij5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j3gk6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3cnqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y85cr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1fwb"]
+atlas = ExtResource("16_rqeun")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i1xp4"]
+atlas = ExtResource("16_rqeun")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aooau"]
+atlas = ExtResource("16_rqeun")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jb0gn"]
+atlas = ExtResource("16_rqeun")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fwpcy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1fwb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i1xp4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aooau")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jb0gn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
 [node name="PartyResume" type="Node2D"]
 z_index = 4
 script = ExtResource("1_gr106")
@@ -769,3 +886,59 @@ z_index = 4
 position = Vector2(62, -5)
 sprite_frames = SubResource("SpriteFrames_dhjdi")
 animation = &"Skull"
+
+[node name="Landscape" type="Node2D" parent="."]
+
+[node name="Stars" type="AnimatedSprite2D" parent="Landscape"]
+z_index = 4
+position = Vector2(45.5, 56.5)
+sprite_frames = SubResource("SpriteFrames_7qgwg")
+autoplay = "default"
+
+[node name="Clouds" type="Sprite2D" parent="Landscape"]
+z_index = 4
+position = Vector2(45.5, 56.5)
+texture = ExtResource("10_r11wm")
+region_enabled = true
+region_rect = Rect2(0, 0, 189, 87)
+script = ExtResource("11_6fybe")
+scroll_speed = 0.007
+
+[node name="Background" type="Sprite2D" parent="Landscape"]
+z_index = 4
+position = Vector2(45.5, 56.5)
+texture = ExtResource("13_gg7vg")
+
+[node name="Middleground" type="Sprite2D" parent="Landscape"]
+z_index = 4
+position = Vector2(45.5, 56.5)
+texture = ExtResource("14_1pmv3")
+
+[node name="Guard1" type="AnimatedSprite2D" parent="Landscape"]
+z_index = 4
+position = Vector2(4, 71)
+sprite_frames = SubResource("SpriteFrames_6s1y3")
+autoplay = "default"
+frame_progress = 0.133764
+
+[node name="Guard2" type="AnimatedSprite2D" parent="Landscape"]
+z_index = 4
+position = Vector2(124, 67)
+sprite_frames = SubResource("SpriteFrames_fwpcy")
+autoplay = "default"
+frame_progress = 0.47651
+flip_h = true
+
+[node name="Fog" type="Sprite2D" parent="Landscape"]
+z_index = 4
+position = Vector2(45.5, 56.5)
+texture = ExtResource("15_t04ns")
+region_enabled = true
+region_rect = Rect2(0, 0, 189, 87)
+script = ExtResource("11_6fybe")
+scroll_speed = 0.03
+
+[node name="Foreground" type="Sprite2D" parent="Landscape"]
+z_index = 4
+position = Vector2(45.5, 56.5)
+texture = ExtResource("16_icv88")
