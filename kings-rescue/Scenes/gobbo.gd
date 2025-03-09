@@ -150,6 +150,7 @@ func death():
 	dead = true
 	if animated_sprite_2d.animation != "death":
 		animated_sprite_2d.play("death")
+		animated_sprite_2d.z_index = 1
 		transition_to_state(State.DEAD)
 
 
@@ -225,11 +226,11 @@ func find_coins():
 			
 func find_nearest_coin():
 	if len(coin_array) > 0:
-		var min = center.global_position.distance_to(coin_array[0].center.global_position)
+		var min_dist = center.global_position.distance_to(coin_array[0].center.global_position)
 		nearest_coin = coin_array[0]
 		for stuff in coin_array:
-			if center.global_position.distance_to(stuff.center.global_position) < min:
-				min = center.global_position.distance_to(stuff.center.global_position)
+			if center.global_position.distance_to(stuff.center.global_position) < min_dist:
+				min_dist = center.global_position.distance_to(stuff.center.global_position)
 				nearest_coin = stuff
 		return(nearest_coin)
 	else:

@@ -140,6 +140,7 @@ func death():
 	dead = true
 	if animated_sprite_2d.animation != "death":
 		animated_sprite_2d.play("death")
+		animated_sprite_2d.z_index = 1
 		transition_to_state(State.DEAD)
 
 

@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 class_name Soldier
-enum State {INACTIVE, IDLE, MOVING, DEAD}
+enum State {INACTIVE, IDLE, MOVING, DEAD, ATTACKING}
 @onready var game_manager: Node2D = get_parent().get_parent()
 @onready var neighbours_check: Area2D = $Neighbours_check
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -42,6 +42,7 @@ var coin_tween
 var leaving_board = false
 var goblin_direction
 var goblins_to_kill = []
+var previous_state = State.INACTIVE
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var border_check: Area2D = $Border_check
 @onready var square_border: AnimatedSprite2D = $Square_border
@@ -79,9 +80,10 @@ func _physics_process(_delta: float) -> void:
 	# Check if food ran out
 	self.starvation_death()
 	# Assasinate if possible
+	self.kill_goblin()
 	if game_manager.currently_moving == false:
 		self.assasination()
-		self.kill_goblin()
+
 
 	match current_state:
 		State.INACTIVE:
@@ -95,6 +97,8 @@ func _physics_process(_delta: float) -> void:
 		State.DEAD:
 			animated_sprite_2d.play(subclass+"_death")
 			animated_sprite_2d.frame = 3
+		State.ATTACKING:
+			pass
 			
 func update_traits() -> void:
 	trapper = RunStats.upgrade_items.has("Trap Specialists")
@@ -128,15 +132,17 @@ func goblin_check():
 			if bodies.role=="Monster" and bodies.has_method("goblin") and !bodies.dead:
 				goblin_direction = bodies.global_position - global_position
 				goblins_to_kill.append(bodies)
-		return(goblins_to_kill)
+		if len(goblins_to_kill) >0 :
+			return true
 
 func kill_goblin() -> void:
-	if len(goblin_check())>0:
+	if goblin_check():
 			animated_sprite_2d.flip_h = goblin_direction.x < 0
 			animated_sprite_2d.play(subclass+"_attack")
-			for bodies in goblin_check():
+			transition_to_state(State.ATTACKING)
+			for bodies in goblins_to_kill:
 				bodies.death()
-				goblins_to_kill.erase(bodies)
+				goblins_to_kill = []
 			
 			
 
@@ -173,9 +179,11 @@ func starvation_death() -> void:
 func handle_inactive_state() -> void:
 	if !game_manager.party_ended:
 		self.animated_sprite_2d.play(subclass+"_default")
+	previous_state = current_state
 
 func handle_idle_state() -> void:
 	 #, #GameManager.soldier_changing
+	previous_state = current_state
 	pass
 	"""#Up for refractor
 	if game_manager.soldier_changing == true and im_new == false:
@@ -275,6 +283,7 @@ func death():
 		AudioManager.play_sound("coin_collect")
 	if animated_sprite_2d.animation != subclass+"_death":
 		animated_sprite_2d.play(subclass+"_death")
+		animated_sprite_2d.z_index = 1
 		
 
 """is that death?"""
@@ -298,7 +307,9 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		return
 		
 	if animated_sprite_2d.animation == subclass+"_attack":
-		transition_to_state(State.IDLE)
+		transition_to_state(previous_state)
+		if previous_state == State.IDLE:
+			animated_sprite_2d.play(subclass+"_idle")
 		
 		
 		
