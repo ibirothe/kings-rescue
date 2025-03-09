@@ -16,14 +16,15 @@ func _on_body_entered(body):
 		game_manager.active_soldier = false
 		game_manager.currently_moving = false
 		body.take_coin()
+		RunStats.soldiers_fled += 1
 		AudioManager.play_sound("mercenary_flee")
 		GlobalText.set_text(game_manager.txt.ingame["mercenary_flee"].pick_random())
 	elif body.mercenary and body.paid:
-		RunStats.coins += 1
+		RunStats.add_coins(1)
 		AudioManager.play_sound("coin_collect")
 		GlobalText.set_text(game_manager.txt.ingame["mercenary_not_flee"].pick_random())
 	else :
-		RunStats.coins += 1
+		RunStats.add_coins(1)
 		AudioManager.play_sound("coin_collect")
 		
 	# Fade out over 1 second

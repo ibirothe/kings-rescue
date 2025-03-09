@@ -37,6 +37,7 @@ func _load_sound_effects():
 		"coin_collect": preload("res://Assets/SFX/food_collect.wav"),
 		"door_activate": preload("res://Assets/SFX/door_activate.wav"),
 		"food_collect": preload("res://Assets/SFX/food_collect.wav"),
+		"ignite_crown": preload("res://Assets/SFX/ignite_crown.wav"),
 		"mercenary_flee": preload("res://Assets/SFX/mercenary_flee.wav"),
 		"player_death": preload("res://Assets/SFX/player_death.wav"),
 		"player_hurt": preload("res://Assets/SFX/player_hurt.wav"),

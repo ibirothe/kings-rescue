@@ -1,14 +1,25 @@
 extends Node2D
 const SAVE_PATH = "user://game_save.dat"
 var difficulty = 0
+
 #run metrics:
 var wins = 0
-var losses = 0
-var streak = 0
+var hourglasses = 0
+var soldiers_died = 0
+var soldiers_fled = 0
+var monsters_spawned = 0
+var monsters_killed = 0
+
+#stored events
+var stored_loss = false
+var stored_difficulty = false
 
 #shop:
 var coins = 100
+var coins_spent = 0
+var coins_total = 0
 var shop_items = []
+
 #upgrades:
 var upgrade_items = []
 
@@ -16,33 +27,32 @@ func _ready() -> void:
 	load_game()
 
 func increase_difficulty():
-	difficulty += 1
-
-func difficulty_name() -> String:
-	match difficulty:
-		0: return "Baby Mode"
-		1: return "Still Easy"
-		2: return "Normie"
-		3: return "Keyboard Smasher"
-		4: return "Rage Quit"
-		5: return "Masochist"
-	return "God Mode"
+	stored_difficulty = true
+	difficulty = min(5, difficulty+1)
 
 func add_win() -> void:
 	wins += 1
-	streak += 1
 	save_game()
 
 func add_loss() -> void:
 	if upgrade_items.has("Hourglass"):
 		upgrade_items.erase("Hourglass")
+		hourglasses += 1
+		save_game()
 		return
-	losses += 1
-	streak = 0
-	clear_shop()
-	clear_upgrades()
-	coins = 0
-	save_game()
+	stored_loss = true
+
+func handle_loss() -> void:
+	if stored_loss:
+		reset_save_file()
+
+func spend_coins(amount) -> void:
+	coins -= amount
+	coins_spent += amount
+
+func add_coins(amount) -> void:
+	coins += amount
+	coins_total += amount
 
 func add_shop_item(item) -> void:
 	if shop_items.size() == 3:
@@ -65,9 +75,15 @@ func save_game() -> void:
 	var save_data = {
 		"difficulty": difficulty,
 		"wins": wins,
-		"losses": losses,
-		"streak": streak,
+		"hourglasses": hourglasses,
+		"stored_loss": stored_loss,
+		"soldiers_died": soldiers_died,
+		"soldiers_fled": soldiers_fled,
+		"monsters_spawned": monsters_spawned,
+		"monsters_killed": monsters_killed,
 		"coins": coins,
+		"coins_spent": coins_spent,
+		"coins_total": coins_total,
 		"shop_items": shop_items,
 		"upgrade_items": upgrade_items
 	}
@@ -102,9 +118,15 @@ func load_game() -> void:
 	# Apply loaded data to game variables
 	difficulty = save_data.get("difficulty")
 	wins = save_data.get("wins")
-	losses = save_data.get("losses")
-	streak = save_data.get("streak")
+	hourglasses = save_data.get("hourglasses")
+	stored_loss = save_data.get("stored_loss")
+	soldiers_died = save_data.get("soldiers_died")
+	soldiers_fled = save_data.get("soldiers_fled")
+	monsters_spawned = save_data.get("monsters_spawned")
+	monsters_killed = save_data.get("monsters_killed")
 	coins = save_data.get("coins")
+	coins_spent = save_data.get("coins_spent")
+	coins_total = save_data.get("coins_total")
 	shop_items = save_data.get("shop_items")
 	upgrade_items = save_data.get("upgrade_items")
 	
@@ -114,12 +136,18 @@ func reset_save_file() -> void:
 	difficulty = 0
 	#run metrics:
 	wins = 0
-	losses = 0
-	streak = 3
+	hourglasses = 0
+	stored_loss = false
+	soldiers_died = 0
+	soldiers_fled = 0
+	monsters_spawned = 0
+	monsters_killed = 0
 
 	#shop:
-	coins = 100
+	coins = 0
+	coins_spent = 0
+	coins_total = 0
 	shop_items = []
 	#upgrades:
-	upgrade_items = ["Hourglass", "Dimensional Key"]
+	upgrade_items = []
 	save_game()

@@ -136,7 +136,9 @@ func starvation_death() -> void:
 	if game_manager:
 		if game_manager.party_ended == true:
 			if game_manager.food == 0:
-				game_manager.troop.soldiers.erase(self)
+				if game_manager.troop.soldiers.has(self):
+					RunStats.soldiers_died += 1
+					game_manager.troop.soldiers.erase(self)
 				if animated_sprite_2d.animation != subclass+"_death":
 					animated_sprite_2d.play(subclass+"_death")
 			active = false
@@ -240,10 +242,11 @@ func stop_movement():
 func death():
 	stop_movement()
 	visual_deactivation()
+	RunStats.soldiers_died += 1
 	game_manager.troop.current_soldier = null
 	game_manager.troop.soldiers.erase(self)
 	if RunStats.upgrade_items.has("Life Insurance"):
-		RunStats.coins += 1
+		RunStats.add_coins(1)
 		AudioManager.play_sound("coin_collect")
 	if animated_sprite_2d.animation != subclass+"_death":
 		animated_sprite_2d.play(subclass+"_death")
