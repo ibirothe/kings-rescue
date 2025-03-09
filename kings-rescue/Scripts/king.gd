@@ -8,6 +8,7 @@ var role = "King"
 @onready var left: Area2D = $Left
 @onready var right: Area2D = $Right
 var direction_check = false
+var dead = false
 @onready var center: Marker2D = $Center
 @onready var king_shape: CollisionShape2D = $King_shape
 @onready var game_manager: Node2D = $"../Game Manager"
@@ -30,9 +31,11 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	#print(direction_check)
 	if game_manager.party_ended and len(win.get_overlapping_bodies()) == 0 or trap == true:
-		if animated_sprite_2d.animation != "death":
+		if not dead:
 			animated_sprite_2d.play("death")
-			AudioManager.play_sound("player_death")
+			AudioManager.play_sound("king_death", -8)
+			dead = true
+			print("it´s beeing played")
 		return
 		#NO IDEA WHY WE HAD THESE
 	"""if game_manager.currently_moving == true:

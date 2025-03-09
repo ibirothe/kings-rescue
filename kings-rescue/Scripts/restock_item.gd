@@ -35,6 +35,8 @@ func _on_body_entered(body):
 				RunStats.add_shop_item(item)
 				GlobalText.set_text(game_manager.txt.ingame["shop_collect"].pick_random())
 		elif mimic and RunStats.upgrade_items.has("Mimic Tranquilizer"):
+			AudioManager.play_sound("mimic_death")
+			AudioManager.play_sound("dart")
 			RunStats.upgrade_items.erase("Mimic Tranquilizer")
 			GlobalText.set_text(game_manager.txt.ingame["mimic_tranquilized"].pick_random())
 			game_manager.add_coin(10)

@@ -1,7 +1,7 @@
 extends Node
 
 @export var SFXvolume: float = 1
-@export var MSCvolume: float = 0
+@export var MSCvolume: float = 0.8
 
 # Constants
 const PLAYERS_PER_SOUND = 3
@@ -33,7 +33,9 @@ func _load_sound_effects():
 	_sound_effects = {
 		"ambience": preload("res://Assets/SFX/ambience.wav"),
 		"buy": preload("res://Assets/SFX/buy.wav"),
+		"dart": preload("res://Assets/SFX/dart.wav"),
 		"cross_out": preload("res://Assets/SFX/cross_out.wav"),
+		"count_ends": preload("res://Assets/SFX/count_ends.wav"),
 		"disselect_soldier": preload("res://Assets/SFX/disselect_soldier.wav"),
 		"coin_collect": preload("res://Assets/SFX/coin_collect.wav"),
 		"count_down_tick": preload("res://Assets/SFX/count_down_tick.wav"),
@@ -41,8 +43,10 @@ func _load_sound_effects():
 		"food_collect": preload("res://Assets/SFX/food_collect.wav"),
 		"ignite_crown": preload("res://Assets/SFX/ignite_crown.wav"),
 		"informant_collect": preload("res://Assets/SFX/informant_collect.wav"),
+		"king_death": preload("res://Assets/SFX/king_death.wav"),
 		"mercenary_flee": preload("res://Assets/SFX/mercenary_flee.wav"),
 		"mimic": preload("res://Assets/SFX/mimic.wav"),
+		"mimic_death": preload("res://Assets/SFX/mimic_death.wav"),
 		"player_death": preload("res://Assets/SFX/player_death.wav"),
 		"player_hurt": preload("res://Assets/SFX/player_hurt.wav"),
 		"player_run": preload("res://Assets/SFX/player_run.wav"),
