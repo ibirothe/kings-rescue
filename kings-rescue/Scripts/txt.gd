@@ -66,3 +66,8 @@ var  CHARACTER_DESCRIPTIONS = {
 	"Marquise": "Marquise's archery is masterful. Sadly, the developers didn't put arrows in the game.",
 	"Arianna": "Arianna joined the King's Guard recently. She had exceptional results in the job interview."
 }
+
+var help = {
+	"food": "Food help text.",
+	"coin": "Coin help text."
+}

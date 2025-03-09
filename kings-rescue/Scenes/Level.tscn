@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://c5qlik5x313qp"]
+[gd_scene load_steps=33 format=3 uid="uid://c5qlik5x313qp"]
 
 [ext_resource type="Texture2D" uid="uid://ows0y8w8e8rn" path="res://Assets/ingame_background.png" id="1_rfxam"]
 [ext_resource type="PackedScene" uid="uid://p8xuqhivfi58" path="res://Scenes/troop.tscn" id="2_hjf0c"]
@@ -17,6 +17,7 @@
 [ext_resource type="Shader" path="res://Shaders/fog.gdshader" id="12_4d8os"]
 [ext_resource type="Texture2D" uid="uid://daggdvepx4vai" path="res://Assets/VFX/light_ray_M.png" id="12_hyhnp"]
 [ext_resource type="Texture2D" uid="uid://csr212x2hxhtq" path="res://Assets/VFX/light_ray_S.png" id="13_s2hpu"]
+[ext_resource type="Script" path="res://Scripts/static_help_click.gd" id="18_i7yf1"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ryrto"]
 line_spacing = -5.0
@@ -80,6 +81,9 @@ size = Vector2(218, 22)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_so7fr"]
 size = Vector2(204, 213)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gvogq"]
+size = Vector2(37, 23)
 
 [node name="Level" type="Node2D"]
 
@@ -409,6 +413,26 @@ visible = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Board-click-area"]
 position = Vector2(-8, 5.5)
 shape = SubResource("RectangleShape2D_so7fr")
+
+[node name="StaticHelpClick" type="Node2D" parent="."]
+
+[node name="Food" type="Area2D" parent="StaticHelpClick"]
+position = Vector2(-179.5, -44.5)
+script = ExtResource("18_i7yf1")
+help_key = "food"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticHelpClick/Food"]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_gvogq")
+
+[node name="Coin" type="Area2D" parent="StaticHelpClick"]
+position = Vector2(-140, -44.5)
+script = ExtResource("18_i7yf1")
+help_key = "coin"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticHelpClick/Coin"]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_gvogq")
 
 [connection signal="input_event" from="Board-click-area" to="Game Manager" method="_on_boardclickarea_input_event"]
 [connection signal="mouse_entered" from="Board-click-area" to="Game Manager" method="_on_boardclickarea_mouse_entered"]
