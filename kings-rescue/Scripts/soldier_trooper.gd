@@ -129,11 +129,14 @@ func leave_board() -> void:
 		active = false
 		game_manager.active_soldier = false
 		game_manager.currently_moving = false
+		
 		var text= subclass + game_manager.txt.ingame["soldier_leaving"].pick_random()
 		GlobalText.set_text(text)
 		coin_tween = create_tween()
 		coin_tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
 		await coin_tween.finished
+		if AudioManager.is_looping_sound_active("player_run"):
+			AudioManager.stop_looping_sound("player_run")
 		queue_free() 
 
 func starvation_death() -> void:
@@ -179,6 +182,8 @@ func move_character(movement: Vector2) -> void:
 		return
 	game_manager.currently_moving = true
 	transition_to_state(State.MOVING)
+	if !AudioManager.is_looping_sound_active("player_run"):
+			AudioManager.play_sound("player_run", 0, 1, true)
 	animated_sprite_2d.play(subclass+"_walk")
 	
 	# Flip character if needed
@@ -196,7 +201,9 @@ func move_character(movement: Vector2) -> void:
 		transition_to_state(State.IDLE)
 		game_manager.movement_complete()
 		movement_locked = false
-		game_manager.refire_king() 
+		game_manager.refire_king()
+		if AudioManager.is_looping_sound_active("player_run"):
+			AudioManager.stop_looping_sound("player_run")
 		) 
 """remove refire king"""
 
@@ -289,6 +296,8 @@ func take_coin():
 	coin_tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
 	await coin_tween.finished
 	game_manager.movement_complete()
+	if AudioManager.is_looping_sound_active("player_run"):
+			AudioManager.stop_looping_sound("player_run")
 	queue_free()  # Remove the node after fading out
 
 func visual_activation():

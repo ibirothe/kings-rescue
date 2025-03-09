@@ -23,6 +23,7 @@ func _on_body_entered(body):
 		#	GlobalText.set_text(game_manager.txt.mercenary_manuals[i])
 		else:
 			GlobalText.set_text(str(info))
+		AudioManager.play_sound("informant_collect")
 		# Delete the item
 		var tween = create_tween()
 		tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
