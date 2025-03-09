@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://ce6vcfst4e4h7"]
+[gd_scene load_steps=38 format=3 uid="uid://ce6vcfst4e4h7"]
 
 [ext_resource type="Texture2D" uid="uid://n6fw1vo7cka5" path="res://Assets/doggo.png" id="1_7f4l4"]
 [ext_resource type="Script" path="res://Scenes/gobbo.gd" id="1_x6l63"]
@@ -217,8 +217,14 @@ radius = 4.12311
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ekhxx"]
 size = Vector2(118, 122)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4l4yq"]
+size = Vector2(32, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pggtm"]
+size = Vector2(6, 32)
+
 [node name="Gobbo" type="CharacterBody2D"]
-collision_layer = 517
+collision_layer = 519
 collision_mask = 515
 script = ExtResource("1_x6l63")
 
@@ -341,3 +347,15 @@ collision_mask = 519
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Finder"]
 shape = SubResource("RectangleShape2D_ekhxx")
+
+[node name="Neighbours_check" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Neighbours_check"]
+shape = SubResource("RectangleShape2D_4l4yq")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Neighbours_check"]
+shape = SubResource("RectangleShape2D_pggtm")
+
+[connection signal="body_entered" from="Neighbours_check" to="." method="_on_neighbours_check_body_entered"]

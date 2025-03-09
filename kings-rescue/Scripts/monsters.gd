@@ -142,6 +142,8 @@ func goblin_ai(goblin):
 			recursion += 1
 			return goblin_ai(goblin)
 		else:
+			if goblin._check_traps(direct_text) == "trap":
+				print("Random check was", rand)
 			print("Moving towards coin ", direct_text)
 			recursion = 0
 			found_trap = false

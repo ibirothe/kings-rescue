@@ -31,6 +31,8 @@ var old_direct: Vector2
 @onready var finder: Area2D = $Finder
 var coin_array = []
 var nearest_coin
+var king_direction
+@onready var neighbours_check: Area2D = $Neighbours_check
 
 
 func _ready() -> void:
@@ -98,8 +100,9 @@ func move(body: Node2D) -> void:
 		#direction_check = true
 	
 func handle_idle_state() -> void:
-	animated_sprite_2d.play()
-	pass
+	if bite == false:
+		animated_sprite_2d.play()
+		pass
 			
 func move_character(movement: Vector2) -> void:
 		
@@ -144,7 +147,8 @@ func leave_anim():
 	queue_free()  # Remove the node after fading out
 
 func death():
-	tween.kill()
+	if tween != null:
+		tween.kill()
 	dead = true
 	if animated_sprite_2d.animation != "death":
 		animated_sprite_2d.play("death")
@@ -235,3 +239,21 @@ func find_nearest_coin():
 
 func take_coin(coin):
 	coin_array.erase(coin)
+
+func _on_neighbours_check_body_entered(body: Node2D) -> void:
+		if !dead:
+			for bodies in neighbours_check.get_overlapping_bodies():
+				if bodies.role=="King":
+					if tween != null:
+						tween.kill()
+					king_direction = bodies.global_position - global_position
+					if !game_manager.party_ended:
+						animated_sprite_2d.flip_h = king_direction.x < 0
+						AudioManager.play_sound("player_hurt")
+						
+						game_manager.end_party("assasination", false)
+					if bite == false:
+						bite = true
+						animated_sprite_2d.play("attack")
+						body.trap = true
+						body.tween.kill()

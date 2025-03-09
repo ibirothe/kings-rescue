@@ -40,6 +40,8 @@ var arrows_tween
 var movement_tween
 var coin_tween
 var leaving_board = false
+var goblin_direction
+var goblins_to_kill = []
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var border_check: Area2D = $Border_check
 @onready var square_border: AnimatedSprite2D = $Square_border
@@ -79,6 +81,7 @@ func _physics_process(_delta: float) -> void:
 	# Assasinate if possible
 	if game_manager.currently_moving == false:
 		self.assasination()
+		self.kill_goblin()
 
 	match current_state:
 		State.INACTIVE:
@@ -118,6 +121,24 @@ func assasination() -> void:
 			AudioManager.play_sound("player_hurt")
 			
 			game_manager.end_party("assasination", false)
+
+func goblin_check():
+	if !dead:
+		for bodies in neighbours_check.get_overlapping_bodies():
+			if bodies.role=="Monster" and bodies.has_method("goblin") and !bodies.dead:
+				goblin_direction = bodies.global_position - global_position
+				goblins_to_kill.append(bodies)
+		return(goblins_to_kill)
+
+func kill_goblin() -> void:
+	if len(goblin_check())>0:
+			animated_sprite_2d.flip_h = goblin_direction.x < 0
+			animated_sprite_2d.play(subclass+"_attack")
+			for bodies in goblin_check():
+				bodies.death()
+				goblins_to_kill.erase(bodies)
+			
+			
 
 func leave_board() -> void:
 	if len(border_check.get_overlapping_bodies()) > 0 and !leaving_board:
