@@ -23,6 +23,14 @@ var dead = false
 @onready var leave: Area2D = $Leave
 var leaving_board = false
 var bite = false
+@onready var up_trap: Area2D = $Up_trap
+@onready var down_trap: Area2D = $Down_trap
+@onready var left_trap: Area2D = $Left_trap
+@onready var right_trap: Area2D = $Right_trap
+var old_direct: Vector2
+@onready var finder: Area2D = $Finder
+var coin_array = []
+var nearest_coin
 
 
 func _ready() -> void:
@@ -44,7 +52,7 @@ func _physics_process(_delta: float) -> void:
 		leave_anim()"""
 			
 			
-func dog():
+func goblin():
 	pass
 
 
@@ -54,10 +62,10 @@ func move(body: Node2D) -> void:
 	if dead:
 		return
 	else:
-		var direction = monsters._get_direction("dog", self)
+		var direction = monsters._get_direction("goblin", number)
 		if direction.x != 0:
 			animated_sprite_2d.flip_h = direction.x < 0
-		print("Doggo is moving ", direction)
+		print("Goblin is moving ", direction)
 
 		if direction.x > 0 and direction.y == 0:
 			print("right")
@@ -74,16 +82,16 @@ func move(body: Node2D) -> void:
 			else:
 				move_character(direction)
 		elif direction.x == 0 and direction.y > 0:
-			print("up")
-			if len(up.get_overlapping_bodies()) > 0:
-				print(up.get_overlapping_bodies())
+			print("down")
+			if len(down.get_overlapping_bodies()) > 0:
+				print(down.get_overlapping_bodies())
 				print("illegal")
 			else:
 				move_character(direction)
 		elif direction.x == 0 and direction.y < 0:
-			print("down")
-			if len(down.get_overlapping_bodies()) > 0:
-				print(down.get_overlapping_bodies())
+			print("up")
+			if len(up.get_overlapping_bodies()) > 0:
+				print(up.get_overlapping_bodies())
 				print("illegal")
 			else:
 				move_character(direction)
@@ -191,3 +199,39 @@ func _on_bumping_area_body_entered(body: Node2D) -> void:
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if animated_sprite_2d.animation == "attack":
 		animated_sprite_2d.play("idle")
+		
+func _check_traps(direction):
+	if len(right_trap.get_overlapping_areas()) > 0 and direction == "right":
+		print("Right trap found")
+		return("trap")
+	elif len(left_trap.get_overlapping_areas()) > 0 and direction == "left":
+		print("Left trap found")
+		return("trap")
+	elif len(up_trap.get_overlapping_areas()) > 0 and direction == "up":
+		print("Up trap found")
+		return("trap")
+	elif len(down_trap.get_overlapping_areas()) > 0 and direction == "down":
+		print("Down trap found")
+		return("trap")
+
+func find_coins():
+	coin_array = []
+	for stuff in finder.get_overlapping_areas():
+		if stuff is Coin:
+			coin_array.append(stuff)
+	print(coin_array)
+			
+func find_nearest_coin():
+	if len(coin_array) > 0:
+		var min = center.global_position.distance_to(coin_array[0].center.global_position)
+		nearest_coin = coin_array[0]
+		for stuff in coin_array:
+			if center.global_position.distance_to(stuff.center.global_position) < min:
+				min = center.global_position.distance_to(stuff.center.global_position)
+				nearest_coin = stuff
+		return(nearest_coin)
+	else:
+		return
+
+func take_coin(coin):
+	coin_array.erase(coin)

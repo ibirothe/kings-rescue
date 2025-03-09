@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bx31414pko86i"]
+[gd_scene load_steps=30 format=3 uid="uid://bx31414pko86i"]
 
 [ext_resource type="Script" path="res://Scripts/trap.gd" id="1_rrvs4"]
 [ext_resource type="Texture2D" uid="uid://bcqa54pm5gvn4" path="res://Assets/trap_indicator.png" id="2_mkef7"]
@@ -8,6 +8,10 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_emdvj"]
 atlas = ExtResource("2_mkef7")
 region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gtf78"]
+atlas = ExtResource("2_mkef7")
+region = Rect2(64, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s7ci1"]
 atlas = ExtResource("3_vngxa")
@@ -98,6 +102,9 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_emdvj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gtf78")
 }],
 "loop": true,
 "name": &"default",

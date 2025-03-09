@@ -9,6 +9,7 @@ var activation_click = false
 var click_resolved = true
 var current_soldier
 @export var dog_scene: PackedScene
+@export var goblin_scene: PackedScene
 var j = 0
 var x = 0  # Initialize x
 var y = 0  # Initialize y
@@ -23,6 +24,11 @@ var buddy
 var monsters = []
 var canine_numb
 var action_queue = []
+var current_monster
+var direct_text
+var goblin_numb
+var found_trap = false
+var recursion = 0
 
 
 func spawn_doggos(canine_numb):
@@ -53,10 +59,35 @@ func spawn_doggos(canine_numb):
 				var direction = _get_direction("dog", doggo.number)
 				if direction.x != 0:
 					doggo.animated_sprite_2d.flip_h = direction.x < 0
+					
+func spawn_goblins(goblin_numb):
+	var i = 0
+	while i < goblin_numb + 2 * RunStats.difficulty:
+		var gobbo = goblin_scene.instantiate()
+		x = round(randf_range(0, 10))
+		y = round(randf_range(0, 10))
+		if x > 2 and y > 2 and x < 8 and y < 8:
+			pass
+		else:
+			x = king.position.x-(5*16) + x*16
+			y = king.position.y+(5*16) - y*16
+			var pos = Vector2(x, y)
+			if pos not in game_manager.occupied_positions:
 
-
-
-				print(doggo_directions)
+				i += 1
+				gobbo.position = pos
+				game_manager.occupied_positions.append(pos)
+				add_child(gobbo)
+				gobbo.number = i-1
+				if x > 0:
+					direct = Vector2(-16, 0)
+				else:
+					direct = Vector2(16, 0)
+				monsters.append(gobbo)
+				doggo_directions.append(direct)
+				var direction = _get_direction("dog", gobbo.number)
+				if direction.x != 0:
+					gobbo.animated_sprite_2d.flip_h = direction.x < 0
 
 func _physics_process(_delta: float) -> void:
 	if len(action_queue) > 0:
@@ -69,10 +100,86 @@ func move_all():
 	action_queue.append("move")
 
 		
-func _get_direction(monster, number):
-	if monster == "dog":
+func _get_direction(monster_type, number):
+	if monster_type == "dog":
 		return doggo_directions[number]
+	if monster_type == "goblin":
+		current_monster = monsters[number]
+		return goblin_ai(current_monster)
 
 func flip_direction(monster, number):
 	if monster == "dog":
 		doggo_directions[number].x *= -1 
+		
+func goblin_ai(goblin):
+	goblin.find_coins()
+	if goblin.find_nearest_coin() == null or detour():
+		print("taking detour")
+		recursion = 0
+		found_trap = false
+		return rand_goblin_directions(goblin)
+	else:
+		var basic_direction = goblin.find_nearest_coin().center.global_position-goblin.center.global_position
+		print(basic_direction)
+		var rand = randf_range(0, 100)
+		if basic_direction.x > 0:
+			direct = Vector2(16, 0)
+			direct_text = "right"
+		else:
+			direct = Vector2(-16, 0)
+			direct_text = "left"
+		if basic_direction.y != 0:
+			if rand > 50 or basic_direction.x == 0:
+				if basic_direction.y > 0:
+					direct = Vector2(0, 16)
+					direct_text = "down"
+				else:
+					direct = Vector2(0, -16)
+					direct_text = "up"
+		rand = randf_range(0, 100)
+		if goblin._check_traps(direct_text) == "trap" and rand > 20:
+			found_trap = true
+			recursion += 1
+			return goblin_ai(goblin)
+		else:
+			print("Moving towards coin ", direct_text)
+			recursion = 0
+			found_trap = false
+			#print("Bad goblin luck")
+			goblin.old_direct = direct
+			return(direct)
+		
+func detour():
+	if found_trap and recursion >2:
+		print("Taking detour")
+		return true
+	else:
+		return false
+	
+		
+func rand_goblin_directions(goblin):
+	var rand_directions = str(round(randf_range(0,3)))
+	match rand_directions:
+		"0": 
+			direct = Vector2(-16, 0)
+			direct_text = "left"
+		"1":
+			direct = Vector2(16, 0)
+			direct_text = "right"
+		"2":
+			direct = Vector2(0, -16)
+			direct_text = "up"
+		"3":
+			direct = Vector2(0, 16)
+			direct_text = "down"
+	print("Moving randomly")
+	var random = randf_range(0, 99)
+	if random < 20: print("Random too low")
+	if direct == goblin.old_direct * (-1) and random > 20:
+		return rand_goblin_directions(goblin)
+	elif goblin._check_traps(direct_text) == "trap" and random > 20:
+		return rand_goblin_directions(goblin)
+	else:
+			goblin.old_direct = direct
+			return direct
+			

@@ -1,6 +1,8 @@
+class_name Coin
 extends Area2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var game_manager: Node2D = get_parent()
+@onready var center: Marker2D = $Center
 
 func _ready():
 	# Connect the body_entered signal
@@ -32,6 +34,17 @@ func _on_body_entered(body):
 		tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
 		await tween.finished
 		queue_free()
+	elif body.role == "Monster":
+		print("monster found")
+		if body.has_method("goblin"):
+			print("goblin picks up coin")
+			body.take_coin(self)
+			var tween = create_tween()
+			tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
+			await tween.finished
+			queue_free()
+		else:
+			pass
 	else:
 		pass
 		

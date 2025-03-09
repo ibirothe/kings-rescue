@@ -24,7 +24,8 @@ var magic = false
 @export var trap_number = 14
 @export var informant_number = 2
 @export var shop_item_number = 1
-@export var canine_number = 1
+@export var canine_number = 0
+@export var goblin_number = 1
 
 @onready var king: CharacterBody2D = $"../King"
 @onready var camera: Camera2D = $"../Camera2D"
@@ -50,6 +51,7 @@ func _physics_process(delta: float) -> void:
 		spawn_traps(trap_number)
 		spawn_shop_item(shop_item_number)
 		monsters.spawn_doggos(canine_number)
+		monsters.spawn_goblins(goblin_number)
 		spawn_difficulty_door()
 		GlobalText.set_text(txt.ingame["start"].pick_random())
 		setup_done = true

@@ -18,7 +18,7 @@ func _on_body_entered(body):
 		tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
 		await tween.finished
 		queue_free()  # Remove the node after fading out
-	if body is Monster:
+	if body.role == "Monster":
 		var tween = create_tween()
 		tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
 		await tween.finished

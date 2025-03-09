@@ -14,7 +14,7 @@ func _on_body_entered(body):
 		
 	if body is Soldier:
 		handle_soldier_interaction(body)
-	if body is Monster:
+	if body.role == "Monster":
 		handle_monster_interaction(body)
 	elif body.has_method("king"):
 		handle_king_interaction(body)
