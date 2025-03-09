@@ -1,8 +1,7 @@
 extends Node
 
 @export var SFXvolume: float = 1
-@export var SYSvolume: float = 1
-@export var MSCvolume: float = 1
+@export var MSCvolume: float = 0.8
 
 # Constants
 const PLAYERS_PER_SOUND = 3
@@ -33,19 +32,27 @@ func _load_sound_effects():
 	# Replace these examples with your actual sound files
 	_sound_effects = {
 		"ambience": preload("res://Assets/SFX/ambience.wav"),
+		"buy": preload("res://Assets/SFX/buy.wav"),
+		"dart": preload("res://Assets/SFX/dart.wav"),
+		"cross_out": preload("res://Assets/SFX/cross_out.wav"),
+		"count_ends": preload("res://Assets/SFX/count_ends.wav"),
 		"disselect_soldier": preload("res://Assets/SFX/disselect_soldier.wav"),
-		"coin_collect": preload("res://Assets/SFX/food_collect.wav"),
+		"coin_collect": preload("res://Assets/SFX/coin_collect.wav"),
 		"count_down_tick": preload("res://Assets/SFX/count_down_tick.wav"),
 		"door_activate": preload("res://Assets/SFX/door_activate.wav"),
 		"food_collect": preload("res://Assets/SFX/food_collect.wav"),
 		"ignite_crown": preload("res://Assets/SFX/ignite_crown.wav"),
+		"informant_collect": preload("res://Assets/SFX/informant_collect.wav"),
+		"king_death": preload("res://Assets/SFX/king_death.wav"),
 		"mercenary_flee": preload("res://Assets/SFX/mercenary_flee.wav"),
+		"mimic": preload("res://Assets/SFX/mimic.wav"),
+		"mimic_death": preload("res://Assets/SFX/mimic_death.wav"),
 		"player_death": preload("res://Assets/SFX/player_death.wav"),
 		"player_hurt": preload("res://Assets/SFX/player_hurt.wav"),
 		"player_run": preload("res://Assets/SFX/player_run.wav"),
 		"remove_trap": preload("res://Assets/SFX/food_collect.wav"),
 		"select_soldier": preload("res://Assets/SFX/select_soldier.wav"),
-		"shop_collect": preload("res://Assets/SFX/food_collect.wav"),
+		"shop_collect": preload("res://Assets/SFX/item_collect.wav"),
 		"swoosh": preload("res://Assets/SFX/swoosh.wav"),
 	}
 
@@ -80,12 +87,26 @@ func play_sound(
 		return
 	
 	var final_volume_db = calculate_volume_by_distance(volume_db, distance, radius)
+	# Apply the SFXvolume export variable
+	final_volume_db = adjust_sfx_volume(final_volume_db)
+	
 	var available_player = _find_available_player(sound_name)
 	
 	_configure_player(available_player, final_volume_db, pitch_scale)
 	
 	if loop:
 		_handle_looping_sound(available_player, sound_name, instance_id)
+
+# Helper function to apply SFXvolume to volume in decibels
+func adjust_sfx_volume(volume_db: float) -> float:
+	# Convert SFXvolume (linear scale) to decibels and add to volume_db
+	# We use log function to convert linear volume to decibels
+	# Only apply if SFXvolume is greater than 0 to avoid math errors
+	if SFXvolume <= 0:
+		return -80.0 # effectively muted
+	
+	var volume_modifier_db = 20 * log(SFXvolume) / log(10)
+	return volume_db + volume_modifier_db
 
 func _find_available_player(sound_name: String) -> AudioStreamPlayer:
 	for player in _audio_players[sound_name]:
@@ -141,7 +162,9 @@ func set_looping_sound_volume(sound_name: String, volume_db: float, instance_id:
 	var unique_sound_key = sound_name + (str(instance_id) if instance_id != null else "")
 	
 	if _looping_sounds.has(unique_sound_key):
-		_looping_sounds[unique_sound_key].volume_db = volume_db
+		# Apply SFXvolume to the requested volume
+		var final_volume_db = adjust_sfx_volume(volume_db)
+		_looping_sounds[unique_sound_key].volume_db = final_volume_db
 
 func stop_looping_sound(sound_name: String, instance_id: Variant = null) -> void:
 	var unique_sound_key = sound_name + (str(instance_id) if instance_id != null else "")
@@ -157,6 +180,15 @@ func stop_looping_sound(sound_name: String, instance_id: Variant = null) -> void
 		
 		if instance_id != null:
 			_sound_instances.erase(unique_sound_key)
+
+# Helper function to apply MSCvolume to volume in decibels
+func adjust_music_volume(volume_db: float) -> float:
+	# Convert MSCvolume (linear scale) to decibels and add to volume_db
+	if MSCvolume <= 0:
+		return -80.0 # effectively muted
+	
+	var volume_modifier_db = 20 * log(MSCvolume) / log(10)
+	return volume_db + volume_modifier_db
 
 func play_music(track_name: String, volume_db: float = 0.0, loop: bool = true) -> void:
 	# Use ResourceLoader instead of file existence check
@@ -186,9 +218,12 @@ func play_music(track_name: String, volume_db: float = 0.0, loop: bool = true) -
 		"stream": music_stream
 	}
 	
+	# Apply the MSCvolume export variable
+	var final_volume_db = adjust_music_volume(volume_db)
+	
 	# Configure and play music
 	_music_player.stream = music_stream
-	_music_player.volume_db = volume_db
+	_music_player.volume_db = final_volume_db
 	_music_player.play()
 
 func _on_music_finished() -> void:
@@ -253,6 +288,21 @@ func stop_all_sounds():
 	
 	# Clear sound instances tracking
 	_sound_instances.clear()
+
+# Setter functions for changing volume at runtime
+func set_sfx_volume(new_volume: float) -> void:
+	SFXvolume = new_volume
+	# Update all currently playing sounds if needed
+	# This will affect all newly played sounds, but not ones already playing
+	# To affect currently playing sounds, you would need additional logic
+
+func set_music_volume(new_volume: float) -> void:
+	MSCvolume = new_volume
+	# Update currently playing music
+	if is_music_playing() and _music_player:
+		var current_base_volume = _music_player.volume_db
+		# We don't know the original base volume, so this is a simplification
+		_music_player.volume_db = adjust_music_volume(0.0)  # Adjust from base of 0dB
 
 func _exit_tree():
 	stop_all_sounds()

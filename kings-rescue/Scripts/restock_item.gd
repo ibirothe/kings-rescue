@@ -11,14 +11,12 @@ func _ready():
 
 func _on_body_entered(body):
 	if body is Soldier:
-		AudioManager.play_sound("shop_collect")
+		
 		
 		var max_attempts = 100  # Prevent infinite loop
 		var attempts = 0
 		var item = null
 		var found = false
-		print(mimic)
-		print(RunStats.upgrade_items.has("Mimic Tranquilizer"))
 		if not mimic:
 			while !found and attempts < max_attempts:
 				var keys = shop.item_list.keys()
@@ -33,9 +31,12 @@ func _on_body_entered(body):
 				attempts += 1
 			
 			if found:
+				AudioManager.play_sound("shop_collect")
 				RunStats.add_shop_item(item)
 				GlobalText.set_text(game_manager.txt.ingame["shop_collect"].pick_random())
 		elif mimic and RunStats.upgrade_items.has("Mimic Tranquilizer"):
+			AudioManager.play_sound("mimic_death")
+			AudioManager.play_sound("dart")
 			RunStats.upgrade_items.erase("Mimic Tranquilizer")
 			GlobalText.set_text(game_manager.txt.ingame["mimic_tranquilized"].pick_random())
 			game_manager.add_coin(10)
@@ -57,6 +58,7 @@ func _on_body_entered(body):
 				RunStats.add_shop_item(item)
 			
 		elif mimic:
+			AudioManager.play_sound("mimic")
 			RunStats.shop_items = []
 			GlobalText.set_text(game_manager.txt.ingame["mimic_collect"].pick_random())
 			

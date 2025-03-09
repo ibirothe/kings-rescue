@@ -149,5 +149,5 @@ func reset_save_file() -> void:
 	coins_total = 10
 	shop_items = ["Food Ration"]
 	#upgrades:
-	upgrade_items = []
+	upgrade_items = ["Mimic Tranquilizer"]
 	save_game()

@@ -70,7 +70,7 @@ func count_down_labels() -> void:
 	await get_tree().create_timer(7).timeout
 	for i in range(max_count):
 		await get_tree().create_timer(0.05).timeout
-		AudioManager.play_sound("count_down_tick")
+		AudioManager.play_sound("count_down_tick", 3)
 		reverse_i += 1
 		win_label.text = "Kings saved: " + str(max(0,RunStats.wins-reverse_i))
 		hourglass_label.text = "Hourglasses: " + str(max(0,RunStats.hourglasses-reverse_i))
@@ -80,7 +80,7 @@ func count_down_labels() -> void:
 		soldiers_fled_label.text = "Desertations: "  + str(max(0,RunStats.soldiers_fled-reverse_i))
 		monsters_spawned_label.text = "Spawned: "  + str(max(0,RunStats.monsters_spawned-reverse_i))
 		monsters_killed_label.text = "Killed: "  + str(max(0,RunStats.monsters_killed-reverse_i))
-	AudioManager.play_sound("coin_collect")
+	AudioManager.play_sound("count_ends")
 
 func update_crowns() -> void:
 	for crown in crowns:

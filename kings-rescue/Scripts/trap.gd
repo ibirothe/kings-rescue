@@ -62,6 +62,9 @@ func fade_out_and_remove():
 func trigger_trap():
 	animated_sprite_2d.play("trigger")
 	AudioManager.play_sound("player_hurt")
+	await get_tree().create_timer(0.9).timeout
+	AudioManager.play_sound("cross_out", -10)
+	
 
 func kill_soldier(soldier):
 	soldier.animated_sprite_2d.play(soldier.subclass + "_death")
@@ -69,6 +72,8 @@ func kill_soldier(soldier):
 	soldier.death()
 	soldier.z_index = 0
 	game_manager.movement_complete()
+	if AudioManager.is_looping_sound_active("player_run"):
+			AudioManager.stop_looping_sound("player_run")
 
 func kill_monster(monster):
 	monster.animated_sprite_2d.play("death")
