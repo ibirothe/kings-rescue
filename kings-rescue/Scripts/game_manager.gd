@@ -40,7 +40,9 @@ func _ready() -> void:
 	#active_soldier = false
 	x=king.position.x-16
 	y=king.position.y-16
-
+	
+	if RunStats.upgrade_items.has("Trained Chef"):
+		food += 2
 
 func _physics_process(delta: float) -> void:
 	if setup_done == false:
@@ -75,6 +77,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Delete"):
 		RunStats.reset_save_file()
 		RunStats.load_game()
+		get_tree().reload_current_scene()
 
 	if Input.is_action_just_pressed("Help"):
 		GlobalText.set_text(txt.ingame["start"].pick_random())
@@ -183,7 +186,7 @@ func spawn_shop_item(amount):
 
 
 func spawn_difficulty_door() -> void:
-	if RunStats.upgrade_items.has("Dimensional Key") and RunStats.streak >= (RunStats.difficulty+1)*3:
+	if RunStats.upgrade_items.has("Dimensional Key") and RunStats.wins >= (RunStats.difficulty+1)*3:
 		var i = 0
 		while i < 1:
 			var door = door_scene.instantiate()
@@ -210,7 +213,7 @@ func end_party(text_key, win) -> void:
 	GlobalText.set_text("")
 	AudioManager.stop_music()
 	
-	var text = txt.party_end[text_key]
+	var text = txt.party_end[text_key].pick_random()
 
 	if win:
 		RunStats.add_win()

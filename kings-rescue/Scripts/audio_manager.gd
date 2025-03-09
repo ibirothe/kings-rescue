@@ -35,7 +35,9 @@ func _load_sound_effects():
 		"ambience": preload("res://Assets/SFX/ambience.wav"),
 		"disselect_soldier": preload("res://Assets/SFX/disselect_soldier.wav"),
 		"coin_collect": preload("res://Assets/SFX/food_collect.wav"),
+		"door_activate": preload("res://Assets/SFX/door_activate.wav"),
 		"food_collect": preload("res://Assets/SFX/food_collect.wav"),
+		"ignite_crown": preload("res://Assets/SFX/ignite_crown.wav"),
 		"mercenary_flee": preload("res://Assets/SFX/mercenary_flee.wav"),
 		"player_death": preload("res://Assets/SFX/player_death.wav"),
 		"player_hurt": preload("res://Assets/SFX/player_hurt.wav"),
@@ -43,6 +45,7 @@ func _load_sound_effects():
 		"remove_trap": preload("res://Assets/SFX/food_collect.wav"),
 		"select_soldier": preload("res://Assets/SFX/select_soldier.wav"),
 		"shop_collect": preload("res://Assets/SFX/food_collect.wav"),
+		"swoosh": preload("res://Assets/SFX/swoosh.wav"),
 	}
 
 

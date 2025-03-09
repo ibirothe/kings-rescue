@@ -15,7 +15,8 @@ func _on_button_down():
 		GlobalText.set_text(game_manager.txt.shop["no_money"].pick_random())
 	else:
 		GlobalText.set_text(game_manager.txt.shop["bought"].pick_random())
-		RunStats.coins -= shop.item_list[RunStats.shop_items[shop_index]][0]
+		
+		RunStats.spend_coins(shop.item_list[RunStats.shop_items[shop_index]][0])
 		if RunStats.shop_items[shop_index] == "Food Ration":
 			game_manager.food += 10
 		else:
