@@ -144,10 +144,10 @@ func reset_save_file() -> void:
 	monsters_killed = 0
 
 	#shop:
-	coins = 0
+	coins = 10
 	coins_spent = 0
-	coins_total = 0
-	shop_items = []
+	coins_total = 10
+	shop_items = ["Food Ration"]
 	#upgrades:
 	upgrade_items = []
 	save_game()

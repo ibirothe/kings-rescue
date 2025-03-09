@@ -250,7 +250,7 @@ func death():
 	game_manager.troop.current_soldier = null
 	game_manager.troop.soldiers.erase(self)
 	if RunStats.upgrade_items.has("Life Insurance"):
-		RunStats.add_coins(1)
+		game_manager.add_coin(1)
 		AudioManager.play_sound("coin_collect")
 	if animated_sprite_2d.animation != subclass+"_death":
 		animated_sprite_2d.play(subclass+"_death")

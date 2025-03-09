@@ -21,7 +21,7 @@ var ingame = {
 	"Hourglass": ["\n\nYour Hourglass shattered - such a shame. That was a family heirloom. But hey, at least it teleported you back to a time before you failed so miserably."],
 	"door": ["Your dimensional key accidentally falls into the 11th-dimensional space. You've been teleported into a parallel universe where everything is exactly the same - except that kings are much harder to save here. Difficulty increased!"],
 	"mimic_collect": ["As you hand the chest to the shopkeeper, it reveals hundreds of razor-sharp teeth. Before you can react, the shopkeeper vanishes - along with his entire stock. The mimic kindly thanks you for the meal, and scuttles away."],
-	"mimic_tranquelized": ["You use the tranquelizer blablabla"]
+	"mimic_tranquilized": ["You use the tranquilizer blablabla"]
 }
 
 var shop = {

@@ -35,6 +35,7 @@ func _load_sound_effects():
 		"ambience": preload("res://Assets/SFX/ambience.wav"),
 		"disselect_soldier": preload("res://Assets/SFX/disselect_soldier.wav"),
 		"coin_collect": preload("res://Assets/SFX/food_collect.wav"),
+		"count_down_tick": preload("res://Assets/SFX/count_down_tick.wav"),
 		"door_activate": preload("res://Assets/SFX/door_activate.wav"),
 		"food_collect": preload("res://Assets/SFX/food_collect.wav"),
 		"ignite_crown": preload("res://Assets/SFX/ignite_crown.wav"),

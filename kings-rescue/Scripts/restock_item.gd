@@ -17,7 +17,8 @@ func _on_body_entered(body):
 		var attempts = 0
 		var item = null
 		var found = false
-		
+		print(mimic)
+		print(RunStats.upgrade_items.has("Mimic Tranquilizer"))
 		if not mimic:
 			while !found and attempts < max_attempts:
 				var keys = shop.item_list.keys()
@@ -34,13 +35,30 @@ func _on_body_entered(body):
 			if found:
 				RunStats.add_shop_item(item)
 				GlobalText.set_text(game_manager.txt.ingame["shop_collect"].pick_random())
-		elif mimic and !RunStats.upgrade_items.has("Mimic Tranquelizer"):
+		elif mimic and RunStats.upgrade_items.has("Mimic Tranquilizer"):
+			RunStats.upgrade_items.erase("Mimic Tranquilizer")
+			GlobalText.set_text(game_manager.txt.ingame["mimic_tranquilized"].pick_random())
+			game_manager.add_coin(10)
+			game_manager.add_food(5)
+			
+			while !found and attempts < max_attempts:
+				var keys = shop.item_list.keys()
+				item = keys[randi() % keys.size()]
+				
+				# Check if item is unique
+				if !shop.item_list[item][1]:
+					found = true
+				elif !RunStats.upgrade_items.has(item) and !RunStats.shop_items.has(item):
+					found = true
+				
+				attempts += 1
+			
+			if found:
+				RunStats.add_shop_item(item)
+			
+		elif mimic:
 			RunStats.shop_items = []
 			GlobalText.set_text(game_manager.txt.ingame["mimic_collect"].pick_random())
-		elif mimic and RunStats.upgrade_items.has("Mimic Tranquelizer"):
-			GlobalText.set_text(game_manager.txt.ingame["mimic_tranquelized"].pick_random())
-			RunStats.add_coins(10)
-			RunStats.food += 5
 			
 		# Delete the item
 		var tween = create_tween()

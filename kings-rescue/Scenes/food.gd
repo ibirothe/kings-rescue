@@ -11,7 +11,7 @@ func _ready():
 func _on_body_entered(body):
 	if body is Soldier:
 		GlobalText.set_text(game_manager.txt.ingame["food"].pick_random())
-		game_manager.food += food_efficiency-RunStats.difficulty
+		game_manager.add_food(food_efficiency)
 		AudioManager.play_sound("food_collect")
 		# Delete the item
 		var tween = create_tween()

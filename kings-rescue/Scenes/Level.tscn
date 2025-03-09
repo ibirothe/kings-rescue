@@ -8,9 +8,9 @@
 [ext_resource type="Script" path="res://Scripts/buy.gd" id="7_fl4b4"]
 [ext_resource type="FontFile" uid="uid://c6fxatwakvveq" path="res://Fonts/Vest 9.ttf" id="7_rm11i"]
 [ext_resource type="Script" path="res://Scenes/label.gd" id="8_83tln"]
-[ext_resource type="Script" path="res://Scenes/food_label.gd" id="8_hmn42"]
+[ext_resource type="Script" path="res://Scenes/coin_label.gd" id="8_hmn42"]
 [ext_resource type="Script" path="res://Scripts/info.gd" id="8_l8lls"]
-[ext_resource type="Script" path="res://Scenes/coin_label.gd" id="9_ffase"]
+[ext_resource type="Script" path="res://Scenes/food_label.gd" id="9_ffase"]
 [ext_resource type="PackedScene" path="res://Scenes/monsters.tscn" id="9_ymc6l"]
 [ext_resource type="PackedScene" uid="uid://dtsb5ek2ffqx6" path="res://Scenes/doggo.tscn" id="10_3ov8r"]
 [ext_resource type="PackedScene" uid="uid://ce6vcfst4e4h7" path="res://Scenes/Gobbo.tscn" id="11_68twa"]
@@ -293,7 +293,7 @@ shop_index = 2
 dog_scene = ExtResource("10_3ov8r")
 goblin_scene = ExtResource("11_68twa")
 
-[node name="CoinLabel" type="Label" parent="."]
+[node name="FoodLabel" type="Label" parent="."]
 texture_filter = 1
 offset_left = -178.0
 offset_top = -49.0
@@ -306,7 +306,7 @@ autowrap_mode = 3
 script = ExtResource("9_ffase")
 metadata/_edit_use_anchors_ = true
 
-[node name="FoodLabel" type="Label" parent="."]
+[node name="CoinLabel" type="Label" parent="."]
 texture_filter = 1
 offset_left = -141.0
 offset_top = -49.0

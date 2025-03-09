@@ -25,11 +25,13 @@ var magic = false
 @export var informant_number = 2
 @export var shop_item_number = 1
 @export var canine_number = 0
-@export var goblin_number = 1
+@export var goblin_number = 0
 
 @onready var king: CharacterBody2D = $"../King"
 @onready var camera: Camera2D = $"../Camera2D"
 @onready var troop = $"../Game Manager/Troop"
+@onready var coin_label = $"../CoinLabel"
+@onready var food_label = $"../FoodLabel"
 @onready var txt = txt_scene.instantiate()
 @onready var monsters: Node2D = $Monsters
 
@@ -229,6 +231,14 @@ func spawn_difficulty_door() -> void:
 
 func refire_king():
 	king.king()
+
+func add_food(amount) -> void:
+	food += amount
+	food_label.spawn_floating_number(amount)
+
+func add_coin(amount) -> void:
+	RunStats.add_coins(amount)
+	coin_label.spawn_floating_number(amount)
 
 func end_party(text_key, win) -> void:
 	GlobalText.set_text("")
