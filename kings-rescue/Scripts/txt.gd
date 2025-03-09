@@ -20,7 +20,8 @@ var ingame = {
 	"shop_collect": ["A treasure chest! You heroically pry it open... only to realize all you’ve done is give the shopkeeper more stuff to overcharge you for.", "You discovered a treasure chest! Naturally, instead of keeping its contents, you’ve unlocked the privilege of buying them.", "You found a treasure chest! It’s full of fantastic items you might be able to afford someday.", "You crack open a treasure chest! The shopkeeper immediately updates their inventory. It’s almost like they knew it was there all along...", "You open a chest, filled with wonders! The shopkeeper thanks you for your contribution to the economy.", "You found a chest! And just like that, your loot is now part of a 'scarcity-driven' market - where the only thing rarer than treasure is reasonable pricing.", "You found treasure! But it’s already been ‘capitalized’ - expect a 30% markup for 'market fluctuations' and 'brand premium.'"],
 	"Hourglass": ["\n\nYour Hourglass shattered - such a shame. That was a family heirloom. But hey, at least it teleported you back to a time before you failed so miserably."],
 	"door": ["Your dimensional key accidentally falls into the 11th-dimensional space. You've been teleported into a parallel universe where everything is exactly the same - except that kings are much harder to save here. Difficulty increased!"],
-	"mimic_collect": ["As you hand the chest to the shopkeeper, it reveals hundreds of razor-sharp teeth. Before you can react, the shopkeeper vanishes - along with his entire stock. The mimic kindly thanks you for the meal, and scuttles away."]
+	"mimic_collect": ["As you hand the chest to the shopkeeper, it reveals hundreds of razor-sharp teeth. Before you can react, the shopkeeper vanishes - along with his entire stock. The mimic kindly thanks you for the meal, and scuttles away."],
+	"mimic_tranquelized": ["You use the tranquelizer blablabla"]
 }
 
 var shop = {
@@ -32,7 +33,8 @@ var shop = {
 	"Hourglass": "The Hourglass shatters upon the king’s death, yet somehow flings you back in time. Not that you’ll save him next time either…",
 	"Life Insurance": "Having life insurance on eight people sounds like fraud waiting to happen - but what else would you expect in a kingdom where assassinating the monarch is practically a national pastime?",
 	"Dimensional Key": "A key crafted by the realm's top quantum scientists to boost both mortality rates and fun-simultaneously. Fitting doors sold separately.",
-	"Trained Chef": "Through skill and precision, the King's chef works wonders - ten apples yield twelve (slightly smaller) in his hands."
+	"Trained Chef": "Through skill and precision, the King's chef works wonders - ten apples yield twelve (slightly smaller) in his hands.",
+	"Mimic Tranquelizer": "A potent dart filled with a special blend of monster-grade sedatives and soothing lullabies."
 }
 
 var assassin_manuals = ["This one is a cooking recipe. No information about assassins.", 

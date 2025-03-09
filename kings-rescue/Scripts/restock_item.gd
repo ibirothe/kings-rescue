@@ -34,9 +34,13 @@ func _on_body_entered(body):
 			if found:
 				RunStats.add_shop_item(item)
 				GlobalText.set_text(game_manager.txt.ingame["shop_collect"].pick_random())
-		elif mimic:
+		elif mimic and !RunStats.upgrade_items.has("Mimic Tranquelizer"):
 			RunStats.shop_items = []
 			GlobalText.set_text(game_manager.txt.ingame["mimic_collect"].pick_random())
+		elif mimic and RunStats.upgrade_items.has("Mimic Tranquelizer"):
+			GlobalText.set_text(game_manager.txt.ingame["mimic_tranquelized"].pick_random())
+			RunStats.add_coins(10)
+			RunStats.food += 5
 			
 		# Delete the item
 		var tween = create_tween()

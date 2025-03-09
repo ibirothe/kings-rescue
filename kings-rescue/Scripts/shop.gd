@@ -27,7 +27,8 @@ var item_list = {
 	"Hourglass": [12, true],
 	"Life Insurance": [10, true],
 	"Dimensional Key": [1, true],
-	"Trained Chef": [8, true]
+	"Trained Chef": [8, true],
+	"Mimic Tranquilizer": [3, true]
 }
 
 func _ready() -> void:
