@@ -77,7 +77,8 @@ func _physics_process(_delta: float) -> void:
 	# Check if food ran out
 	self.starvation_death()
 	# Assasinate if possible
-	self.assasination()
+	if game_manager.currently_moving == false:
+		self.assasination()
 
 	match current_state:
 		State.INACTIVE:
@@ -102,9 +103,11 @@ func assasination_check() -> bool:
 			if bodies.role=="King":
 				king_direction = bodies.global_position - global_position
 				possible_assassination = true
-			if bodies.role=="Soldier":
+			if bodies.role=="Soldier" and bodies.subclass != self.subclass:
 				if bodies.dead != true:
 					soldier_close = true
+			if possible_assassination == true and len(neighbours_check.get_overlapping_bodies()) == 2:
+				soldier_close = false
 	return possible_assassination and !soldier_close
 
 func assasination() -> void:
@@ -122,6 +125,7 @@ func leave_board() -> void:
 		stop_movement()
 		disable_shader()
 		visual_deactivation()
+		game_manager.movement_complete()
 		active = false
 		game_manager.active_soldier = false
 		game_manager.currently_moving = false
@@ -173,6 +177,7 @@ func calculate_grid_movement(click_pos: Vector2) -> Vector2:
 func move_character(movement: Vector2) -> void:
 	if current_state == State.MOVING:
 		return
+	game_manager.currently_moving = true
 	transition_to_state(State.MOVING)
 	animated_sprite_2d.play(subclass+"_walk")
 	
@@ -189,9 +194,8 @@ func move_character(movement: Vector2) -> void:
 	movement_tween.tween_callback(func():
 		animated_sprite_2d.play(subclass+"_idle")
 		transition_to_state(State.IDLE)
-		game_manager.food = max(0, game_manager.food-1)
+		game_manager.movement_complete()
 		movement_locked = false
-		game_manager.currently_moving = false
 		game_manager.refire_king() 
 		) 
 """remove refire king"""
@@ -246,7 +250,7 @@ func death():
 	game_manager.troop.current_soldier = null
 	game_manager.troop.soldiers.erase(self)
 	if RunStats.upgrade_items.has("Life Insurance"):
-		RunStats.add_coins(1)
+		game_manager.add_coin(1)
 		AudioManager.play_sound("coin_collect")
 	if animated_sprite_2d.animation != subclass+"_death":
 		animated_sprite_2d.play(subclass+"_death")
@@ -284,6 +288,7 @@ func take_coin():
 	# Fade out over 1 second
 	coin_tween.tween_property(animated_sprite_2d, "self_modulate:a", 0.0, 1.0)
 	await coin_tween.finished
+	game_manager.movement_complete()
 	queue_free()  # Remove the node after fading out
 
 func visual_activation():
@@ -371,8 +376,9 @@ func soldier():
 # 
 func _on_neighbours_check_body_exited(body: Node2D) -> void:
 		if body.role == "Soldier":
-			if assassin == true:
-				soldier_close = false
+			pass
+			"""if assassin == true:
+				soldier_close = false"""
 		elif body.role == "King":
 			if assassin == true:
 				possible_assassination = false

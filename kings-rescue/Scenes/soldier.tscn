@@ -1274,10 +1274,10 @@ radius = 6.08276
 size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dl8vv"]
-size = Vector2(28, 5)
+size = Vector2(32, 5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fc0j8"]
-size = Vector2(6, 29)
+size = Vector2(6, 32)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ymxx7"]
 
@@ -1432,7 +1432,6 @@ collision_mask = 3
 shape = SubResource("RectangleShape2D_dl8vv")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Neighbours_check"]
-position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_fc0j8")
 
 [node name="Center" type="Marker2D" parent="."]

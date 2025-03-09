@@ -24,11 +24,16 @@ var magic = false
 @export var trap_number = 14
 @export var informant_number = 2
 @export var shop_item_number = 1
+@export var canine_number = 0
+@export var goblin_number = 0
 
 @onready var king: CharacterBody2D = $"../King"
 @onready var camera: Camera2D = $"../Camera2D"
 @onready var troop = $"../Game Manager/Troop"
+@onready var coin_label = $"../CoinLabel"
+@onready var food_label = $"../FoodLabel"
 @onready var txt = txt_scene.instantiate()
+@onready var monsters: Node2D = $Monsters
 
 
 func _ready() -> void:
@@ -49,6 +54,8 @@ func _physics_process(delta: float) -> void:
 		spawn_informant(informant_number)
 		spawn_traps(trap_number)
 		spawn_shop_item(shop_item_number)
+		monsters.spawn_doggos(canine_number)
+		monsters.spawn_goblins(goblin_number)
 		spawn_difficulty_door()
 		GlobalText.set_text(txt.ingame["start"].pick_random())
 		setup_done = true
@@ -160,23 +167,46 @@ func spawn_traps(traps_numb):
 
 func spawn_shop_item(amount):
 	var i = 0
+	
 	while i < amount:
-		var shop_item = shop_item_scene.instantiate()
-		x = round(randf_range(0, 10))
-		y = round(randf_range(0, 10))
+		var x = round(randf_range(0, 10))
+		var y = round(randf_range(0, 10))
 		
+		# Skip central area and generate new coordinates
 		if x > 2 and y > 2 and x < 8 and y < 8:
-			pass
-		else:
-			x = king.position.x-(5*16) + x*16
-			y = king.position.y+(5*16) - y*16
-			var pos = Vector2(x, y)
+			continue
 			
-			if pos not in occupied_positions:
-				i += 1
-				shop_item.position = pos
-				occupied_positions.append(pos)
-				add_child(shop_item)
+		var pos_x = king.position.x-(5*16) + x*16
+		var pos_y = king.position.y+(5*16) - y*16
+		var pos = Vector2(pos_x, pos_y)
+		
+		if pos not in occupied_positions:
+			i += 1
+			var shop_item = shop_item_scene.instantiate()
+			shop_item.position = pos
+			occupied_positions.append(pos)
+			add_child(shop_item)
+	
+	# spawn mimic (with probability)
+	if randi_range(0,10) >= 8:
+		var x = round(randf_range(0, 10))
+		var y = round(randf_range(0, 10))
+		
+		# Skip central area and generate new coordinates
+		if x > 2 and y > 2 and x < 8 and y < 8:
+			return
+			
+		var pos_x = king.position.x-(5*16) + x*16
+		var pos_y = king.position.y+(5*16) - y*16
+		var pos = Vector2(pos_x, pos_y)
+		
+		if pos not in occupied_positions:
+			var mimic_shop_item = shop_item_scene.instantiate()
+			mimic_shop_item.position = pos
+			mimic_shop_item.mimic = true
+			occupied_positions.append(pos)
+			add_child(mimic_shop_item)
+
 
 func spawn_difficulty_door() -> void:
 	if RunStats.upgrade_items.has("Dimensional Key") and RunStats.wins >= (RunStats.difficulty+1)*3:
@@ -201,6 +231,14 @@ func spawn_difficulty_door() -> void:
 
 func refire_king():
 	king.king()
+
+func add_food(amount) -> void:
+	food += amount
+	food_label.spawn_floating_number(amount)
+
+func add_coin(amount) -> void:
+	RunStats.add_coins(amount)
+	coin_label.spawn_floating_number(amount)
 
 func end_party(text_key, win) -> void:
 	GlobalText.set_text("")
@@ -242,3 +280,9 @@ func _on_boardclickarea_mouse_entered() -> void:
 
 func _on_boardclickarea_mouse_exited() -> void:
 	inside_board = false
+
+func movement_complete():
+	monsters.move_all()
+	food = max(0, food-1)
+	currently_moving = false
+	

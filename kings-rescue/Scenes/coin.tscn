@@ -35,3 +35,5 @@ sprite_frames = SubResource("SpriteFrames_as65x")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_heyvr")
+
+[node name="Center" type="Marker2D" parent="."]

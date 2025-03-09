@@ -1,5 +1,7 @@
 extends CharacterBody2D
+class_name King
 enum State {INACTIVE, IDLE, MOVING}
+
 var role = "King"
 @onready var up: Area2D = $Up
 @onready var down: Area2D = $Down
@@ -19,6 +21,8 @@ var trap = false
 var win_check = false
 
 
+
+
 func _ready() -> void:
 	#print(position)
 	pass
@@ -30,10 +34,11 @@ func _physics_process(_delta: float) -> void:
 			animated_sprite_2d.play("death")
 			AudioManager.play_sound("player_death")
 		return
-	if game_manager.currently_moving == true:
+		#NO IDEA WHY WE HAD THESE
+	"""if game_manager.currently_moving == true:
 		king_shape.disabled = true
 	else:
-		king_shape.disabled = false
+		king_shape.disabled = false"""
 
 	match current_state:
 		State.IDLE:
@@ -53,37 +58,21 @@ func king():
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	#if direction_check == false:
+	if body is Soldier:
 		var direction = center.global_position.direction_to(body.center.global_position)
 		print(direction/3.14*180)
 		if direction.x < 0 and direction.y == 0:
 			print("right")
-			if len(right.get_overlapping_bodies()) > 0:
-				body.turn_back()
-				print(right.get_overlapping_bodies())
-				print("illegal")
-			else:
-				move_character(game_manager.troop.move_dir)
+			collision_check(right.get_overlapping_bodies(), body)
 		if direction.x > 0 and direction.y == 0:
 			print("left")
-			if len(left.get_overlapping_bodies()) > 0:
-				body.turn_back()
-				print("illegal")
-			else:
-				move_character(game_manager.troop.move_dir)
+			collision_check(left.get_overlapping_bodies(), body)
 		if direction.x == 0 and direction.y > 0:
 			print("up")
-			if len(up.get_overlapping_bodies()) > 0:
-				body.turn_back()
-				print("illegal")
-			else:
-				move_character(game_manager.troop.move_dir)
+			collision_check(up.get_overlapping_bodies(), body)
 		if direction.x == 0 and direction.y < 0:
 			print("down")
-			if len(down.get_overlapping_bodies()) > 0:
-				body.turn_back()
-				print("illegal")
-			else:
-				move_character(game_manager.troop.move_dir)
+			collision_check(down.get_overlapping_bodies(), body)
 		#direction_check = true
 	
 func handle_idle_state() -> void:
@@ -115,6 +104,15 @@ func transition_to_state(new_state: State) -> void:
 			animated_sprite_2d.play("idle")
 	
 	current_state = new_state
+
+func collision_check(guys, body):
+	for bodies in guys:
+		if bodies is Soldier:
+			body.turn_back()
+			print(right.get_overlapping_bodies())
+			print("illegal")
+			return
+	move_character(game_manager.troop.move_dir)
 
 func win_anim():
 	animated_sprite_2d.play("walk")
