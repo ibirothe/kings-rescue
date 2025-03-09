@@ -7,7 +7,6 @@ enum State {INACTIVE, IDLE, MOVING, DEAD}
 @onready var right: Area2D = $Right
 var direction_check = false
 @onready var center: Marker2D = $Center
-@onready var king_shape: CollisionShape2D = $King_shape
 @onready var game_manager = get_parent().get_parent()
 @onready var monsters = get_parent()
 var right_legal
@@ -15,7 +14,6 @@ var current_state
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 var tween
 const MOVE_TIME := 0.5  # Time in seconds to complete movement
-@onready var win: Area2D = $Win
 var trap = false
 var number
 var role = "Monster"
