@@ -20,7 +20,7 @@ func _on_body_entered(body):
 			game_manager.currently_moving = false
 			body.take_coin()
 			RunStats.soldiers_fled += 1
-		AudioManager.play_sound("mercenary_flee")
+			AudioManager.play_sound("mercenary_flee")
 			GlobalText.set_text(game_manager.txt.ingame["mercenary_flee"].pick_random())
 		elif body.mercenary and body.paid:
 			RunStats.add_coins(1)

@@ -919,14 +919,14 @@ z_index = 4
 position = Vector2(4, 71)
 sprite_frames = SubResource("SpriteFrames_6s1y3")
 autoplay = "default"
-frame_progress = 0.133764
+frame_progress = 0.42706
 
 [node name="Guard2" type="AnimatedSprite2D" parent="Landscape"]
 z_index = 4
 position = Vector2(124, 67)
 sprite_frames = SubResource("SpriteFrames_fwpcy")
 autoplay = "default"
-frame_progress = 0.47651
+frame_progress = 0.311148
 flip_h = true
 
 [node name="Fog" type="Sprite2D" parent="Landscape"]
