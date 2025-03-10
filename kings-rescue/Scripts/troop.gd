@@ -16,6 +16,8 @@ var setup_done = false
 var soldiers = []
 @export var soldier_scene: PackedScene
 var move_dir: Vector2
+var click_locked = false
+@onready var timer: Timer = $Timer
 
 func spawn_soldiers():
 	for i in range(8):
@@ -61,7 +63,10 @@ func spawn_soldiers():
 		soldiers.append(soldier)
 
 func _physics_process(_delta: float) -> void:
-	if soldier_can_move():
+	if click_locked == true:
+		print(click_locked)
+		timer.start
+	if soldier_can_move() and !click_locked:
 
 		match movement_direction:
 			"up": move_dir = Vector2(0, -16)
@@ -71,17 +76,18 @@ func _physics_process(_delta: float) -> void:
 		current_soldier.movestart_position = current_soldier.position
 		current_soldier.move_character(move_dir)
 		reset_clicks()
-	elif soldier_can_change():
+	elif soldier_can_change() and !click_locked:
 		activate_soldier(activating_soldier)
 		deactivate_soldier(current_soldier)
 		current_soldier = activating_soldier
 
 		reset_clicks()
-	elif soldier_can_activate():
+	elif soldier_can_activate() and !click_locked:
 
 		activate_soldier(activating_soldier)
 		current_soldier = activating_soldier
 		reset_clicks()
+	
 
 
 func movement_query(where, guy):
@@ -110,6 +116,7 @@ func deactivate_soldier(soldier) -> void:
 	soldier.active = false
 	
 func reset_clicks():
+	click_locked = false
 	click_resolved = true
 	activation_click = false
 	movement_click = false
@@ -126,3 +133,7 @@ func soldier_can_change() -> bool:
 	
 func soldier_can_activate() -> bool:
 	return activation_click and !game_manager.party_ended
+
+
+func _on_timer_timeout() -> void:
+	click_locked = false

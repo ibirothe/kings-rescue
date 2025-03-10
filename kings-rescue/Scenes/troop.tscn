@@ -6,3 +6,10 @@
 [node name="Troop" type="Node2D"]
 script = ExtResource("1_6njsc")
 soldier_scene = ExtResource("2_tcmm4")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

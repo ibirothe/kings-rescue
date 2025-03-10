@@ -142,6 +142,8 @@ func kill_goblin() -> void:
 	if goblin_check():
 		if movement_tween != null:
 			movement_locked = true
+			if game_manager.troop.click_locked == false:
+				game_manager.troop.click_locked = true
 			if AudioManager.is_looping_sound_active("player_run"):
 				AudioManager.stop_looping_sound("player_run")
 			stop_movement()
@@ -271,6 +273,7 @@ func turn_back():
 	if movement_tween:
 		movement_tween.kill() # Stop the current tween
 	# Create new tween to return to start
+		game_manager.troop.click_locked = true
 	movement_tween = create_tween()
 	movement_tween.tween_property(self, "position", 
 		movestart_position, MOVE_TIME
@@ -354,6 +357,8 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 				game_manager.movement_complete()
 				movement_locked = false
 				saved_movement = false
+				game_manager.troop.click_locked = false
+				game_manager.troop.reset_clicks()
 				game_manager.refire_king()
 				if AudioManager.is_looping_sound_active("player_run"):
 					AudioManager.stop_looping_sound("player_run")
@@ -449,7 +454,7 @@ func _on_up_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> vo
 		send_move_click("up")
 		
 func send_move_click(direction):
-	if 	game_manager.troop.current_soldier == self and movement_locked == false:
+	if 	game_manager.troop.current_soldier == self:
 		game_manager.troop.movement_query(direction, self)
 	
 func _on_bumping_area_body_entered(body: Node2D) -> void:
