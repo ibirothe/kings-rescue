@@ -30,7 +30,7 @@ var bodies
 var movestart_position
 var returning = false
 var possible_assassination = false
-var soldier_close = true
+var soldier_close = false
 var dead = false
 var king_direction
 var move_dir
@@ -48,6 +48,7 @@ var movement_for_goblin
 var movestart_for_goblin
 var movement_incomplete
 var completing_movement = false
+var neighbors = []
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var border_check: Area2D = $Border_check
 @onready var square_border: AnimatedSprite2D = $Square_border
@@ -79,6 +80,7 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	if active and assassin: print("Assassin")
 	self.update_traits()
 	# Soldier leaving the board
 	self.leave_board()
@@ -114,15 +116,17 @@ func update_traits() -> void:
 	
 func assasination_check() -> bool:
 	if assassin and !dead:
+		neighbors = []
 		for bodies in neighbours_check.get_overlapping_bodies():
 			if bodies.role=="King":
 				king_direction = bodies.global_position - global_position
-				possible_assassination = true
-			if bodies.role=="Soldier" and bodies.subclass != self.subclass:
-				if bodies.dead != true:
-					soldier_close = true
-			if possible_assassination == true and len(neighbours_check.get_overlapping_bodies()) == 2:
-				soldier_close = false
+			neighbors.append(bodies.role)
+		if "King" in neighbors:
+			possible_assassination = true
+		if "Soldier" in neighbors:
+			soldier_close = true
+		else:
+			soldier_close = false
 	return possible_assassination and !soldier_close
 
 func assasination() -> void:

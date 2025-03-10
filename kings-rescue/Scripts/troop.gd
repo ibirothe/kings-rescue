@@ -130,6 +130,7 @@ func reset_clicks():
 	movement_click = false
 	moving_soldier = []
 	movement_direction = []
+	game_manager.currently_moving = false
 	j = 0
 
 # Condition checks
