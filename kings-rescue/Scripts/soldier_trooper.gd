@@ -286,6 +286,8 @@ func turn_back():
 		transition_to_state(State.IDLE)
 		movement_locked = false
 		game_manager.currently_moving = false
+		saved_movement = false
+		game_manager.troop.click_locked = false
 		game_manager.refire_king()
 		)
 
