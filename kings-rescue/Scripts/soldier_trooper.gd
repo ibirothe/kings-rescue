@@ -142,6 +142,8 @@ func kill_goblin() -> void:
 	if goblin_check():
 		if movement_tween != null:
 			movement_locked = true
+			if AudioManager.is_looping_sound_active("player_run"):
+				AudioManager.stop_looping_sound("player_run")
 			stop_movement()
 		animated_sprite_2d.flip_h = goblin_direction.x < 0
 		animated_sprite_2d.play(subclass+"_attack")
