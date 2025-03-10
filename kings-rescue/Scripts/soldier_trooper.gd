@@ -147,7 +147,8 @@ func kill_goblin() -> void:
 	if goblin_check():
 		if movement_tween != null:
 			movement_incomplete = true
-			movement_locked = true
+			#movement_locked = true
+			#game_manager.troop.movement_incomplete = true
 			if AudioManager.is_looping_sound_active("player_run"):
 				AudioManager.stop_looping_sound("player_run")
 			stop_movement()
@@ -196,7 +197,7 @@ func handle_inactive_state() -> void:
 	if !game_manager.party_ended:
 		self.animated_sprite_2d.play(subclass+"_default")
 	previous_state = current_state
-	movement_incomplete = false
+	#movement_incomplete = false
 
 func handle_idle_state() -> void:
 	 #, #GameManager.soldier_changing
@@ -222,6 +223,8 @@ func calculate_grid_movement(click_pos: Vector2) -> Vector2:
 	return Vector2.ZERO
 
 func move_character(movement: Vector2) -> void:
+	movement_incomplete = true
+	game_manager.troop.movement_incomplete = true
 	if saved_movement == false:
 		movestart_for_goblin = global_position
 		movement_for_goblin = movement
@@ -251,6 +254,8 @@ func move_character(movement: Vector2) -> void:
 		game_manager.movement_complete()
 		movement_locked = false
 		saved_movement = false
+		game_manager.troop.movement_incomplete = false
+		movement_incomplete = false
 		game_manager.refire_king()
 		if AudioManager.is_looping_sound_active("player_run"):
 			AudioManager.stop_looping_sound("player_run")
@@ -289,6 +294,8 @@ func turn_back():
 		animated_sprite_2d.play(subclass+"_idle")
 		transition_to_state(State.IDLE)
 		movement_locked = false
+		movement_incomplete = false
+		game_manager.troop.movement_incomplete = false
 		game_manager.currently_moving = false
 		saved_movement = false
 		game_manager.refire_king()
@@ -365,6 +372,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 				movement_incomplete = false
 				game_manager.troop.reset_clicks()
 				game_manager.refire_king()
+				game_manager.troop.movement_incomplete = false
 				if AudioManager.is_looping_sound_active("player_run"):
 					AudioManager.stop_looping_sound("player_run")
 				) 

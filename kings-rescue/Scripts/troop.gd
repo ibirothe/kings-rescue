@@ -19,6 +19,7 @@ var move_dir: Vector2
 #var click_locked = false
 @onready var timer: Timer = $Timer
 var timer_started = false
+var movement_incomplete = false
 
 func spawn_soldiers():
 	for i in range(8):
@@ -113,8 +114,9 @@ func activate_soldier(soldier) -> void:
 	GlobalText.set_text(game_manager.txt.CHARACTER_DESCRIPTIONS[soldier.subclass])
 	
 func deactivate_soldier(soldier) -> void:
-	if current_soldier.movement_incomplete:
-		current_soldier.complete_movement()
+	if soldier.movement_incomplete:
+		print("Has to complete move")
+		soldier.complete_movement()
 	else:
 		soldier.animated_sprite_2d.play(soldier.subclass+"_default")
 		soldier.transition_to_state(soldier.State.INACTIVE)
@@ -132,7 +134,7 @@ func reset_clicks():
 
 # Condition checks
 func soldier_can_move() -> bool:
-	return movement_click and !activation_click and !game_manager.party_ended and current_soldier != null and !current_soldier.movement_incomplete
+	return movement_click and !activation_click and !game_manager.party_ended and current_soldier != null and !movement_incomplete
 	
 func soldier_can_change() -> bool:
 	return activation_click and current_soldier != null and !game_manager.party_ended
