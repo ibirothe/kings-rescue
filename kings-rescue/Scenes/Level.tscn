@@ -97,7 +97,8 @@ position = Vector2(-8, 8)
 [node name="Game Manager" type="Node2D" parent="."]
 script = ExtResource("4_2wxqe")
 trap_number = 1
-goblin_number = 10
+canine_number = 15
+goblin_number = 15
 
 [node name="Troop" parent="Game Manager" instance=ExtResource("2_hjf0c")]
 position = Vector2(-8, 8)

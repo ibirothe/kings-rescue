@@ -101,7 +101,6 @@ func _get_direction(monster_type, current_monster):
 	if monster_type == "goblin":
 		return goblin_ai(current_monster)
 	if monster_type == "dog":
-		direct = current_monster.directions
 		check_occupied(current_monster, direct)
 		
 

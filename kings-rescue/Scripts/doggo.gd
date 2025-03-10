@@ -61,7 +61,8 @@ func move(body: Node2D) -> void:
 	if dead:
 		return
 	else:
-		var direction = monsters._get_direction("dog", self)
+		var direction = directions
+		monsters.check_occupied(self, direction)
 		if non_occupied:
 			if direction.x != 0:
 				animated_sprite_2d.flip_h = direction.x < 0
