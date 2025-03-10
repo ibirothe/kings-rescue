@@ -46,6 +46,8 @@ var previous_state = State.INACTIVE
 var saved_movement = false
 var movement_for_goblin
 var movestart_for_goblin
+var movement_incomplete
+var completing_movement = false
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var border_check: Area2D = $Border_check
 @onready var square_border: AnimatedSprite2D = $Square_border
@@ -86,6 +88,9 @@ func _physics_process(_delta: float) -> void:
 	self.kill_goblin()
 	if game_manager.currently_moving == false:
 		self.assasination()
+	if completing_movement and !movement_incomplete and !active:
+		completing_movement = false
+		transition_to_state(State.INACTIVE)
 
 
 	match current_state:
@@ -141,9 +146,8 @@ func goblin_check():
 func kill_goblin() -> void:
 	if goblin_check():
 		if movement_tween != null:
+			movement_incomplete = true
 			movement_locked = true
-			if game_manager.troop.click_locked == false:
-				game_manager.troop.click_locked = true
 			if AudioManager.is_looping_sound_active("player_run"):
 				AudioManager.stop_looping_sound("player_run")
 			stop_movement()
@@ -273,7 +277,6 @@ func turn_back():
 	if movement_tween:
 		movement_tween.kill() # Stop the current tween
 	# Create new tween to return to start
-		game_manager.troop.click_locked = true
 	movement_tween = create_tween()
 	movement_tween.tween_property(self, "position", 
 		movestart_position, MOVE_TIME
@@ -287,7 +290,6 @@ func turn_back():
 		movement_locked = false
 		game_manager.currently_moving = false
 		saved_movement = false
-		game_manager.troop.click_locked = false
 		game_manager.refire_king()
 		)
 
@@ -359,7 +361,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 				game_manager.movement_complete()
 				movement_locked = false
 				saved_movement = false
-				game_manager.troop.click_locked = false
+				movement_incomplete = false
 				game_manager.troop.reset_clicks()
 				game_manager.refire_king()
 				if AudioManager.is_looping_sound_active("player_run"):
@@ -480,3 +482,8 @@ func _on_neighbours_check_body_exited(body: Node2D) -> void:
 func disable_shader():
 	tint_tween.kill
 	animated_sprite_2d.material = null
+
+func complete_movement():
+	completing_movement = true
+	visual_deactivation()
+	active = false

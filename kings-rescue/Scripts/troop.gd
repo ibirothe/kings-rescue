@@ -16,8 +16,9 @@ var setup_done = false
 var soldiers = []
 @export var soldier_scene: PackedScene
 var move_dir: Vector2
-var click_locked = false
+#var click_locked = false
 @onready var timer: Timer = $Timer
+var timer_started = false
 
 func spawn_soldiers():
 	for i in range(8):
@@ -63,11 +64,13 @@ func spawn_soldiers():
 		soldiers.append(soldier)
 
 func _physics_process(_delta: float) -> void:
-	if click_locked == true:
-		print(click_locked)
-		timer.start
-	if soldier_can_move() and !click_locked:
 
+	"""if click_locked == true and timer_started == false:
+		print(timer.time_left)
+		print(click_locked)
+		timer_started = true
+		timer.start()"""
+	if soldier_can_move():
 		match movement_direction:
 			"up": move_dir = Vector2(0, -16)
 			"down": move_dir = Vector2(0, 16)
@@ -76,13 +79,13 @@ func _physics_process(_delta: float) -> void:
 		current_soldier.movestart_position = current_soldier.position
 		current_soldier.move_character(move_dir)
 		reset_clicks()
-	elif soldier_can_change() and !click_locked:
+	elif soldier_can_change():
 		activate_soldier(activating_soldier)
 		deactivate_soldier(current_soldier)
 		current_soldier = activating_soldier
 
 		reset_clicks()
-	elif soldier_can_activate() and !click_locked:
+	elif soldier_can_activate():
 
 		activate_soldier(activating_soldier)
 		current_soldier = activating_soldier
@@ -110,13 +113,16 @@ func activate_soldier(soldier) -> void:
 	GlobalText.set_text(game_manager.txt.CHARACTER_DESCRIPTIONS[soldier.subclass])
 	
 func deactivate_soldier(soldier) -> void:
-	soldier.animated_sprite_2d.play(soldier.subclass+"_default")
-	soldier.transition_to_state(soldier.State.INACTIVE)
-	soldier.visual_deactivation()
-	soldier.active = false
+	if current_soldier.movement_incomplete:
+		current_soldier.complete_movement()
+	else:
+		soldier.animated_sprite_2d.play(soldier.subclass+"_default")
+		soldier.transition_to_state(soldier.State.INACTIVE)
+		soldier.visual_deactivation()
+		soldier.active = false
 	
 func reset_clicks():
-	click_locked = false
+	#click_locked = false
 	click_resolved = true
 	activation_click = false
 	movement_click = false
@@ -126,7 +132,7 @@ func reset_clicks():
 
 # Condition checks
 func soldier_can_move() -> bool:
-	return movement_click and !activation_click and !game_manager.party_ended and current_soldier != null
+	return movement_click and !activation_click and !game_manager.party_ended and current_soldier != null and !current_soldier.movement_incomplete
 	
 func soldier_can_change() -> bool:
 	return activation_click and current_soldier != null and !game_manager.party_ended
@@ -135,5 +141,10 @@ func soldier_can_activate() -> bool:
 	return activation_click and !game_manager.party_ended
 
 
-func _on_timer_timeout() -> void:
+"""func _on_timer_timeout() -> void:
+	if current_soldier != null:
+		deactivate_soldier(current_soldier)
 	click_locked = false
+	reset_clicks()
+	timer.stop()
+	var timer_started"""
