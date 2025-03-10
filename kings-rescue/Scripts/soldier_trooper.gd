@@ -196,6 +196,7 @@ func handle_inactive_state() -> void:
 	if !game_manager.party_ended:
 		self.animated_sprite_2d.play(subclass+"_default")
 	previous_state = current_state
+	movement_incomplete = false
 
 func handle_idle_state() -> void:
 	 #, #GameManager.soldier_changing
