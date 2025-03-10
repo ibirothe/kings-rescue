@@ -357,6 +357,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 					AudioManager.stop_looping_sound("player_run")
 				) 
 		transition_to_state(previous_state)
+		movement_locked = false
 		if previous_state == State.IDLE:
 			animated_sprite_2d.play(subclass+"_idle")
 		
