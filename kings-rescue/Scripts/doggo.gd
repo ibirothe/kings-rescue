@@ -24,6 +24,7 @@ var leaving_board = false
 var bite = false
 var setup_done = false
 var legal_move
+var non_occupied = true
 
 func _ready() -> void:
 
@@ -55,31 +56,33 @@ func dog():
 
 func move(body: Node2D) -> void:
 	#if direction_check == false:
+	non_occupied = true
 
 	if dead:
 		return
 	else:
-		var direction = directions
-		if direction.x != 0:
-			animated_sprite_2d.flip_h = direction.x < 0
-		print("Doggo is moving ", direction)
+		var direction = monsters._get_direction("dog", self)
+		if non_occupied:
+			if direction.x != 0:
+				animated_sprite_2d.flip_h = direction.x < 0
+			print("Doggo is moving ", direction)
 
-		if direction.x > 0 and direction.y == 0:
-			print("right")
-			legal_move = _check_square_to_move(right.get_overlapping_bodies())
-		elif direction.x < 0 and direction.y == 0:
-			print("left")
-			legal_move = _check_square_to_move(left.get_overlapping_bodies())
-		elif direction.x == 0 and direction.y > 0:
-			print("down")
-			legal_move = _check_square_to_move(down.get_overlapping_bodies())
-		elif direction.x == 0 and direction.y < 0:
-			print("up")
-			legal_move = _check_square_to_move(up.get_overlapping_bodies())
-		if legal_move:
-			move_character(direction)
-		else:
-			return
+			if direction.x > 0 and direction.y == 0:
+				print("right")
+				legal_move = _check_square_to_move(right.get_overlapping_bodies())
+			elif direction.x < 0 and direction.y == 0:
+				print("left")
+				legal_move = _check_square_to_move(left.get_overlapping_bodies())
+			elif direction.x == 0 and direction.y > 0:
+				print("down")
+				legal_move = _check_square_to_move(down.get_overlapping_bodies())
+			elif direction.x == 0 and direction.y < 0:
+				print("up")
+				legal_move = _check_square_to_move(up.get_overlapping_bodies())
+			if legal_move:
+				move_character(direction)
+			else:
+				return
 	
 func handle_idle_state() -> void:
 	animated_sprite_2d.play()
@@ -187,7 +190,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 func _check_square_to_move(bodies):
 	var illegal = true
 	for i in bodies:
-		if i is Soldier or i is King or i.has_method("goblin"):
+		if i is Soldier or i is King or i.has_method("goblin") or i.has_method("dog"):
 			illegal = false
 	return illegal
 	

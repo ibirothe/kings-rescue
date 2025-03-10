@@ -43,6 +43,9 @@ var leaving_board = false
 var goblin_direction
 var goblins_to_kill = []
 var previous_state = State.INACTIVE
+var saved_movement = false
+var movement_for_goblin
+var movestart_for_goblin
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var border_check: Area2D = $Border_check
 @onready var square_border: AnimatedSprite2D = $Square_border
@@ -137,12 +140,15 @@ func goblin_check():
 
 func kill_goblin() -> void:
 	if goblin_check():
-			animated_sprite_2d.flip_h = goblin_direction.x < 0
-			animated_sprite_2d.play(subclass+"_attack")
-			transition_to_state(State.ATTACKING)
-			for bodies in goblins_to_kill:
-				bodies.death()
-				goblins_to_kill = []
+		if movement_tween != null:
+			movement_locked = true
+			stop_movement()
+		animated_sprite_2d.flip_h = goblin_direction.x < 0
+		animated_sprite_2d.play(subclass+"_attack")
+		transition_to_state(State.ATTACKING)
+		for bodies in goblins_to_kill:
+			bodies.death()
+			goblins_to_kill = []
 			
 			
 
@@ -185,7 +191,8 @@ func handle_inactive_state() -> void:
 
 func handle_idle_state() -> void:
 	 #, #GameManager.soldier_changing
-	previous_state = current_state
+	if previous_state != State.IDLE:
+		previous_state = current_state
 	pass
 	"""#Up for refractor
 	if game_manager.soldier_changing == true and im_new == false:
@@ -206,6 +213,11 @@ func calculate_grid_movement(click_pos: Vector2) -> Vector2:
 	return Vector2.ZERO
 
 func move_character(movement: Vector2) -> void:
+	if saved_movement == false:
+		movestart_for_goblin = global_position
+		movement_for_goblin = movement
+		saved_movement = true
+	previous_state = State.MOVING
 	if current_state == State.MOVING:
 		return
 	game_manager.currently_moving = true
@@ -229,6 +241,7 @@ func move_character(movement: Vector2) -> void:
 		transition_to_state(State.IDLE)
 		game_manager.movement_complete()
 		movement_locked = false
+		saved_movement = false
 		game_manager.refire_king()
 		if AudioManager.is_looping_sound_active("player_run"):
 			AudioManager.stop_looping_sound("player_run")
@@ -253,7 +266,6 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 
 
 func turn_back():
-	print("turning back")
 	if movement_tween:
 		movement_tween.kill() # Stop the current tween
 	# Create new tween to return to start
@@ -313,9 +325,41 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		return
 		
 	if animated_sprite_2d.animation == subclass+"_attack":
+		if previous_state == State.MOVING:
+			transition_to_state(State.MOVING)
+			if !AudioManager.is_looping_sound_active("player_run"):
+					AudioManager.play_sound("player_run", 0, 1, true)
+			animated_sprite_2d.play(subclass+"_walk")
+			
+			# Flip character if needed
+			if movement.x != 0:
+				animated_sprite_2d.flip_h = movement.x < 0
+			var traveled_distance = global_position - movestart_for_goblin
+			print(traveled_distance)
+			var remaining_movement = movement_for_goblin - traveled_distance
+			print(remaining_movement)
+			var remaining_time = MOVE_TIME*(remaining_movement.distance_to(Vector2(0, 0))/movement_for_goblin.distance_to(Vector2(0, 0)))
+			print(remaining_movement)
+			movement_tween = create_tween()
+			movement_tween.tween_property(self, "position", 
+				position + remaining_movement, remaining_time
+			).set_trans(Tween.TRANS_LINEAR)
+			
+			# When movement completes
+			movement_tween.tween_callback(func():
+				animated_sprite_2d.play(subclass+"_idle")
+				transition_to_state(State.IDLE)
+				game_manager.movement_complete()
+				movement_locked = false
+				saved_movement = false
+				game_manager.refire_king()
+				if AudioManager.is_looping_sound_active("player_run"):
+					AudioManager.stop_looping_sound("player_run")
+				) 
 		transition_to_state(previous_state)
 		if previous_state == State.IDLE:
 			animated_sprite_2d.play(subclass+"_idle")
+		
 		
 		
 		
@@ -402,7 +446,7 @@ func _on_up_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> vo
 		send_move_click("up")
 		
 func send_move_click(direction):
-	if 	game_manager.troop.current_soldier == self:
+	if 	game_manager.troop.current_soldier == self and movement_locked == false:
 		game_manager.troop.movement_query(direction, self)
 	
 func _on_bumping_area_body_entered(body: Node2D) -> void:

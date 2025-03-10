@@ -29,6 +29,7 @@ var direct_text
 var goblin_numb
 var found_trap = false
 var recursion = 0
+var occupied_spaces = []
 
 
 func spawn_doggos(canine_numb):
@@ -92,25 +93,30 @@ func _physics_process(_delta: float) -> void:
 	pass
 	
 func move_all():
+	occupied_spaces = []
 	action_queue.append("move")
 
 		
 func _get_direction(monster_type, current_monster):
 	if monster_type == "goblin":
 		return goblin_ai(current_monster)
+	if monster_type == "dog":
+		direct = current_monster.directions
+		check_occupied(current_monster, direct)
+		
 
 
 		
 func goblin_ai(goblin):
 	goblin.find_coins()
 	if goblin.find_nearest_coin() == null or detour():
-		print("taking detour")
+		#print("taking detour")
 		recursion = 0
 		found_trap = false
 		return rand_goblin_directions(goblin)
 	else:
 		var basic_direction = goblin.find_nearest_coin().center.global_position-goblin.center.global_position
-		print(basic_direction)
+		#print(basic_direction)
 		var rand = randf_range(0, 100)
 		if basic_direction.x > 0:
 			direct = Vector2(16, 0)
@@ -132,7 +138,7 @@ func goblin_ai(goblin):
 			recursion += 1
 			return goblin_ai(goblin)
 		else:
-			print("Moving towards coin ", direct_text)
+			#print("Moving towards coin ", direct_text)
 			recursion = 0
 			found_trap = false
 			#print("Bad goblin luck")
@@ -141,7 +147,7 @@ func goblin_ai(goblin):
 		
 func detour():
 	if found_trap and recursion >2:
-		print("Taking detour")
+		#print("Taking detour")
 		return true
 	else:
 		return false
@@ -162,9 +168,8 @@ func rand_goblin_directions(goblin):
 		"3":
 			direct = Vector2(0, 16)
 			direct_text = "down"
-	print("Moving randomly")
+	#print("Moving randomly")
 	var random = randf_range(0, 99)
-	if random < 20: print("Random too low")
 	if direct == goblin.old_direct * (-1) and random > 20:
 		return rand_goblin_directions(goblin)
 	elif goblin._check_traps(direct_text) == "trap" and random > 20:
@@ -173,3 +178,11 @@ func rand_goblin_directions(goblin):
 			goblin.old_direct = direct
 			return direct
 			
+func check_occupied(monster, direct):
+		var new_position = monster.global_position + direct
+		if new_position not in occupied_spaces:
+			occupied_spaces.append(new_position)
+			return(direct)
+		else:
+			monster.non_occupied = false
+			return(direct)

@@ -30,6 +30,9 @@ var old_direct: Vector2
 var coin_array = []
 var nearest_coin
 var legal_move
+var non_occupied = true
+var king_direction
+@onready var neighbours_check: Area2D = $Neighbours_check
 
 
 func _ready() -> void:
@@ -56,32 +59,35 @@ func goblin():
 
 
 func move(body: Node2D) -> void:
+	non_occupied = true
 	#if direction_check == false:
 
 	if dead:
 		return
 	else:
-		var direction = monsters._get_direction("goblin", self)
-		if direction.x != 0:
-			animated_sprite_2d.flip_h = direction.x < 0
-		print("Goblin is moving ", direction)
+		var direct = monsters._get_direction("goblin", self)
+		monsters.check_occupied(self, direct)
+		if non_occupied:
+			if direct.x != 0:
+				animated_sprite_2d.flip_h = direct.x < 0
+			#print("Goblin is moving ", direction)
 
-		if direction.x > 0 and direction.y == 0:
-			print("right")
-			legal_move = _check_square_to_move(right.get_overlapping_bodies())
-		elif direction.x < 0 and direction.y == 0:
-			print("left")
-			legal_move = _check_square_to_move(left.get_overlapping_bodies())
-		elif direction.x == 0 and direction.y > 0:
-			print("down")
-			legal_move = _check_square_to_move(down.get_overlapping_bodies())
-		elif direction.x == 0 and direction.y < 0:
-			print("up")
-			legal_move = _check_square_to_move(up.get_overlapping_bodies())
-		if legal_move:
-			move_character(direction)
-		else:
-			return
+			if direct.x > 0 and direct.y == 0:
+				#print("right")
+				legal_move = _check_square_to_move(right.get_overlapping_bodies())
+			elif direct.x < 0 and direct.y == 0:
+				#print("left")
+				legal_move = _check_square_to_move(left.get_overlapping_bodies())
+			elif direct.x == 0 and direct.y > 0:
+				#print("down")
+				legal_move = _check_square_to_move(down.get_overlapping_bodies())
+			elif direct.x == 0 and direct.y < 0:
+				#print("up")
+				legal_move = _check_square_to_move(up.get_overlapping_bodies())
+			if legal_move:
+				move_character(direct)
+			else:
+				return
 		
 		#direction_check = true
 	
@@ -143,34 +149,34 @@ func death():
 func _on_bumping_area_body_entered(body: Node2D) -> void:
 	if body is Soldier:
 		var direction = center.global_position.direction_to(body.center.global_position)
-		print(direction/3.14*180)
+		#print(direction/3.14*180)
 		if direction.x < 0 and direction.y == 0:
-			print("right")
+			#print("right")
 			if len(right.get_overlapping_bodies()) > 0:
 				body.turn_back()
 				print(right.get_overlapping_bodies())
-				print("illegal")
+				#print("illegal")
 			else:
 				move_character(game_manager.troop.move_dir)
 		elif direction.x > 0 and direction.y == 0:
-			print("left")
+			#print("left")
 			if len(left.get_overlapping_bodies()) > 0:
 				body.turn_back()
-				print("illegal")
+				#print("illegal")
 			else:
 				move_character(game_manager.troop.move_dir)
 		elif direction.x == 0 and direction.y > 0:
-			print("up")
+			#print("up")
 			if len(up.get_overlapping_bodies()) > 0:
 				body.turn_back()
-				print("illegal")
+				#print("illegal")
 			else:
 				move_character(game_manager.troop.move_dir)
 		elif direction.x == 0 and direction.y < 0:
-			print("down")
+			#print("down")
 			if len(down.get_overlapping_bodies()) > 0:
 				body.turn_back()
-				print("illegal")
+				#print("illegal")
 			else:
 				move_character(game_manager.troop.move_dir)
 		game_manager.monsters.flip_direction("dog", number)
@@ -191,16 +197,16 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		
 func _check_traps(direction):
 	if len(right_trap.get_overlapping_areas()) > 0 and direction == "right":
-		print("Right trap found")
+		#print("Right trap found")
 		return("trap")
 	elif len(left_trap.get_overlapping_areas()) > 0 and direction == "left":
-		print("Left trap found")
+		#print("Left trap found")
 		return("trap")
 	elif len(up_trap.get_overlapping_areas()) > 0 and direction == "up":
-		print("Up trap found")
+		#print("Up trap found")
 		return("trap")
 	elif len(down_trap.get_overlapping_areas()) > 0 and direction == "down":
-		print("Down trap found")
+		#print("Down trap found")
 		return("trap")
 
 func find_coins():
@@ -208,7 +214,7 @@ func find_coins():
 	for stuff in finder.get_overlapping_areas():
 		if stuff is Coin:
 			coin_array.append(stuff)
-	print(coin_array)
+	#print(coin_array)
 			
 func find_nearest_coin():
 	if len(coin_array) > 0:
@@ -231,4 +237,22 @@ func _check_square_to_move(bodies):
 		if i is Soldier or i is King or i.has_method("goblin") or i.has_method("dog"):
 			illegal = false
 	return illegal
-	
+
+
+func _on_neighbours_check_body_entered(body: Node2D) -> void:
+		if !dead:
+			for bodies in neighbours_check.get_overlapping_bodies():
+				if bodies.role=="King":
+					if tween != null:
+						tween.kill()
+					king_direction = bodies.global_position - global_position
+					if !game_manager.party_ended:
+						animated_sprite_2d.flip_h = king_direction.x < 0
+						AudioManager.play_sound("player_hurt")
+						
+						game_manager.end_party("assasination", false)
+					if bite == false:
+						bite = true
+						animated_sprite_2d.play("attack")
+						body.trap = true
+						body.tween.kill()
