@@ -137,6 +137,7 @@ func death():
 	if animated_sprite_2d.animation != "death":
 		animated_sprite_2d.play("death")
 		transition_to_state(State.DEAD)
+		animated_sprite_2d.z_index = 1
 
 
 func _on_bumping_area_body_entered(body: Node2D) -> void:
