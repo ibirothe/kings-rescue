@@ -7,7 +7,6 @@ enum State {INACTIVE, IDLE, MOVING, DEAD}
 @onready var right: Area2D = $Right
 var direction_check = false
 @onready var center: Marker2D = $Center
-@onready var king_shape: CollisionShape2D = $King_shape
 @onready var game_manager = get_parent().get_parent()
 @onready var monsters = get_parent()
 var right_legal
@@ -15,22 +14,28 @@ var current_state
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 var tween
 const MOVE_TIME := 0.5  # Time in seconds to complete movement
-@onready var win: Area2D = $Win
 var trap = false
 var number
 var role = "Monster"
 var dead = false
+var directions
 @onready var leave: Area2D = $Leave
 var leaving_board = false
 var bite = false
-
+var setup_done = false
+var legal_move
 
 func _ready() -> void:
+
 	#print(position)
 	pass
 
 func _physics_process(_delta: float) -> void:
 	#print(direction_check)
+	if !setup_done:
+		if directions.x != 0:
+			animated_sprite_2d.flip_h = directions.x < 0
+		setup_done == true
 	self.leave_board()
 	match current_state:
 		State.IDLE:
@@ -54,40 +59,27 @@ func move(body: Node2D) -> void:
 	if dead:
 		return
 	else:
-		var direction = monsters._get_direction("dog", self)
+		var direction = directions
 		if direction.x != 0:
 			animated_sprite_2d.flip_h = direction.x < 0
 		print("Doggo is moving ", direction)
 
 		if direction.x > 0 and direction.y == 0:
 			print("right")
-			if len(right.get_overlapping_bodies()) > 0:
-				print(right.get_overlapping_bodies())
-				print("illegal")
-			else:
-				move_character(direction)
+			legal_move = _check_square_to_move(right.get_overlapping_bodies())
 		elif direction.x < 0 and direction.y == 0:
 			print("left")
-			if len(left.get_overlapping_bodies()) > 0:
-				print(left.get_overlapping_bodies())
-				print("illegal")
-			else:
-				move_character(direction)
+			legal_move = _check_square_to_move(left.get_overlapping_bodies())
 		elif direction.x == 0 and direction.y > 0:
-			print("up")
-			if len(up.get_overlapping_bodies()) > 0:
-				print(up.get_overlapping_bodies())
-				print("illegal")
-			else:
-				move_character(direction)
-		elif direction.x == 0 and direction.y < 0:
 			print("down")
-			if len(down.get_overlapping_bodies()) > 0:
-				print(down.get_overlapping_bodies())
-				print("illegal")
-			else:
-				move_character(direction)
-		#direction_check = true
+			legal_move = _check_square_to_move(down.get_overlapping_bodies())
+		elif direction.x == 0 and direction.y < 0:
+			print("up")
+			legal_move = _check_square_to_move(up.get_overlapping_bodies())
+		if legal_move:
+			move_character(direction)
+		else:
+			return
 	
 func handle_idle_state() -> void:
 	animated_sprite_2d.play()
@@ -176,7 +168,7 @@ func _on_bumping_area_body_entered(body: Node2D) -> void:
 				print("illegal")
 			else:
 				move_character(game_manager.troop.move_dir)
-		game_manager.monsters.flip_direction("dog", number)
+		directions.x *= -1 
 	elif body is King:
 		tween.kill()
 		if bite == false:
@@ -191,3 +183,11 @@ func _on_bumping_area_body_entered(body: Node2D) -> void:
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if animated_sprite_2d.animation == "attack":
 		animated_sprite_2d.play("idle")
+
+func _check_square_to_move(bodies):
+	var illegal = true
+	for i in bodies:
+		if i is Soldier or i is King or i.has_method("goblin"):
+			illegal = false
+	return illegal
+	

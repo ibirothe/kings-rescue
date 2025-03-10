@@ -55,10 +55,9 @@ func spawn_doggos(canine_numb):
 				else:
 					direct = Vector2(16, 0)
 				monsters.append(doggo)
-				doggo_directions.append(direct)
-				var direction = _get_direction("dog", doggo.number)
-				if direction.x != 0:
-					doggo.animated_sprite_2d.flip_h = direction.x < 0
+				doggo.directions = direct
+				var direction = _get_direction("dog", doggo)
+
 					
 func spawn_goblins(goblin_numb):
 	var i = 0
@@ -84,10 +83,6 @@ func spawn_goblins(goblin_numb):
 				else:
 					direct = Vector2(16, 0)
 				monsters.append(gobbo)
-				doggo_directions.append(direct)
-				var direction = _get_direction("dog", gobbo.number)
-				if direction.x != 0:
-					gobbo.animated_sprite_2d.flip_h = direction.x < 0
 
 func _physics_process(_delta: float) -> void:
 	if len(action_queue) > 0:
@@ -100,16 +95,11 @@ func move_all():
 	action_queue.append("move")
 
 		
-func _get_direction(monster_type, number):
-	if monster_type == "dog":
-		return doggo_directions[number]
+func _get_direction(monster_type, current_monster):
 	if monster_type == "goblin":
-		current_monster = monsters[number]
 		return goblin_ai(current_monster)
 
-func flip_direction(monster, number):
-	if monster == "dog":
-		doggo_directions[number].x *= -1 
+
 		
 func goblin_ai(goblin):
 	goblin.find_coins()

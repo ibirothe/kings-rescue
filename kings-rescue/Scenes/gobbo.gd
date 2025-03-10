@@ -7,7 +7,6 @@ enum State {INACTIVE, IDLE, MOVING, DEAD}
 @onready var right: Area2D = $Right
 var direction_check = false
 @onready var center: Marker2D = $Center
-@onready var king_shape: CollisionShape2D = $King_shape
 @onready var game_manager = get_parent().get_parent()
 @onready var monsters = get_parent()
 var right_legal
@@ -15,7 +14,6 @@ var current_state
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 var tween
 const MOVE_TIME := 0.5  # Time in seconds to complete movement
-@onready var win: Area2D = $Win
 var trap = false
 var number
 var role = "Monster"
@@ -31,6 +29,7 @@ var old_direct: Vector2
 @onready var finder: Area2D = $Finder
 var coin_array = []
 var nearest_coin
+var legal_move
 
 
 func _ready() -> void:
@@ -62,39 +61,28 @@ func move(body: Node2D) -> void:
 	if dead:
 		return
 	else:
-		var direction = monsters._get_direction("goblin", number)
+		var direction = monsters._get_direction("goblin", self)
 		if direction.x != 0:
 			animated_sprite_2d.flip_h = direction.x < 0
 		print("Goblin is moving ", direction)
 
 		if direction.x > 0 and direction.y == 0:
 			print("right")
-			if len(right.get_overlapping_bodies()) > 0:
-				print(right.get_overlapping_bodies())
-				print("illegal")
-			else:
-				move_character(direction)
+			legal_move = _check_square_to_move(right.get_overlapping_bodies())
 		elif direction.x < 0 and direction.y == 0:
 			print("left")
-			if len(left.get_overlapping_bodies()) > 0:
-				print(left.get_overlapping_bodies())
-				print("illegal")
-			else:
-				move_character(direction)
+			legal_move = _check_square_to_move(left.get_overlapping_bodies())
 		elif direction.x == 0 and direction.y > 0:
 			print("down")
-			if len(down.get_overlapping_bodies()) > 0:
-				print(down.get_overlapping_bodies())
-				print("illegal")
-			else:
-				move_character(direction)
+			legal_move = _check_square_to_move(down.get_overlapping_bodies())
 		elif direction.x == 0 and direction.y < 0:
 			print("up")
-			if len(up.get_overlapping_bodies()) > 0:
-				print(up.get_overlapping_bodies())
-				print("illegal")
-			else:
-				move_character(direction)
+			legal_move = _check_square_to_move(up.get_overlapping_bodies())
+		if legal_move:
+			move_character(direction)
+		else:
+			return
+		
 		#direction_check = true
 	
 func handle_idle_state() -> void:
@@ -144,7 +132,8 @@ func leave_anim():
 	queue_free()  # Remove the node after fading out
 
 func death():
-	tween.kill()
+	if tween != null:
+		tween.kill()
 	dead = true
 	if animated_sprite_2d.animation != "death":
 		animated_sprite_2d.play("death")
@@ -235,3 +224,11 @@ func find_nearest_coin():
 
 func take_coin(coin):
 	coin_array.erase(coin)
+	
+func _check_square_to_move(bodies):
+	var illegal = true
+	for i in bodies:
+		if i is Soldier or i is King or i.has_method("goblin") or i.has_method("dog"):
+			illegal = false
+	return illegal
+	
