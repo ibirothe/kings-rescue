@@ -80,7 +80,7 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if active and assassin: print("Assassin")
+	#if active and assassin: print("Assassin")
 	self.update_traits()
 	# Soldier leaving the board
 	self.leave_board()
